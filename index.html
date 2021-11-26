@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A* Algorithmus</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/extraFunc.js"></script>
+    <script src="js/methods.js"></script>
+    <script src="js/class_and_const.js"></script>
+    <script src="js/loadFile.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<h1>A* algorithmus - Bester Weg vom Start zum Ziel</h1>
+
+<br>
+<br>
+<img src="files/gelaende_002.png" width="960px">
+<br>
+<!--<button onclick="startGame();">Init grid</button>
+<button onclick="startAll();">startAll</button>-->
+
+<br>
+<h3>Einstellungen</h3>
+<button onclick="removeStart();">Reset Startpunkt</button>
+<br><br>
+Verzögerungszeit bei Suche nach besten Weg: <br><br>
+<span style="border-style: solid"><span id="outputTime">100</span>ms</span><br>
+0ms<input type="range" max="1000" min="0" step="50" value="0" id="time" name="time" onmouseover="displayTime()">1000ms
+<br><br>
+<button onclick="hideShowSearch();" hidden="hidden" id="showSolution">hideShowSearch</button>
+<br><br>
+<table id="grid">
+</table>
+
+
+<br>
+<br>
+<div id="auswertung">
+    <h3>Auswertung</h3>
+    <p>Boot genutzt: <span id="usedBoat">-</span></p>
+    <p>Zeitkosten: <span id="runnedCosts">-</span> ZE</p>
+    <p>Durchlaufene Felder: <span id="runnedFields">-</span> FE</p>
+    <ul>
+        <li>Wald: <span id="runnedFieldsForest">-</span> FE</li>
+        <br>
+        <li>Fluss: <span id="runnedFieldsRiver">-</span> FE</li>
+        <br>
+        <li>Berg: <span id="runnedFieldsMountain">-</span> FE</li>
+        <br>
+        <li>Weg: <span id="runnedFieldsWay">-</span> FE</li>
+        <br>
+        <li>Ebene: <span id="runnedFieldsFlat">-</span> FE</li>
+    </ul>
+</div>
+<br>
+<br>
+<br>
+</body>
+</html>

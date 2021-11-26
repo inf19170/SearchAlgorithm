@@ -1,0 +1,12 @@
+body{
+    width: 960px;
+    margin: auto;
+    color: black;
+    font-family: arial;
+    background-color: rgba(240,240,240,1);
+}
+
+table, th, td { border: thin solid; text-align: center;}
+table { background-color: gray; border-spacing: 0px;}
+#grid { border-collapse: separate; margin-top: 0em; }
+caption { text-align: left; }
