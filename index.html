@@ -22,13 +22,14 @@
 
 <br>
 <h3>Einstellungen</h3>
-<button onclick="removeStart();">Reset Startpunkt</button>
+<button onclick="javascript:location.reload()">Zurücksetzen</button>
 <br><br>
 Verzögerungszeit bei Suche nach besten Weg: <br><br>
-<span style="border-style: solid"><span id="outputTime">100</span>ms</span><br>
-0ms<input type="range" max="1000" min="0" step="50" value="0" id="time" name="time" onmouseover="displayTime()">1000ms
+<span style="border-style: solid"><span id="outputTime">0</span>ms</span><br>
+
+langsam<input type="range" max="1000" min="500" step="50" value="1000" id="time" name="time" onmouseover="displayTime()">schnell
 <br><br>
-<button onclick="hideShowSearch();" hidden="hidden" id="showSolution">hideShowSearch</button>
+<button onclick="hideShowSearch();" hidden="hidden" id="showSolution">Zeige/Verstecke Suchbereich</button>
 <br><br>
 <table id="grid">
 </table>

@@ -30,7 +30,7 @@ Nach Beendigung des Durchlaufens, grüne Felder deaktivieren
 function displayTime(){
 
     document.querySelector("#time").addEventListener ("input", function () {
-        document.getElementById("outputTime").innerHTML = this.value;
+        document.getElementById("outputTime").innerHTML = (1000-parseFloat(this.value)).toString();
     });
 
 }

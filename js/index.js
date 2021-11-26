@@ -164,7 +164,7 @@ async function startAll(){
             //console.log(openList);
 
             counter++;
-            await Sleep(document.querySelector("#time").value);
+            await Sleep(getSleepTime());
             if(finished()){
                 openList = [];
                 //alert("Ziel erreicht!");
@@ -180,7 +180,9 @@ async function startAll(){
     }
 
 }
-
+function getSleepTime(){
+    return 1000-document.querySelector("#time").value;
+}
 
 // Überprüft, ob das Ziel erreicht wurde
 function finished(){
@@ -314,6 +316,7 @@ async function showPathTo(pos){
         way.push(current);
         current = parents.get(current);
     }
+    path = way;
     for(let i = way.length-1; i>=0; i--){
         let field = way[i];
         if(field == pos){
@@ -323,7 +326,8 @@ async function showPathTo(pos){
         }
         await Sleep(100);
     }
-    path = way;
+    await Sleep(100);
+    hideShowSearch();
 
 }
 

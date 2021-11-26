@@ -6,7 +6,7 @@ body{
     background-color: rgba(240,240,240,1);
 }
 
-table, th, td { border: thin solid; text-align: center;}
+table, th, td {  text-align: center;}
 table { background-color: gray; border-spacing: 0px;}
-#grid { border-collapse: separate; margin-top: 0em; }
+#grid {  margin-top: 0em; }
 caption { text-align: left; }
