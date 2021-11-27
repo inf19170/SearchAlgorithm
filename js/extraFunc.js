@@ -35,7 +35,7 @@ function displayTime(){
 
 }
 
-
+// Zeigt die Auswahl, ob Start oder Ziel definiert werden soll.
 function displayOption(id, showOption){
     let element = document.getElementById(id);
     if(showOption){
@@ -88,9 +88,9 @@ function showMoreDetails(){
 
     // Zeitkosten darstellen
     document.getElementById("runnedCosts").innerHTML = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost")), 3);
-    if(document.getElementById(getEnd()).getAttribute("hasBoat")){
-        document.getElementById("usedBoat").innerHTML = false.toString();
+    if(document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(getEnd()).getAttribute("type") != "0"){
+        document.getElementById("usedBoat").innerHTML = "nein";
     }else{
-        document.getElementById("usedBoat").innerHTML = true.toString();
+        document.getElementById("usedBoat").innerHTML = "ja";
     }
 }

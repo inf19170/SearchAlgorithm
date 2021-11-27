@@ -17,7 +17,6 @@ let parents = new Map();
 
 function getStart(){
     if(start == null){
-        //console.error("Startfeld wurde nicht definiert!");
         return null;
     }
     return start;
@@ -29,7 +28,6 @@ function setStart(obj){
 
 function getEnd(){
     if(end == null){
-        //console.error("Zielfeld wurde nicht definiert!");
         return null;
     }
     return end;
@@ -39,12 +37,6 @@ function setEnd(obj){
 }
 
 
-
-function startGame(){
-                    // 17:28
-    init_grid("4:4", "10:15");
-
-}
 
 window.onload = function(){
     displayGrid();
@@ -59,12 +51,10 @@ function init_grid(start, end){
     setStart(start);
     setEnd(end);
     document.getElementById(getStart()).style.backgroundColor = "yellow";
-    //document.getElementById(getStart()).style.fontSize = "13px";
     document.getElementById(getStart()).innerHTML = "S";
     setPathCosts(getStart(), 0);
 
     document.getElementById(getEnd()).style.backgroundColor = "yellow";
-    //document.getElementById(getEnd()).style.fontSize = "13px";
     document.getElementById(getEnd()).innerHTML = "E";
 
     openList.push(getStart());
@@ -86,6 +76,7 @@ async function startAll(){
             //console.log("Abfrage Zeile 79: "+tmpPath);
             //console.log(tmpHasBoat.includes("true"));
             //console.log(typeof tmpHasBoat);
+            // Wennn Berg und kein Boot hat                         Wenn Wasser und hat noch Boot                   alle anderen Fälle
             if((tmpType == 3 && tmpHasBoat.includes("false")) || (tmpType == 0 && tmpHasBoat.includes("true")) || (tmpType != 3 && tmpType != 0)){
                 if(shortestPath == undefined){
                     shortestPath = tmpPath;
@@ -100,13 +91,29 @@ async function startAll(){
                         shortestPathArray.push(tmpPath);
                     }
                 }
+
+            }else if(tmpType == 3){
+                // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden!
+                if(shortestPath == undefined){
+                    shortestPath = tmpPath;
+                }
+                let tmpPathCost = parseFloat(document.getElementById(tmpPath).getAttribute("cost"))*0.9+parseFloat(document.getElementById(tmpPath).getAttribute("pathCost"))+heuristFunction(tmpPath);
+                let shortestPathCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost"))+parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"))+heuristFunction(shortestPath);
+                if(tmpPathCost < shortestPathCost){
+                    shortestPath = tmpPath;
+                    shortestPathArray.push(tmpPath);
+                    document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
+                }else if(tmpPathCost <= shortestPathCost){
+                    shortestPathArray.push(tmpPath);
+                    document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
+                }
             }
 
 
 
         }
 
-        // Falls es mehrere Felder gibt, die eine gleich kurze Strecke hat, dann nehme man das Element, dass die kürzeste Diagonale zum Ziel hat!
+        // Falls es mehrere Felder gibt, die eine gleich Entfernung vom Start zur jetzigen Stelle hat, dann nehme man das Element, dass die kürzeste Diagonale zum Ziel hat!
         if(shortestPathArray.length > 1){
             //console.info("Es gibt mehre Felder mit derselben Entfernung!");
             let shortDiagonale = undefined;
@@ -121,7 +128,20 @@ async function startAll(){
         // Es konnte kein passendes Feld gefunden werden!
         if(shortestPath === undefined){
             console.error("Es konnte kein 'shortestPath' gefunden werden!");
-            alert("Es konnte kein Weg gefunden werden!");
+            let alreadyChanged = true;
+            for(let i = 0; i< openList.length; i++){
+                let id = openList[i];
+               if(document.getElementById(id).getAttribute("hasBoat") === "true"){
+                   alreadyChanged = false;
+               }
+                document.getElementById(id).setAttribute("hasBoat", false.toString());
+            }
+
+
+            if(alreadyChanged){
+                alert("Es konnte mit den Regel kein Weg gefunden werden!");break;
+            }
+            return;
         }else{
             // Entferne die Zelle mit dem kürzesten Weg aus der OpenList
             openList = removeArrayElement(openList, shortestPath);
@@ -151,8 +171,9 @@ async function startAll(){
                 let pos = fieldsAround[i];
                 if(document.getElementById(pos).getAttribute("pathCost") == null || parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost){
                     let type = document.getElementById(pos).getAttribute("type");
-                    //console.log(type);
                     setPathCosts(pos, fieldCost);
+
+                    // Setze, dass das Boot abgelegt wurde
                     if(type != 0 &&  document.getElementById(shortestPath).getAttribute("type") == 0 || document.getElementById(shortestPath).getAttribute("hasBoat") == "false"){ setHasBoat(pos, false)}
                     openList.push(pos);
                     parents.set(pos,shortestPath);
