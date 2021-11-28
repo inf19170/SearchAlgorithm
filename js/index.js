@@ -201,9 +201,6 @@ async function startAll(){
             }
         }
 
-
-
-
     }
     if(!finished() && openList.length ==0){
         noSolutionFound();
@@ -347,6 +344,7 @@ async function showPathTo(pos){
         way.push(current);
         current = parents.get(current);
     }
+     document.getElementById("successTxt").setAttribute("style", "visibility:visible");
     path = way;
     for(let i = way.length-1; i>=0; i--){
         let field = way[i];
@@ -359,6 +357,7 @@ async function showPathTo(pos){
     }
     await Sleep(100);
     hideShowSearch();
+    document.getElementById("showSolution").disabled = false;
 
 }
 
@@ -367,6 +366,7 @@ async function setStartOrEnd(id){
     if(getStart() == null){
         setStart(id);
         document.getElementById(getStart()).style.backgroundColor = "yellow";
+          document.getElementById("resetbtn").disabled = false;
     }else if(getEnd() == null){
         setEnd(id);
         document.getElementById(getStart()).style.backgroundColor = "yellow";

@@ -1,12 +1,92 @@
-body{
-    width: 960px;
-    margin: auto;
-    color: black;
-    font-family: arial;
-    background-color: rgba(240,240,240,1);
+#content {
+
+    margin-top: 3%;
+    margin-bottom: 10%;
+
 }
 
-table, th, td {  text-align: center;}
-table { background-color: gray; border-spacing: 0px;}
-#grid {  margin-top: 0em; }
+
+
+#auswertungTitel {
+    text-align: center;
+}
+
+#auswertung {
+
+    border: solid;
+    border-radius: 8px;
+    border-color: white
+}
+
+body{
+    color: rgb(255, 255, 255);
+    font-family: arial;
+   
+}
+
+table, th, td { text-align: end; }
+
+table { 
+  
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+        background-color: gray; 
+        border-spacing: 0px;
+ 
+    }
+
+
+#grid { font-size: 20px; }
+
+#middleCol {
+    margin-left: 10px; 
+    margin-right: 25px;
+}
+
+#rightCol {
+    margin-left: 25px; 
+  
+}
+
+.listFields {
+    position: relative;
+    left: 10%;
+ 
+}
+
+.beginText{
+    text-align: left;
+}
+
+.centerText{
+    text-align: center;
+}
+
+.endText{
+    text-align: right;
+}
+
 caption { text-align: left; }
+
+#titel {
+    text-align: center;
+}
+
+.danger {
+    color: rgb(255, 91, 91);
+  }
+  
+  .danger:hover {
+    background: #f44336;
+    border-radius: 8px;
+    color: white;
+  }
+
+#successTxt {
+ visibility: visible;
+}
+
+#showSolution {
+
+    cursor: pointer;
+}
