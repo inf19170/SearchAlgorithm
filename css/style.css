@@ -84,6 +84,6 @@ caption { text-align: left; }
 
 #successTxt {
 
-    display: none;
+ visibility: visible;
 
 }
