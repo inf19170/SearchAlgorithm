@@ -5,14 +5,15 @@
 
 }
 
-
 #auswertungTitel {
     text-align: center;
 }
 
 #auswertung {
+
+    border: solid;
     border-radius: 8px;
-    border: solid white;
+    border-color: white
 }
 
 body{
@@ -27,13 +28,22 @@ table {
   
     color: rgb(0, 0, 0);
     cursor: pointer;
-    background-color: gray;
-    border-spacing: 0px;
+        background-color: gray; 
+        border-spacing: 0px;
+        border-collapse: separate;
+        table-layout: fixed ;
+        padding-right: 250px;
+        width: 100%;
+        position: relative; 
+        right: 75px;
+        
+        
+  
  
-}
+    }
 
 
-#grid { font-size: 20px; }
+#grid { font-size: 20px;   }
 
 #middleCol {
     margin-left: 10px; 
@@ -88,5 +98,7 @@ caption { text-align: left; }
 }
 
 #showSolution {
+
     cursor: pointer;
 }
+
