@@ -89,8 +89,10 @@ function showMoreDetails(){
     // Zeitkosten darstellen
     document.getElementById("runnedCosts").innerHTML = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost")), 3);
     if(document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(getEnd()).getAttribute("type") != "0"){
-        document.getElementById("usedBoat").innerHTML = "nein";
+        document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
+        document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
     }else{
-        document.getElementById("usedBoat").innerHTML = "ja";
+        document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check"></i>';
+        document.getElementById("usedBoat").setAttribute("style", "color: lightgreen");
     }
 }
