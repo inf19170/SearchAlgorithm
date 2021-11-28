@@ -42,6 +42,10 @@ function setEnd(obj){
 
 window.onload = function(){
     displayGrid();
+    let time = localStorage.getItem("searchTime");
+    if(time != null){
+        document.getElementById("time").setAttribute("value", time);
+    }
 }
 
 

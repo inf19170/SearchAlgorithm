@@ -30,7 +30,7 @@ Nach Beendigung des Durchlaufens, grüne Felder deaktivieren
 function displayTime(){
 
     document.querySelector("#time").addEventListener ("input", function () {
-        document.getElementById("outputTime").innerHTML = (1000-parseFloat(this.value)).toString();
+        localStorage.setItem("searchTime", this.value);
     });
 
 }
@@ -76,10 +76,18 @@ function showMoreDetails(){
         "way":0,
         "flat":0,
     };
+    let costs = 0;
     while(current != getStart()){
         let tmpType = document.getElementById(current).getAttribute("type");
         let tmpThrowBoat = document.getElementById(current).getAttribute("throwBoat");
-        if(tmpThrowBoat == "true") throwBoat = true;
+        if(tmpThrowBoat == "true"){
+            throwBoat = true;
+            console.log("Bot geschmissen an:");
+            console.log(current);
+            console.log("Wegkosten bis dato:")
+            costs = document.getElementById(current).getAttribute("pathCost");
+
+        }
         amount["all"] = amount["all"] + 1;
         amount[type[tmpType]] = amount[type[tmpType]] + 1;
         current = parents.get(current);
@@ -91,9 +99,16 @@ function showMoreDetails(){
     document.getElementById("runnedFieldsMountain").innerHTML = amount["mountain"].toString();
     document.getElementById("runnedFieldsWay").innerHTML = amount["way"].toString();
     //console.log(amount);
-
+    console.log(costs);
     // Zeitkosten darstellen
-    document.getElementById("runnedCosts").innerHTML = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost")), 3);
+    let roundFactor = 3;
+    let runnedCosts = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost")), roundFactor);
+    document.getElementById("runnedCosts").innerHTML = runnedCosts;
+    let lowerRunnedCosts = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost"))-costs +costs*(1-reduze), roundFactor);
+    document.getElementById("lowerRunnedCosts").innerHTML = lowerRunnedCosts;
+    let diff = runnedCosts -lowerRunnedCosts;
+    document.getElementById("diffRunnedCosts").innerHTML = roundFloat(diff, roundFactor);
+
 
     if(throwBoat == true || document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(getEnd()).getAttribute("type") != "0"){
         document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
