@@ -1,61 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="de">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>A* Algorithmus</title>
+    <title>A*-Algorithmus</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
     <script src="js/extraFunc.js"></script>
     <script src="js/methods.js"></script>
     <script src="js/class_and_const.js"></script>
     <script src="js/loadFile.js"></script>
     <script src="js/index.js"></script>
-</head>
-<body>
-<h1>A* algorithmus - Bester Weg vom Start zum Ziel</h1>
 
-<br>
-<br>
-<img src="files/gelaende_002.png" width="960px">
-<br>
-<!--<button onclick="startGame();">Init grid</button>
+</head>
+
+<body class="bg-dark text-white">
+    <h1 class="display-4" id="titel">A*-Algorithmus - Bester Weg vom Start zum Ziel</h1>
+
+
+
+    <!--<button onclick="startGame();">Init grid</button>
 <button onclick="startAll();">startAll</button>-->
 
-<br>
-<h3>Einstellungen</h3>
-<button onclick="javascript:location.reload()">Zurücksetzen</button>
-<br><br>
-Verzögerungszeit bei Suche nach besten Weg: <br><br>
-<span style="border-style: solid"><span id="outputTime">0</span>ms</span><br>
 
-langsam<input type="range" max="1000" min="500" step="50" value="1000" id="time" name="time" onmouseover="displayTime()">schnell
-<br><br>
-<button onclick="hideShowSearch();" hidden="hidden" id="showSolution">Zeige/Verstecke Suchbereich</button>
-<br><br>
-<table id="grid">
-</table>
+    <div id="content" class="container">
+        <div class="row">
+
+            <div class="col-7" id="gridCol">
+
+                <table id="grid">
+                </table>
+
+            </div>
+
+            <div id="middleCol" class="col">
+
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <p class="h4 centerText"><u><i class="fas fa-cog"></i> Einstellungen</u></p>
+                <br><br>
+
+                <p class="h5 centerText">Suchgeschwindigkeit: </p>
+
+                <input type="range" class="form-range" max="1000" min="500" step="100" value="1000" id="time"
+                    name="time" onmouseover="displayTime()">
+                <div class="row">
+                    <div class="col beginText"><i>Langsam</i></div>
+                    <div class="col endText"><i>Schnell</i></div>
+                </div>
+                <br><br>
+                <button onclick="hideShowSearch();" id="showSolution" class="btn btn-success" disabled>Anzeige des
+                    Suchbereichs</button>
+                <br><br>
+                <button style="position: relative; left: 20% " id="resetbtn" onclick="javascript:location.reload()"
+                    class="btn btn-sm btn-outline-danger" disabled><i class="fas fa-redo-alt"></i> Zurücksetzen</button>
 
 
-<br>
-<br>
-<div id="auswertung">
-    <h3>Auswertung</h3>
-    <p>Boot genutzt: <span id="usedBoat">-</span></p>
-    <p>Zeitkosten: <span id="runnedCosts">-</span> ZE</p>
-    <p>Durchlaufene Felder: <span id="runnedFields">-</span> FE</p>
-    <ul>
-        <li>Wald: <span id="runnedFieldsForest">-</span> FE</li>
-        <br>
-        <li>Fluss: <span id="runnedFieldsRiver">-</span> FE</li>
-        <br>
-        <li>Berg: <span id="runnedFieldsMountain">-</span> FE</li>
-        <br>
-        <li>Weg: <span id="runnedFieldsWay">-</span> FE</li>
-        <br>
-        <li>Ebene: <span id="runnedFieldsFlat">-</span> FE</li>
-    </ul>
-</div>
-<br>
-<br>
-<br>
+
+            </div>
+
+            <div class="col" id="auswertung">
+                <br>
+                <p id="auswertungTitel" class="h4 centerText"><u>Auswertung</u></p>
+                <br>
+                <div class="listFields" id="rightCol">
+                    <p><i>Boot genutzt: </i><span id="usedBoat">-</span></p>
+                    <p><i>Zeitkosten: </i><span id="runnedCosts">-</span> ZE</p>
+                    <br>
+                    <p><u>Durchlaufene Felder:</u></p>
+
+                    Insgesamt: <span id="runnedFields">-</span> FE</li>
+                    <ul>
+                        <br>
+                        <li>Wald: <span id="runnedFieldsForest">-</span> FE</li>
+
+                        <li>Fluss: <span id="runnedFieldsRiver">-</span> FE</li>
+
+                        <li>Berg: <span id="runnedFieldsMountain">-</span> FE</li>
+
+                        <li>Weg: <span id="runnedFieldsWay">-</span> FE</li>
+
+                        <li>Ebene: <span id="runnedFieldsFlat">-</span> FE</li>
+                    </ul>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div id="insertSuccess">
+
+                    <div class="centerText alert alert-success" role="alert" id="successTxt">Suche erfolgreich! <i
+                            class="fas fa-check"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
