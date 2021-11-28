@@ -11,10 +11,8 @@
 }
 
 #auswertung {
-
-    border: solid;
     border-radius: 8px;
-    border-color: white
+    border: solid white;
 }
 
 body{
@@ -29,10 +27,10 @@ table {
   
     color: rgb(0, 0, 0);
     cursor: pointer;
-        background-color: gray; 
-        border-spacing: 0px;
+    background-color: gray;
+    border-spacing: 0px;
  
-    }
+}
 
 
 #grid { font-size: 20px; }
@@ -90,6 +88,5 @@ caption { text-align: left; }
 }
 
 #showSolution {
-
     cursor: pointer;
 }
