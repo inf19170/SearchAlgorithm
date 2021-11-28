@@ -41,6 +41,9 @@ function setEnd(obj){
 window.onload = function(){
     displayGrid();
 }
+function noSolutionFound(){
+    alert("Es konnte mit den Regel kein Weg gefunden werden!");
+}
 
 function displayGrid(){
     document.getElementById("grid").innerHTML = createGrid(getData());
@@ -144,7 +147,7 @@ async function startAll(){
 
 
             if(alreadyChanged){
-                alert("Es konnte mit den Regel kein Weg gefunden werden!");break;
+                noSolutionFound(); break;
             }
             return;
         }else{
@@ -192,7 +195,6 @@ async function startAll(){
             await Sleep(getSleepTime());
             if(finished()){
                 openList = [];
-                //alert("Ziel erreicht!");
                 document.getElementById("showSolution").removeAttribute("hidden");
                 await Sleep(250);
                 showSolution();
@@ -203,8 +205,12 @@ async function startAll(){
 
 
     }
+    if(!finished() && openList.length ==0){
+        noSolutionFound();
+    }
 
 }
+
 function getSleepTime(){
     return 1000-document.querySelector("#time").value;
 }
