@@ -41,8 +41,10 @@ function setEnd(obj){
 window.onload = function(){
     displayGrid();
 }
+
+
 function noSolutionFound(){
-    alert("Es konnte mit den Regel kein Weg gefunden werden!");
+    document.getElementById("failTxt").setAttribute("style", "display: block");
 }
 
 function displayGrid(){
@@ -344,7 +346,7 @@ async function showPathTo(pos){
         way.push(current);
         current = parents.get(current);
     }
-     document.getElementById("successTxt").setAttribute("style", "visibility:visible");
+     document.getElementById("successTxt").setAttribute("style", "display: block");
     path = way;
     for(let i = way.length-1; i>=0; i--){
         let field = way[i];
