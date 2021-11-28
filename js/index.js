@@ -365,7 +365,6 @@ async function showPathTo(pos){
         if(field == pos){
             document.getElementById(field).style.backgroundColor = "darkred";
             document.getElementById(field).style.color = "white";
-            document.getElementById(field).style.fontWeight = "bold";
         }else{
             document.getElementById(field).style.backgroundColor = "red";
         }

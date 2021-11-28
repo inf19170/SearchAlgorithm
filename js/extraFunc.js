@@ -43,10 +43,12 @@ function displayOption(id, showOption){
             element.style.backgroundColor = color["startBegin"];
             element.innerHTML = "S";
             element.style.textAlign = "center";
+            element.style.fontWeight = "bold";
         }else if(getEnd() == null){
             element.style.backgroundColor = color["endBegin"];
             element.innerHTML = "E";
             element.style.textAlign = "center";
+            element.style.fontWeight = "bold";
         }
 
     }else{
@@ -55,6 +57,7 @@ function displayOption(id, showOption){
             element.innerHTML = type;
             element.style.backgroundColor = color[type];
             element.style.textAlign = "";
+            element.style.fontWeight = "";
         }
    }
 
