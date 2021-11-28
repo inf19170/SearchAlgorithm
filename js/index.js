@@ -200,7 +200,7 @@ async function startAll(){
         }
 
 
-
+   document.getElementById("successTxt").setAttribute("style", "display:block");
 
     }
 
