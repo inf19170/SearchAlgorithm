@@ -47,6 +47,14 @@ function noSolutionFound(){
     document.getElementById("failTxt").setAttribute("style", "display: block");
 }
 
+function solutionFound(){
+    document.getElementById("successTxt").setAttribute("style", "display: block");
+}
+
+
+
+
+
 function displayGrid(){
     document.getElementById("grid").innerHTML = createGrid(getData());
 }
@@ -346,7 +354,8 @@ async function showPathTo(pos){
         way.push(current);
         current = parents.get(current);
     }
-     document.getElementById("successTxt").setAttribute("style", "display: block");
+     
+    solutionFound();
     path = way;
     for(let i = way.length-1; i>=0; i--){
         let field = way[i];
@@ -360,6 +369,7 @@ async function showPathTo(pos){
     await Sleep(100);
     hideShowSearch();
     document.getElementById("showSolution").disabled = false;
+   
 
 }
 
