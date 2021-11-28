@@ -353,6 +353,7 @@ async function showPathTo(pos){
     }
     await Sleep(100);
     hideShowSearch();
+    document.getElementById("showSolution").disabled = false;
 
 }
 
@@ -361,6 +362,7 @@ async function setStartOrEnd(id){
     if(getStart() == null){
         setStart(id);
         document.getElementById(getStart()).style.backgroundColor = "yellow";
+          document.getElementById("resetbtn").disabled = false;
     }else if(getEnd() == null){
         setEnd(id);
         document.getElementById(getStart()).style.backgroundColor = "yellow";
