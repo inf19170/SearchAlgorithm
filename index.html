@@ -19,7 +19,7 @@
 
 </head>
 
-<body class="bg-dark text-white">
+<body class="bg-dark bg-gradient text-white">
     <br>
     <h1 class="display-4" id="titel">A*-Algorithmus - Bester Weg vom Start zum Ziel</h1>
 
@@ -27,6 +27,9 @@
 
     <!--<button onclick="startGame();">Init grid</button>
 <button onclick="startAll();">startAll</button>-->
+
+
+
 
 
     <div id="content" class="container">
@@ -46,10 +49,12 @@
                 <br>
                 <br>
                 <br>
+                <br>
                 <p class="h4 centerText"><i class="fas fa-cog"></i> <u>Einstellungen</u></p>
                 <br><br>
 
-                <p class="h5 centerText">Suchgeschwindigkeit: </p>
+                <p class="h5 centerText">Suchgeschwindigkeit:</p>
+
 
                 <input type="range" class="form-range" max="1000" min="500" step="100" value="1000" id="time"
                     name="time" onmouseover="displayTime()">
@@ -58,9 +63,23 @@
                     <div class="col endText"><i>Schnell</i></div>
                 </div>
                 <br><br>
-                <button onclick="hideShowSearch();" id="showSolution" class="btn btn-success" disabled>Anzeige des
-                    Suchbereichs</button>
-                <br><br>
+
+
+
+                <div class="form-check form-switch">
+                    <input onchange="hideShowSearch()" class="form-check-input" type="checkbox" id="showSolution"
+                        disabled>
+                    <label class="form-check-label" for="flexSwitchCheckDisabled">Suchbereich-Anzeige</label>
+                </div>
+
+
+
+                <!-- <button onclick="hideShowSearch();" id="showSolution" class="btn btn-success" disabled>Anzeige des
+                    Suchbereichs</button> -->
+
+
+
+                <br>
                 <button style="position: relative; left: 20% " id="resetbtn" onclick="javascript:location.reload()"
                     class="btn btn-sm btn-outline-danger" disabled><i class="fas fa-redo-alt"></i> Zurücksetzen</button>
 
@@ -95,18 +114,22 @@
                 <br>
                 <br>
                 <br>
-                <br>
-                <br>
-                <br>
+              
                 <div id="insertSuccess">
 
-                    <div class="centerText alert alert-success bg-success p-2 text-white bg-opacity-75" role="alert" id="successTxt">Suche erfolgreich! <i
-                            class="fas fa-check"></i>
+                    <div class="centerText bg-success p-2 text-white" role="alert"
+                        id="successTxt">Suche erfolgreich! <i class="fas fa-check"></i>
+                    </div>
+
+                    <div class="centerText bg-danger p-2 text-white bg-opacity-75" role="alert"
+                        id="failTxt">Suche nicht erfolgreich! <i class="fas fa-exclamation-triangle"></i>
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
+
 </body>
+
 </html>
