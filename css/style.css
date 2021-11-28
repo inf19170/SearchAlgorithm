@@ -31,7 +31,6 @@ table {
         background-color: gray; 
         border-spacing: 0px;
         border-collapse: separate;
-        table-layout: fixed ;
         padding-right: 250px;
         width: 100%;
         position: relative; 
