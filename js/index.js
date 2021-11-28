@@ -23,6 +23,7 @@ function getStart(){
 }
 function setStart(obj){
     start = obj;
+    document.getElementById(getStart()).style.textAlign = "center";
 }
 
 
@@ -34,6 +35,7 @@ function getEnd(){
 }
 function setEnd(obj){
     end = obj;
+    document.getElementById(getEnd()).style.textAlign = "center";
 }
 
 
@@ -348,6 +350,7 @@ function hideShowSearch(){
 let path = [];
 // Returns Anzahl an durchlaufenden Felder
 async function showPathTo(pos){
+    document.getElementById(getStart()).style.fontWeight = "bold";
     let current = pos;
     let way = new Array();
     while(current != getStart()){
@@ -361,7 +364,9 @@ async function showPathTo(pos){
         let field = way[i];
         if(field == pos){
             document.getElementById(field).style.backgroundColor = "darkred";
-          }else{
+            document.getElementById(field).style.color = "white";
+            document.getElementById(field).style.fontWeight = "bold";
+        }else{
             document.getElementById(field).style.backgroundColor = "red";
         }
         await Sleep(100);

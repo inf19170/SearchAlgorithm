@@ -1,5 +1,3 @@
-/* Quellcode wurde aus https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626 kopiert und für die Aufgabe angepasst */
-
 // Funktionen um ein Random generiertes Gride zu verwenden
 
 function newGride(height, length){
@@ -29,7 +27,7 @@ function randomField(){
 
 
 function getData(){
-   // return newGride(100,100);
+    //return newGride(40,40);
     let data =
         "1;1;1;1;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;1;1;4;4;1;1;1;1;3;3;3;3;0;0;4;1;1;1;1;1\n" +
         "1;1;1;4;4;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;4;4;4;4;1;1;1;3;3;0;0;0;4;4;1;1;1;1;1\n" +
@@ -75,6 +73,7 @@ function getData(){
     return data;
 }
 
+/* Quellcode wurde aus https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626 kopiert und für die Aufgabe angepasst */
 // Create HTML Code for grid
 function createGrid(data) {
     let allRows = data.split(/\r?\n|\r/);
@@ -90,13 +89,10 @@ function createGrid(data) {
                 table += field.createHTML(i,singleRow);
             }
             maxWidth = row.length;
-
         }
         table += '</tr>';
         maxHeight = allRows.length;
     }
-
-
     table += '</table>';
     return table;
 }

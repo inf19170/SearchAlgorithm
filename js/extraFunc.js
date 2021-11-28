@@ -42,16 +42,19 @@ function displayOption(id, showOption){
         if(getStart() == null){
             element.style.backgroundColor = color["startBegin"];
             element.innerHTML = "S";
+            element.style.textAlign = "center";
         }else if(getEnd() == null){
             element.style.backgroundColor = color["endBegin"];
             element.innerHTML = "E";
+            element.style.textAlign = "center";
         }
 
     }else{
         if(id != getStart() && id != getEnd() && !closedList.includes(id)){
-            let type = element.getAttribute("type")
+            let type = element.getAttribute("type");
             element.innerHTML = type;
             element.style.backgroundColor = color[type];
+            element.style.textAlign = "";
         }
    }
 
