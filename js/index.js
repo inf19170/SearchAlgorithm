@@ -62,8 +62,7 @@ function init_grid(start, end){
 }
 
 async function startAll(){
-    let counter = 0;
-    while(openList.length > 0 && counter <1700){
+    while(openList.length > 0){
 
 
         // Ermittle die Zelle aus der OpenList mit dem kürzesten Weg
@@ -73,6 +72,12 @@ async function startAll(){
             let tmpPath = openList[i];
             let tmpType = parseInt(document.getElementById(tmpPath).getAttribute("type"));
             let tmpHasBoat = document.getElementById(tmpPath).getAttribute("hasBoat");
+
+            if((tmpType == 0 && tmpHasBoat.includes("false"))){
+                openList = removeArrayElement(openList, tmpPath);
+                continue; // Für Schleife mit nächsten Element aus!
+            }
+
             //console.log("Abfrage Zeile 79: "+tmpPath);
             //console.log(tmpHasBoat.includes("true"));
             //console.log(typeof tmpHasBoat);
@@ -184,7 +189,6 @@ async function startAll(){
             //console.log("Openlist: ");
             //console.log(openList);
 
-            counter++;
             await Sleep(getSleepTime());
             if(finished()){
                 openList = [];
