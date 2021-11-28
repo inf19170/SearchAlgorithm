@@ -48,6 +48,6 @@ class Field {
 
     createHTML(x,y){
         const id = x+":"+y;
-        return "<td style='background-color:"+this.color+"; width: 20px; height: 10px; font-size: 8px;' cost='"+this.costs+"' id='"+id+"' type='"+this.type+"' hasBoat='"+this.hasBoat+"'  onclick='setStartOrEnd(\""+id+"\");' onmouseover='displayOption(\""+id+"\", true);' onmouseleave='displayOption(\""+id+"\", false);'>"+this.type+"</td>"
+        return "<td style='background-color:"+this.color+"; width: 20px; height: 10px; font-size: 8px;' cost='"+this.costs+"' id='"+id+"' type='"+this.type+"' hasBoat='"+this.hasBoat+"'  onclick='setStartOrEnd(\""+id+"\");' onmouseover='displayOption(\""+id+"\", true);' onmouseleave='displayOption(\""+id+"\", false);' throwBoat='false'>"+this.type+"</td>"
     }
 }

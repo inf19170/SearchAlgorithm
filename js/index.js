@@ -123,9 +123,11 @@ async function startAll(){
                     shortestPath = tmpPath;
                     shortestPathArray.push(tmpPath);
                     document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
+                    document.getElementById(tmpPath).setAttribute("throwBoat", true.toString());
                 }else if(tmpPathCost <= shortestPathCost){
                     shortestPathArray.push(tmpPath);
                     document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
+                    document.getElementById(tmpPath).setAttribute("throwBoat", true.toString());
                 }
             }
 
@@ -153,8 +155,9 @@ async function startAll(){
                 let id = openList[i];
                if(document.getElementById(id).getAttribute("hasBoat") === "true"){
                    alreadyChanged = false;
+                   document.getElementById(id).setAttribute("hasBoat", false.toString());
+                   document.getElementById(id).setAttribute("throwBoat", true.toString());
                }
-                document.getElementById(id).setAttribute("hasBoat", false.toString());
             }
 
 
@@ -368,7 +371,9 @@ async function showPathTo(pos){
         }else{
             document.getElementById(field).style.backgroundColor = "red";
         }
-        await Sleep(100);
+        let sleep = 25;
+        if(i<=5){sleep = 100;}
+        await Sleep(sleep);
     }
     await Sleep(100);
     hideShowSearch();
