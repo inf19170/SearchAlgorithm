@@ -24,13 +24,12 @@ function newLine(length){
 
 function randomField(){
     let highestValue = 4; // Gibt die höchste Zahl der Felder an 4 --> Wald
-    let random = Math.round(Math.random()*highestValue);
-    return random;
+    return Math.round(Math.random()*highestValue);
 }
 
 
 function getData(){
-    return newGride(100,100);
+   // return newGride(100,100);
     let data =
         "1;1;1;1;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;1;1;4;4;1;1;1;1;3;3;3;3;0;0;4;1;1;1;1;1\n" +
         "1;1;1;4;4;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;4;4;4;4;1;1;1;3;3;0;0;0;4;4;1;1;1;1;1\n" +
@@ -88,7 +87,6 @@ function createGrid(data) {
             for (let i = 0; i < row.length; i++) {
                 let type = row[i];
                 let field = new Field(type);
-                let ID = i+":"+singleRow;
                 table += field.createHTML(i,singleRow);
             }
             maxWidth = row.length;
