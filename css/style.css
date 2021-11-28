@@ -83,7 +83,10 @@ caption { text-align: left; }
   }
 
 #successTxt {
-
  visibility: visible;
+}
 
+#showSolution {
+
+    cursor: pointer;
 }
