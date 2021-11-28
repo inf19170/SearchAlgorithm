@@ -1,11 +1,36 @@
 /* Quellcode wurde aus https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626 kopiert und für die Aufgabe angepasst */
 
+// Funktionen um ein Random generiertes Gride zu verwenden
+
+function newGride(height, length){
+    let string = "";
+    for(let i = 0; i <height;i++){
+        string +=newLine(length);
+        if(i <height-1) string += "\n";
+    }
+    return string;
+}
+
+function newLine(length){
+    let string = "";
+    for(let i = 0; i <length;i++){
+        string +=randomField().toString();
+        if(i <length-1) string += ";";
+    }
+
+    return string;
+}
 
 
-
+function randomField(){
+    let highestValue = 4; // Gibt die höchste Zahl der Felder an 4 --> Wald
+    let random = Math.round(Math.random()*highestValue);
+    return random;
+}
 
 
 function getData(){
+    return newGride(100,100);
     let data =
         "1;1;1;1;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;1;1;4;4;1;1;1;1;3;3;3;3;0;0;4;1;1;1;1;1\n" +
         "1;1;1;4;4;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;4;4;4;4;1;1;1;3;3;0;0;0;4;4;1;1;1;1;1\n" +
