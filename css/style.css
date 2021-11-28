@@ -6,7 +6,6 @@
 }
 
 
-
 #auswertungTitel {
     text-align: center;
 }
@@ -83,7 +82,11 @@ caption { text-align: left; }
   }
 
 #successTxt {
- visibility: visible;
+    display: none;
+}
+
+#failTxt {
+    display: none;
 }
 
 #showSolution {
