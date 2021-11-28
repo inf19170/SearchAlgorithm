@@ -38,13 +38,6 @@ class Field {
         this.color = color[type];
         this.hasBoat = true;
     }
-    getCosts(){
-        return this.costs;
-    }
-
-    getColor(){
-        return this.color;
-    }
 
     createHTML(x,y){
         const id = x+":"+y;

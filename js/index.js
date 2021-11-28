@@ -117,7 +117,7 @@ async function startAll(){
                 if(shortestPath == undefined){
                     shortestPath = tmpPath;
                 }
-                let tmpPathCost = parseFloat(document.getElementById(tmpPath).getAttribute("cost"))*0.9+parseFloat(document.getElementById(tmpPath).getAttribute("pathCost"))+heuristFunction(tmpPath);
+                let tmpPathCost = parseFloat(document.getElementById(tmpPath).getAttribute("cost"))*(1-reduze)+parseFloat(document.getElementById(tmpPath).getAttribute("pathCost"))+heuristFunction(tmpPath);
                 let shortestPathCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost"))+parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"))+heuristFunction(shortestPath);
                 if(tmpPathCost < shortestPathCost){
                     shortestPath = tmpPath;
@@ -184,7 +184,7 @@ async function startAll(){
             let fieldCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost"));
 
             // Falls Boot abgelegt wurde, reduziert sich die Wegzeit
-            if(document.getElementById(shortestPath).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost*0.9;
+            if(document.getElementById(shortestPath).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost*(1-reduze);
             if(parents.get(shortestPath) != null){
                 let parentPath = shortestPath;
                 fieldCost += parseFloat(document.getElementById(parentPath).getAttribute("pathCost"));

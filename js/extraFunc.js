@@ -80,8 +80,6 @@ function showMoreDetails(){
         let tmpType = document.getElementById(current).getAttribute("type");
         let tmpThrowBoat = document.getElementById(current).getAttribute("throwBoat");
         if(tmpThrowBoat == "true") throwBoat = true;
-        //console.log(tmpType);
-        //console.log(type[tmpType]);
         amount["all"] = amount["all"] + 1;
         amount[type[tmpType]] = amount[type[tmpType]] + 1;
         current = parents.get(current);
@@ -97,9 +95,6 @@ function showMoreDetails(){
     // Zeitkosten darstellen
     document.getElementById("runnedCosts").innerHTML = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost")), 3);
 
-    console.log("Boot geschmissen?");
-    console.log(throwBoat);
-    console.log(throwBoat == false);
     if(throwBoat == true || document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(getEnd()).getAttribute("type") != "0"){
         document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
         document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
