@@ -380,6 +380,7 @@ async function showPathTo(endPos){
         if(field == endPos){
             document.getElementById(field).style.backgroundColor = "darkred";
             document.getElementById(field).style.color = "white";
+            // Boot weggeworfen                                         // Boot nicht mehr vorhanden (nach Wasser) und das Feld ist nicht das Ende!
         }else if(posThrowBoat !== undefined && field == posThrowBoat || i <= way.length-2 && document.getElementById(way[i+1]).getAttribute("type") == 0 && document.getElementById(field).getAttribute("type") != 0 && document.getElementById(field).getAttribute("hasBoat") == "false"){
             document.getElementById(field).style.backgroundColor = "blue";
             document.getElementById(field).style.color = "white";
