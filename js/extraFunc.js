@@ -68,6 +68,10 @@ function showMoreDetails(){
         amount[type[tmpType]] = amount[type[tmpType]] + 1;
         current = parents.get(current);
     }
+    if(document.getElementById(getStart()).getAttribute("throwBoat") == "true"){
+        throwBoat = true;
+        costs = document.getElementById(getStart()).getAttribute("pathCost");
+    }
 
 
     // Feldkosten anzeigen lassen
