@@ -372,9 +372,9 @@ async function showPathTo(endPos){
         if(document.getElementById(current).getAttribute("throwBoat") == "true") posThrowBoat = current;
         current = parents.get(current);
     }
-     
     solutionFound();
     solutionPath = way;
+    way.push(getStart());
     for(let i = way.length-1; i>=0; i--){
         let field = way[i];
         if(field == endPos){
@@ -384,7 +384,7 @@ async function showPathTo(endPos){
         }else if(posThrowBoat !== undefined && field == posThrowBoat || i <= way.length-2 && document.getElementById(way[i+1]).getAttribute("type") == 0 && document.getElementById(field).getAttribute("type") != 0 && document.getElementById(field).getAttribute("hasBoat") == "false"){
             document.getElementById(field).style.backgroundColor = "blue";
             document.getElementById(field).style.color = "white";
-        }else{
+        }else if(field != getStart()){
             document.getElementById(field).style.backgroundColor = "red";
         }
         let sleep = 25;
