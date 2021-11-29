@@ -96,7 +96,12 @@ function showMoreDetails(){
     document.getElementById("lowerRunnedCosts").innerHTML = lowerRunnedCosts;
 
     let diff = runnedCosts -lowerRunnedCosts;
-    document.getElementById("diffRunnedCosts").innerHTML = ' -' + roundFloat(diff, roundFactor);
+    if(roundFloat(diff, roundFactor) > 0){
+        document.getElementById("diffRunnedCosts").innerHTML = ' -' + roundFloat(diff, roundFactor);
+    }
+    else {
+    document.getElementById("diffRunnedCosts").innerHTML = roundFloat(diff, roundFactor);
+    }
 
 
     // Wurde ein Fluss überquert
