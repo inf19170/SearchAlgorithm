@@ -68,6 +68,7 @@ function showMoreDetails(){
         amount[type[tmpType]] = amount[type[tmpType]] + 1;
         current = parents.get(current);
     }
+    // Überprüfe, ob Boot direkt am Start weggeworfen wurde
     if(document.getElementById(getStart()).getAttribute("throwBoat") == "true"){
         throwBoat = true;
         costs = document.getElementById(getStart()).getAttribute("pathCost");
