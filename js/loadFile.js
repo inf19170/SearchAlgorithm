@@ -1,5 +1,4 @@
 // Funktionen um ein Random generiertes Gride zu verwenden
-
 function newGride(height, length){
     let string = "";
     for(let i = 0; i <height;i++){
@@ -9,6 +8,7 @@ function newGride(height, length){
     return string;
 }
 
+// Neue Zeile für Gride
 function newLine(length){
     let string = "";
     for(let i = 0; i <length;i++){
@@ -19,13 +19,13 @@ function newLine(length){
     return string;
 }
 
-
+// Ein zufälliges Feld für Gride
 function randomField(){
-    let highestValue = 4; // Gibt die höchste Zahl der Felder an 4 --> Wald
+    let highestValue = 4; // Gibt die höchste Nummer der Felder an 4 --> Wald
     return Math.round(Math.random()*highestValue);
 }
 
-
+// Liest die Datei für das Gride aus
 function getData(){
     //return newGride(40,40);
     let data =
@@ -73,7 +73,7 @@ function getData(){
     return data;
 }
 
-/* Quellcode wurde aus https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626 kopiert und für die Aufgabe angepasst */
+/* Nachfolgendet Quellcode wurde aus https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626 kopiert und für die Aufgabe angepasst */
 // Create HTML Code for grid
 function createGrid(data) {
     let allRows = data.split(/\r?\n|\r/);

@@ -69,6 +69,8 @@ function showMoreDetails(){
         amount[type[tmpType]] = amount[type[tmpType]] + 1;
         current = parents.get(current);
     }
+
+
     // Feldkosten anzeigen lassen
     document.getElementById("runnedFields").innerHTML = amount["all"].toString();
     document.getElementById("runnedFieldsFlat").innerHTML = amount["flat"].toString();

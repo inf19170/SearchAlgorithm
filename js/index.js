@@ -1,20 +1,5 @@
 
 let start;
-let end;
-
-let maxWidth;
-let maxHeight;
-
-let hasBoat = true;
-
-
-
-
-let openList = [];
-let closedList = [];
-
-let parents = new Map();
-
 function getStart(){
     if(start == null){
         return null;
@@ -27,6 +12,7 @@ function setStart(obj){
 }
 
 
+let end;
 function getEnd(){
     if(end == null){
         return null;
@@ -39,7 +25,29 @@ function setEnd(obj){
 }
 
 
+let maxWidth;
+let maxHeight;
 
+
+
+let showSearch = false; // Bei false wird der Suchweg (grün) nicht angezeigt.
+
+
+
+let openList = [];
+let closedList = [];
+
+let solutionPath = [];
+let parents = new Map();
+
+
+
+
+
+
+
+
+// Beim Starten der Seite soll das Gride auf der Seite platziert werden und die Suchzeit auf vorigen Wert angepasst werden
 window.onload = function(){
     displayGrid();
     let time = localStorage.getItem("searchTime");
@@ -48,11 +56,11 @@ window.onload = function(){
     }
 }
 
-
+// Es wurde KEINE Lösung gefunden
 function noSolutionFound(){
     document.getElementById("failTxt").setAttribute("style", "display: block");
 }
-
+// Es wurde EINE Lösung gefunden
 function solutionFound(){
     document.getElementById("successTxt").setAttribute("style", "display: block");
 }
@@ -60,12 +68,12 @@ function solutionFound(){
 
 
 
-
+// Fügt Gride in Webseite hinzu
 function displayGrid(){
     document.getElementById("grid").innerHTML = createGrid(getData());
 }
 
-// Init grid
+// initiiere Start, Ende, openList und starte den Algorithmus
 function init_grid(start, end){
     setStart(start);
     setEnd(end);
@@ -77,14 +85,15 @@ function init_grid(start, end){
     document.getElementById(getEnd()).innerHTML = "E";
 
     openList.push(getStart());
-    startAll();
+    startAlgorithmus();
 }
 
-async function startAll(){
+// Startet den A* Algorithmus
+async function startAlgorithmus(){
     while(openList.length > 0){
 
 
-        // Ermittle die Zelle aus der OpenList mit dem kürzesten Weg
+        // Ermittle das mögliche Feld aus der OpenList mit dem kürzesten Weg
         let shortestPath = undefined;
         let shortestPathArray = [];
         for(let i = 0; i < openList.length; i++){
@@ -97,9 +106,6 @@ async function startAll(){
                 continue; // Für Schleife mit nächsten Element aus!
             }
 
-            //console.log("Abfrage Zeile 79: "+tmpPath);
-            //console.log(tmpHasBoat.includes("true"));
-            //console.log(typeof tmpHasBoat);
             // Wennn Berg und kein Boot hat                         Wenn Wasser und hat noch Boot                   alle anderen Fälle
             if((tmpType == 3 && tmpHasBoat.includes("false")) || (tmpType == 0 && tmpHasBoat.includes("true")) || (tmpType != 3 && tmpType != 0)){
                 if(shortestPath == undefined){
@@ -117,7 +123,8 @@ async function startAll(){
                 }
 
             }else if(tmpType == 3){
-                // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden!
+                
+                // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden, sofern dies kostengünstiger ist!
                 if(shortestPath == undefined){
                     shortestPath = tmpPath;
                 }
@@ -139,9 +146,8 @@ async function startAll(){
 
         }
 
-        // Falls es mehrere Felder gibt, die eine gleich Entfernung vom Start zur jetzigen Stelle hat, dann nehme man das Element, dass die kürzeste Diagonale zum Ziel hat!
+        // Falls es mehrere Felder gibt, die eine gleichen Wert für die Entfernung vom Start+Wegkosten+Heuristische zur jetzigen Stelle hat, dann nehme man das Element, dass die kürzeste Diagonale zum Ziel hat!
         if(shortestPathArray.length > 1){
-            //console.info("Es gibt mehre Felder mit derselben Entfernung!");
             let shortDiagonale = undefined;
             for(let i = 0; i< shortestPathArray.length; i++){
                 let pos = shortestPathArray[i];
@@ -151,7 +157,7 @@ async function startAll(){
             }
         }
 
-        // Es konnte kein passendes Feld gefunden werden!
+        // Es konnte kein Feld gefunden werden! Möglicher Versuch ist es, dass alle noch offenen Felder die auf einen Berg führen ohne Boot (Boot wird abgeworfen) genommen werden!
         if(shortestPath === undefined){
             console.error("Es konnte kein 'shortestPath' gefunden werden!");
             let alreadyChanged = true;
@@ -169,19 +175,21 @@ async function startAll(){
                 noSolutionFound(); break;
             }
             return;
-        }else{
-            // Entferne die Zelle mit dem kürzesten Weg aus der OpenList
+        }else{ // Wenn shortestPath definiert ist, werden alle nicht mehr notwendigen Felder aus der openList entfernt
+
+
+            // Entferne das Feld mit dem kürzesten Weg aus der OpenList, weil dieses erweitert wird
             openList = removeArrayElement(openList, shortestPath);
-            //console.log("Kürzester Weg: " +shortestPath);
 
             if(document.getElementById(shortestPath).innerHTML !== "S"){
                 document.getElementById(shortestPath).style.backgroundColor = color["searchField"];
             }
 
-            // Füge die Zelle mit dem kürzesten Weg in die ClosedList
+            // Füge das entfernte Feld (aus der openList) in die ClosedList
             closedList.push(shortestPath);
 
-            // Berechne die Schritte für die Zellen außenrum
+            /* Berechne die Schritte für die Zellen außenrum */
+
             let fieldsAround = getFieldsAround(shortestPath);
 
             // Feldkosten für das Feld davor
@@ -194,13 +202,14 @@ async function startAll(){
                 fieldCost += parseFloat(document.getElementById(parentPath).getAttribute("pathCost"));
             }
 
+            /* Setze für jedes Element, das um das ausgewählte Feld liegt, die Kosten */
             for(let i = 0; i < fieldsAround.length; i++){
                 let pos = fieldsAround[i];
                 if(document.getElementById(pos).getAttribute("pathCost") == null || parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost){
                     let type = document.getElementById(pos).getAttribute("type");
                     setPathCosts(pos, fieldCost);
 
-                    // Setze, dass das Boot abgelegt wurde
+                    // Setze, dass das Boot abgelegt wurde, wenn Wasser überquert wurde oder das Feld zuvor schon kein Boot mehr hatte
                     if(type != 0 &&  document.getElementById(shortestPath).getAttribute("type") == 0 || document.getElementById(shortestPath).getAttribute("hasBoat") == "false"){ setHasBoat(pos, false)}
                     openList.push(pos);
                     parents.set(pos,shortestPath);
@@ -208,10 +217,10 @@ async function startAll(){
 
             }
 
-            //console.log("Openlist: ");
-            //console.log(openList);
-
+            // Wartezeit zwischen den Suchschritten
             await Sleep(getSleepTime());
+
+            /* Überprüfe, ob Ziel erreicht wurde. Falls ja, soll die Lösung angezeigt werden! */
             if(finished()){
                 openList = [];
                 document.getElementById("showSolution").removeAttribute("hidden");
@@ -221,12 +230,14 @@ async function startAll(){
         }
 
     }
+    /* Falls das Ziel nciht erreicht wurde und es keine offenen Felder mehr gibt, hat der Algorithmus keine Lösung gefunden! */
     if(!finished() && openList.length ==0){
         noSolutionFound();
     }
 
 }
 
+// Liest den Wert für die Wartezeit beim Suchen aus
 function getSleepTime(){
     return 1000-document.querySelector("#time").value;
 }
@@ -239,7 +250,7 @@ function finished(){
     return false;
 }
 
-// Setzt die Zahl für die schon gelaufenen Zellen (ohne Heurisitische Funktion)
+// Setzt die Pfadkosten für die schon gelaufenen Felder (Wert ist ohne Heurisitische Funktion)
 function setPathCosts(/*ID of field*/ pos, value){
     if(document.getElementById(pos.toString()).getAttribute("pathCost") == null){
         document.getElementById(pos.toString()).setAttribute("pathCost", value);
@@ -247,22 +258,16 @@ function setPathCosts(/*ID of field*/ pos, value){
     }
 }
 
+// Setze, ob er das Boot hat oder nicht
 function setHasBoat(/*ID of field*/ pos, value){
     document.getElementById(pos.toString()).setAttribute("hasBoat", value);
 }
 
 
-function calculatePathCosts(/*ID of field*/ pos ){
-    return heuristFunction(pos);
-}
-
-// Returns the cost of the given field
-function getCostOfField(pos){
-    return document.getElementById(pos).getAttribute("cost");
-}
 
 
-// Returns all fiels around given position
+
+// Gibt alle Felder zurück, die um das gegebene Feld liegen
 function getFieldsAround(/*ID of field*/ pos){
     let list = new Array();
     let posX = parseInt(pos.split(":")[0]);
@@ -306,7 +311,7 @@ function getFieldsAround(/*ID of field*/ pos){
 }
 
 
-// Returns the value of the heurist function
+// Gibt den Wert für die heuristische Funktion für die gegeben Position
 function heuristFunction(pos){
     let posX = parseInt(pos.split(":")[0]);
     let posY = parseInt(pos.split(":")[1]);
@@ -329,19 +334,18 @@ function heuristFunction(pos){
 
 
 
-
+// Zeigt Lösung & Auswertung
 function showSolution(){
     showPathTo(getEnd());
-
-
     showMoreDetails();
 }
-let showSearch = false;
+
+// Zeigt oder entfernt Suchbereich in der grafischen Oberfläche
 function hideShowSearch(){
     for(let i = 0; i< closedList.length;i++){
         let value = closedList[i];
         let element = document.getElementById(value);
-        if(value != getStart() && !path.includes(value)) {
+        if(value != getStart() && !solutionPath.includes(value)) {
             if(showSearch){
                 element.style.backgroundColor = color["searchField"];
             }else{
@@ -354,8 +358,9 @@ function hideShowSearch(){
     showSearch = !showSearch;
 
 }
-let path = [];
-// Returns Anzahl an durchlaufenden Felder
+
+
+// Zeigt den Lösungweg des Algorithmus
 async function showPathTo(pos){
     document.getElementById(getStart()).style.fontWeight = "bold";
     let current = pos;
@@ -366,7 +371,7 @@ async function showPathTo(pos){
     }
      
     solutionFound();
-    path = way;
+    solutionPath = way;
     for(let i = way.length-1; i>=0; i--){
         let field = way[i];
         if(field == pos){
@@ -401,6 +406,22 @@ async function setStartOrEnd(id){
 
 }
 
+
+
+
+
+/* Übeprüfe die notwendigkeit dieser Funktionen: */
+
+//let hasBoat = true;
+
+function calculatePathCosts(/*ID of field*/ pos ){
+    return heuristFunction(pos);
+}
+
+// Returns the cost of the given field
+function getCostOfField(pos){
+    return document.getElementById(pos).getAttribute("cost");
+}
 // Entfernt den Startpunkt aus dem Spielfeld
 function removeStart(){
     displayGrid();
