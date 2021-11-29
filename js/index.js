@@ -361,12 +361,15 @@ function hideShowSearch(){
 
 
 // Zeigt den Lösungweg des Algorithmus
-async function showPathTo(pos){
+async function showPathTo(endPos){
     document.getElementById(getStart()).style.fontWeight = "bold";
-    let current = pos;
+    let current = endPos;
+    let posThrowBoat = undefined;
+
     let way = new Array();
     while(current != getStart()){
         way.push(current);
+        if(document.getElementById(current).getAttribute("throwBoat") == "true") posThrowBoat = current;
         current = parents.get(current);
     }
      
@@ -374,8 +377,11 @@ async function showPathTo(pos){
     solutionPath = way;
     for(let i = way.length-1; i>=0; i--){
         let field = way[i];
-        if(field == pos){
+        if(field == endPos){
             document.getElementById(field).style.backgroundColor = "darkred";
+            document.getElementById(field).style.color = "white";
+        }else if(posThrowBoat !== undefined && field == posThrowBoat){
+            document.getElementById(field).style.backgroundColor = "blue";
             document.getElementById(field).style.color = "white";
         }else{
             document.getElementById(field).style.backgroundColor = "red";
