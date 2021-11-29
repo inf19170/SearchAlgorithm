@@ -96,7 +96,7 @@ function showMoreDetails(){
     document.getElementById("lowerRunnedCosts").innerHTML = lowerRunnedCosts;
 
     let diff = runnedCosts -lowerRunnedCosts;
-    document.getElementById("diffRunnedCosts").innerHTML = roundFloat(diff, roundFactor);
+    document.getElementById("diffRunnedCosts").innerHTML = ' -' + roundFloat(diff, roundFactor);
 
 
     // Wurde ein Fluss überquert
