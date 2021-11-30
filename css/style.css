@@ -2,8 +2,8 @@
 
     margin-top: 3%;
     margin-bottom: 10%;
-
 }
+
 
 #auswertungTitel {
     text-align: center;
@@ -34,7 +34,6 @@ table {
         padding-right: 250px;
         width: 100%;
         position: relative; 
-         
  
     }
 
@@ -46,14 +45,10 @@ table {
     margin-right: 25px;
 }
 
-#rightCol {
-    margin-left: 25px; 
-  
-}
+
 
 .listFields {
-    position: relative;
-    left: 10%;
+    text-align: center;
  
 }
 
@@ -74,6 +69,8 @@ caption { text-align: left; }
 #titel {
     text-align: center;
 }
+
+
 
 .danger {
     color: rgb(255, 91, 91);
@@ -96,9 +93,24 @@ caption { text-align: left; }
 #showSolution {
 
     cursor: pointer;
+    height: 23px;
+    width: 45px;
+    margin-left: -3.5em;
+
 }
 
 #ergebnis {
     margin-bottom: 20px;
+    
 }
 
+#divRunnedFields {
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    border-bottom: dotted;
+    border-color:rgb(255, 255, 255);
+}
+
+#resetbtn {
+    position: relative; left: 15%
+}
