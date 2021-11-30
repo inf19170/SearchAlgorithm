@@ -94,7 +94,7 @@ caption { text-align: left; }
 
 }
 
-#successTxt, failTxt {
+#successTxt, #failTxt {
     margin-bottom: 10px;
     
 }
