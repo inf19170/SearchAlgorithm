@@ -34,7 +34,6 @@ table {
         padding-right: 250px;
         width: 100%;
         position: relative; 
- 
     }
 
 
@@ -47,10 +46,6 @@ table {
 
 
 
-.listFields {
-    text-align: center;
- 
-}
 
 .beginText{
     text-align: left;
@@ -99,17 +94,32 @@ caption { text-align: left; }
 
 }
 
-#ergebnis {
-    margin-bottom: 20px;
+#successTxt, failTxt {
+    margin-bottom: 10px;
     
 }
 
-#divRunnedFields {
-    padding-bottom: 20px;
+#ergebnis {
+    margin-bottom: 30px;
+}
+
+#rightCol{
+   
+    
     margin-bottom: 10px;
     border-bottom: dotted;
     border-color:rgb(255, 255, 255);
 }
+
+
+#divRunnedFields {
+    
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    border-bottom: dotted;
+    border-color:rgb(255, 255, 255);
+}
+
 
 #resetbtn {
     position: relative; left: 15%
