@@ -19,7 +19,7 @@ function displayOption(id, showOption){
             element.innerHTML = "S";
             element.style.textAlign = "center";
             element.style.fontWeight = "bold";
-        }else if(getEnd() == null){
+        }else if(getEnd() == null && id != getStart()){
             element.style.backgroundColor = color["endBegin"];
             element.innerHTML = "E";
             element.style.textAlign = "center";
