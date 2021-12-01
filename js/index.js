@@ -404,6 +404,8 @@ async function setStartOrEnd(id){
         setStart(id);
         document.getElementById(getStart()).style.backgroundColor = "yellow";
           document.getElementById("resetbtn").disabled = false;
+    }else if(getStart() == id){
+        alert("Das Ziel darf sich nicht auf dem Startfeld befinden!");
     }else if(getEnd() == null){
         setEnd(id);
         document.getElementById(getStart()).style.backgroundColor = "yellow";
