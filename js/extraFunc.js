@@ -55,19 +55,29 @@ function showMoreDetails(){
         "flat":0,
     };
     let costs = 0; // Kosten, die bis zum Wegwerfen des Bootes entstanden sind
+
+
+    let tmpType;
+
     while(current != getStart()){
-        let tmpType = document.getElementById(current).getAttribute("type");
+        tmpType = document.getElementById(current).getAttribute("type");
         let tmpThrowBoat = document.getElementById(current).getAttribute("throwBoat");
 
         if(tmpThrowBoat == "true"){
             throwBoat = true;
             costs = document.getElementById(current).getAttribute("pathCost");
         }
-
-        amount["all"] = amount["all"] + 1;
-        amount[type[tmpType]] = amount[type[tmpType]] + 1;
+        if(current != getEnd()){
+            amount["all"] = amount["all"] + 1;
+            amount[type[tmpType]] = amount[type[tmpType]] + 1;
+        }
         current = parents.get(current);
     }
+
+    // Durchlaufene Wege für Startfeld addieren
+    tmpType = document.getElementById(getStart()).getAttribute("type");
+    amount["all"] = amount["all"] + 1;
+    amount[type[tmpType]] = amount[type[tmpType]] + 1;
     // Überprüfe, ob Boot direkt am Start weggeworfen wurde
     if(document.getElementById(getStart()).getAttribute("throwBoat") == "true"){
         throwBoat = true;
