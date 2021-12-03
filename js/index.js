@@ -10,7 +10,7 @@ function setStart(obj) {
     start = obj;
     document.getElementById(getStart()).style.textAlign = "center";
     document.getElementById("startPoint").innerHTML = '<i style="color: lightgreen" class="fas fa-check"></i> ' + document.getElementById("startPoint").innerHTML;
-    document.getElementById("startSelect").innerHTML = '[' + getStart() + ']';
+    document.getElementById("startSelect").innerHTML = symbols[document.getElementById(getStart()).getAttribute("type")] + ' [' + getStart() + ']';
 }
 
 
@@ -25,7 +25,7 @@ function setEnd(obj) {
     end = obj;
     document.getElementById(getEnd()).style.textAlign = "center";
     document.getElementById("endPoint").innerHTML = '<i style="color: lightgreen" class="fas fa-check"></i> ' + document.getElementById("endPoint").innerHTML;
-    document.getElementById("endSelect").innerHTML = '[' + getEnd() + ']';
+    document.getElementById("endSelect").innerHTML = symbols[document.getElementById(getEnd()).getAttribute("type")] + ' [' + getEnd() + '] ';
 
 }
 
@@ -62,6 +62,8 @@ function noSolutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
     document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #b60c00; text-align: center;");
     document.getElementById("solutionTxt").innerHTML = 'Suche nicht erfolgreich!&ensp;<i style ="color: black" class="fas fa-exclamation-triangle"></i>';
+    document.getElementById("showSolution").checked = "checked";
+    document.getElementById("showSolution").disabled = false;
 }
 // Es wurde EINE Lösung gefunden
 function solutionFound() {
