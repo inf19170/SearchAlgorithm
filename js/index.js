@@ -1,3 +1,4 @@
+
 let start;
 function getStart() {
     if (start == null) {
@@ -47,7 +48,7 @@ let parents = new Map();
 
 
 
-// Beim Starten der Seite soll das Grid auf der Seite platziert werden und die Suchzeit auf vorigen Wert angepasst werden
+// Beim Starten der Seite soll das Gride auf der Seite platziert werden und die Suchzeit auf vorigen Wert angepasst werden
 window.onload = function () {
     displayGrid();
     let time = localStorage.getItem("searchTime");
@@ -59,7 +60,7 @@ window.onload = function () {
 // Es wurde KEINE Lösung gefunden
 function noSolutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
-    document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: rgb(220, 18, 18); text-align: center;");
+    document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #420400; text-align: center;");
     document.getElementById("solutionTxt").innerHTML = 'Suche nicht erfolgreich!&ensp;<i style ="color: black" class="fas fa-exclamation-triangle"></i>';
 }
 // Es wurde EINE Lösung gefunden
@@ -70,7 +71,7 @@ function solutionFound() {
 }
 
 
-// Fügt Grid in Webseite hinzu
+// Fügt Gride in Webseite hinzu
 function displayGrid() {
     document.getElementById("grid").innerHTML = createGrid(getData());
 }
@@ -93,6 +94,7 @@ function init_grid(start, end) {
 async function startAlgorithmus() {
 
     document.getElementById("solutionTxt").innerHTML = 'Suchvorgang läuft! <i class="far fa-clock"></i>';
+    document.getElementById("solutionTxt").setAttribute("style", "color: #F3DC44");
     document.getElementsByTagName("body")[0].style.cursor = "progress";
     while (openList.length > 0) {
 
@@ -440,7 +442,7 @@ function removeStart() {
 }
 
 // Für Auswahl: Start und Ziel
-// Zeigt die Auswahl, ob Start oder Ziel im Grid an
+// Zeigt die Auswahl, ob Start oder Ziel im Gride an
 function displayOption(id, showOption) {
     let element = document.getElementById(id);
     // Wahr, wenn Maus auf Feld geht & // Falsch, wenn Maus das Feld verlässt
@@ -471,4 +473,5 @@ function displayOption(id, showOption) {
             element.style.fontWeight = "";
         }
     }
+
 }
