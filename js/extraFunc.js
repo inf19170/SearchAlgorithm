@@ -16,7 +16,7 @@ function showMoreDetails(){
   // Display gelaufene Felder
     let current = getEnd(); // Weg wird von Ende zum Start zurück verfolgt
     let throwBoat = false; // Wurde das Boot auf dem Weg weggeworfen?
-
+    let posLostBoat = undefined;
     let amount = {
         "all":0,
         "forest":0,
@@ -33,18 +33,24 @@ function showMoreDetails(){
     while(current != getStart()){
         tmpType = document.getElementById(current).getAttribute("type");
         let tmpThrowBoat = document.getElementById(current).getAttribute("throwBoat");
+        let hasBoat = document.getElementById(current).getAttribute("hasBoat");
 
         if(tmpThrowBoat == "true"){
             throwBoat = true;
+            posLostBoat = current;
             costs = document.getElementById(current).getAttribute("pathCost");
         }
+
+        if(throwBoat === false && hasBoat == "false"){
+            posLostBoat = current;
+        }
+
         if(current != getEnd()){
             amount["all"] = amount["all"] + 1;
             amount[type[tmpType]] = amount[type[tmpType]] + 1;
         }
         current = parents.get(current);
     }
-
     // Durchlaufene Wege für Startfeld addieren
     tmpType = document.getElementById(getStart()).getAttribute("type");
     amount["all"] = amount["all"] + 1;
@@ -90,8 +96,8 @@ function showMoreDetails(){
 
     // Wurde das Boot weggeworfen?
     if(throwBoat === true){
-        document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check"></i>';
-        document.getElementById("throwBoat").setAttribute("style", "color: lightgreen");
+        document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check" id="throwBoatSymbol"></i> '+"["+posLostBoat+"]";
+        document.getElementById("throwBoatSymbol").setAttribute("style", "color: lightgreen");
 
         document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
         document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
@@ -101,8 +107,8 @@ function showMoreDetails(){
         document.getElementById("throwBoat").setAttribute("style", "color: rgb(255, 73, 73)");
 
         if(document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type") == "0" || document.getElementById(getEnd()).getAttribute("hasBoat") == "false"){
-            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check"></i>';
-            document.getElementById("usedBoat").setAttribute("style", "color: lightgreen");
+            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" id="usedBoatSymbol"></i> '+"["+posLostBoat+"]";
+            document.getElementById("usedBoatSymbol").setAttribute("style", "color: lightgreen");
 
         }else{
             document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
