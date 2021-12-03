@@ -58,10 +58,12 @@ window.onload = function(){
 
 // Es wurde KEINE Lösung gefunden
 function noSolutionFound(){
+    document.getElementsByTagName("body")[0].style.cursor = "auto";
     document.getElementById("failTxt").setAttribute("style", "display: block");
 }
 // Es wurde EINE Lösung gefunden
 function solutionFound(){
+    document.getElementsByTagName("body")[0].style.cursor = "auto";
     document.getElementById("successTxt").setAttribute("style", "display: block");
 }
 
@@ -90,6 +92,7 @@ function init_grid(start, end){
 
 // Startet den A* Algorithmus
 async function startAlgorithmus(){
+    document.getElementsByTagName("body")[0].style.cursor = "progress";
     while(openList.length > 0){
 
 
@@ -106,7 +109,7 @@ async function startAlgorithmus(){
                 continue; // Für Schleife mit nächsten Element aus!
             }
 
-            // Wennn Berg und kein Boot hat                         Wenn Wasser und hat noch Boot                   alle anderen Fälle
+            // Wenn Berg und man kein Boot hat                    Wenn Wasser und man noch Boot hat                alle anderen Fälle
             if((tmpType == 3 && tmpHasBoat.includes("false")) || (tmpType == 0 && tmpHasBoat.includes("true")) || (tmpType != 3 && tmpType != 0)){
                 if(shortestPath == undefined){
                     shortestPath = tmpPath;
@@ -172,7 +175,8 @@ async function startAlgorithmus(){
 
 
             if(alreadyChanged){
-                noSolutionFound(); break;
+                noSolutionFound();
+                break;
             }
             return;
         }else{ // Wenn shortestPath definiert ist, werden alle nicht mehr notwendigen Felder aus der openList entfernt
@@ -435,4 +439,39 @@ function getCostOfField(pos){
 function removeStart(){
     displayGrid();
     setStart(null);
+}
+
+// Für Auswahl: Start und Ziel
+// Zeigt die Auswahl, ob Start oder Ziel im Gride an
+function displayOption(id, showOption){
+    let element = document.getElementById(id);
+    // Wahr, wenn Maus auf Feld geht & // Falsch, wenn Maus das Feld verlässt
+    if(showOption){
+        if(getStart() == null){
+            document.getElementById("grid").style.cursor = "pointer";
+            element.style.backgroundColor = color["startBegin"];
+            element.innerHTML = "S";
+            element.style.textAlign = "center";
+            element.style.fontWeight = "bold";
+        }else if(getEnd() == null && id != getStart()){
+            document.getElementById("grid").style.cursor = "pointer";
+            element.style.backgroundColor = color["endBegin"];
+            element.innerHTML = "E";
+            element.style.textAlign = "center";
+            element.style.fontWeight = "bold";
+        }else{
+            document.getElementById("grid").style.cursor = "auto";
+        }
+
+    }else{
+        // Feld nur ändern, wenn es nicht das Start-, Endfeld oder besuchte Felder (Closedlist) ist
+        if(id != getStart() && id != getEnd() && !closedList.includes(id)){
+            let type = element.getAttribute("type");
+            element.innerHTML = type;
+            element.style.backgroundColor = color[type];
+            element.style.textAlign = "";
+            element.style.fontWeight = "";
+        }
+    }
+
 }

@@ -8,40 +8,7 @@ function setSearchTimeToLocalStorage(){
 
 }
 
-// Für Auswahl: Start und Ziel
-// Zeigt die Auswahl, ob Start oder Ziel im Gride an
-function displayOption(id, showOption){
-    let element = document.getElementById(id);
-    // Wahr, wenn Maus auf Feld geht & // Falsch, wenn Maus das Feld verlässt
-    if(showOption){
-        if(getStart() == null){
-            document.getElementById("grid").style.cursor = "pointer";
-            element.style.backgroundColor = color["startBegin"];
-            element.innerHTML = "S";
-            element.style.textAlign = "center";
-            element.style.fontWeight = "bold";
-        }else if(getEnd() == null && id != getStart()){
-            document.getElementById("grid").style.cursor = "pointer";
-            element.style.backgroundColor = color["endBegin"];
-            element.innerHTML = "E";
-            element.style.textAlign = "center";
-            element.style.fontWeight = "bold";
-        }else{
-            document.getElementById("grid").style.cursor = "auto";
-        }
 
-    }else{
-        // Feld nur ändern, wenn es nicht das Start-, Endfeld oder besuchte Felder (Closedlist) ist
-        if(id != getStart() && id != getEnd() && !closedList.includes(id)){
-            let type = element.getAttribute("type");
-            element.innerHTML = type;
-            element.style.backgroundColor = color[type];
-            element.style.textAlign = "";
-            element.style.fontWeight = "";
-        }
-   }
-
-}
 
 // Für Auswertung: Mehr Details
 // Berechnet zusätzliche Informationen zu dem gelaufenen Gride
@@ -118,8 +85,8 @@ function showMoreDetails(){
     }
 
 
-    // Wurde ein Fluss überquert
-    if(throwBoat == true || document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(getEnd()).getAttribute("type") != "0"){
+    // Fluss wurde nicht überquert
+    if(throwBoat === true || document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(getEnd()).getAttribute("type") != "0"){
         document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
         document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
     }else{
@@ -128,7 +95,7 @@ function showMoreDetails(){
     }
 
     // Wurde das Boot weggeworfen
-    if(throwBoat == true){
+    if(throwBoat === true){
         document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check"></i>';
         document.getElementById("throwBoat").setAttribute("style", "color: lightgreen");
     }else{
