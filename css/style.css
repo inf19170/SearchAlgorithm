@@ -47,7 +47,7 @@ table {
 
 
 
-.beginText{
+.leftText{
     text-align: left;
 }
 
@@ -55,7 +55,7 @@ table {
     text-align: center;
 }
 
-.endText{
+.rightText{
     text-align: right;
 }
 
@@ -95,13 +95,17 @@ caption { text-align: left; }
 
 }
 
-#successTxt, #failTxt {
-    margin-bottom: 10px;
-    
+#solutionTxt {
+    border: solid 3px; border-color: rgb(226, 226, 226); margin-bottom: 10px; text-align: center;
+}
+
+#fieldSelect{
+    text-align: center;
+    margin-bottom: 10%;
 }
 
 #ergebnis {
-    margin-bottom: 30px;
+    margin-bottom: 5%;
 }
 
 #rightCol{
