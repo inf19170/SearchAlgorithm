@@ -15,15 +15,19 @@ function displayOption(id, showOption){
     // Wahr, wenn Maus auf Feld geht & // Falsch, wenn Maus das Feld verlässt
     if(showOption){
         if(getStart() == null){
+            document.getElementById("grid").style.cursor = "pointer";
             element.style.backgroundColor = color["startBegin"];
             element.innerHTML = "S";
             element.style.textAlign = "center";
             element.style.fontWeight = "bold";
         }else if(getEnd() == null && id != getStart()){
+            document.getElementById("grid").style.cursor = "pointer";
             element.style.backgroundColor = color["endBegin"];
             element.innerHTML = "E";
             element.style.textAlign = "center";
             element.style.fontWeight = "bold";
+        }else{
+            document.getElementById("grid").style.cursor = "auto";
         }
 
     }else{
