@@ -65,8 +65,6 @@ caption { text-align: left; }
     text-align: center;
 }
 
-
-
 .danger {
     color: rgb(255, 91, 91);
   }
@@ -89,8 +87,11 @@ caption { text-align: left; }
 
     cursor: pointer;
     height: 23px;
-    width: 45px;
+    width: 60px;
     margin-left: -3.5em;
+    margin-right: 1.5em;
+    position: relative;
+    bottom: 0.2em;
 
 }
 
