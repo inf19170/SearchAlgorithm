@@ -1,4 +1,3 @@
-
 let start;
 function getStart() {
     if (start == null) {
@@ -472,5 +471,4 @@ function displayOption(id, showOption) {
             element.style.fontWeight = "";
         }
     }
-
 }
