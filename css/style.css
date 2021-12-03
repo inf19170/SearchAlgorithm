@@ -96,7 +96,7 @@ caption { text-align: left; }
 }
 
 #solutionTxt {
-    border: solid 3px; border-color: rgb(226, 226, 226); margin-bottom: 10px; text-align: center;
+    border: groove;  margin-bottom: 10px; text-align: center;
 }
 
 #fieldSelect{
