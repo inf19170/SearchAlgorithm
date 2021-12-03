@@ -22,7 +22,7 @@
 
 <body id="completeContent" class="bg-dark bg-gradient text-light">
     <br>
-    <h1 class="display-4" id="titel"><b><u>A*-Algorithmus - Bester Weg vom Start zum Ziel</u></b></h1>
+    <h1 class="display-4" id="titel"><b><u>A*-Algorithmus - Kürzester Weg vom Start zum Ziel</u></b></h1>
 
     <div id="content" class="container">
         <div class="row">
@@ -125,12 +125,18 @@
 
                     <h3 id="ergebnis" class="display-9 centerText"><u>Ergebnis:</u></h3>
 
-                    <div class="centerText bg-success p-2 text-white" role="alert" id="successTxt">Suche erfolgreich! <i
-                            class="fas fa-check"></i>
+                    <div class="col" id="fieldSelect">
+
+                       <div id="startPoint" class="row-4">Startpunkt: <span id="startSelect">-</span></div>
+                     
+                        
+                        <div id="endPoint" class="row-4">Zielpunkt: <span id="endSelect">-</span></div>
+
                     </div>
 
-                    <div class="centerText bg-danger p-2 text-white" role="alert" id="failTxt">Suche nicht
-                        erfolgreich! <i class="fas fa-exclamation-triangle"></i>
+
+                    <div class="p-2" id="solutionTxt">&nbsp;
+
                     </div>
 
                 </div>
