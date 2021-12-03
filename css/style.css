@@ -11,14 +11,13 @@
 
 #auswertung {
 
-    border: solid;
     border-radius: 8px;
-    border-color: white
+    border: solid white;
 }
 
 body{
     color: rgb(255, 255, 255);
-    font-family: arial;
+    font-family: arial, serif;
    
 }
 
