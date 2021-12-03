@@ -84,23 +84,34 @@ function showMoreDetails(){
     document.getElementById("diffRunnedCosts").innerHTML = roundFloat(diff, roundFactor);
     }
 
+    console.log(throwBoat);
+    console.log(document.getElementById(getEnd()).getAttribute("hasBoat"));
+    console.log(document.getElementById(getEnd()).getAttribute("type"));
 
-    // Fluss wurde nicht überquert
-    if(throwBoat === true || document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(getEnd()).getAttribute("type") != "0"){
-        document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
-        document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
-    }else{
-        document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check"></i>';
-        document.getElementById("usedBoat").setAttribute("style", "color: lightgreen");
-    }
-
-    // Wurde das Boot weggeworfen
+    // Wurde das Boot weggeworfen?
     if(throwBoat === true){
         document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check"></i>';
         document.getElementById("throwBoat").setAttribute("style", "color: lightgreen");
-    }else{
+
+        document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
+        document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
+    }else {
+
         document.getElementById("throwBoat").innerHTML = '<i class="fas fa-times"></i>';
         document.getElementById("throwBoat").setAttribute("style", "color: rgb(255, 73, 73)");
+
+        if(document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type") == "0" || document.getElementById(getEnd()).getAttribute("hasBoat") == "false"){
+            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check"></i>';
+            document.getElementById("usedBoat").setAttribute("style", "color: lightgreen");
+
+        }else{
+            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
+            document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
+        }
+
+
     }
+
+
 
 }
