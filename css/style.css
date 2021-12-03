@@ -39,6 +39,7 @@ table {
 
 #grid { font-size: 20px;   }
 
+
 #middleCol {
     margin-left: 10px; 
     margin-right: 25px;
@@ -91,6 +92,7 @@ caption { text-align: left; }
     margin-left: -3.5em;
     margin-right: 1.5em;
     position: relative;
+    left: 15px;
     bottom: 0.2em;
 
 }
