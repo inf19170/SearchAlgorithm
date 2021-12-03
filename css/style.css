@@ -135,3 +135,10 @@ caption { text-align: left; }
     left: 32px;
     
 }
+
+#fieldNumber {
+
+    position: relative;
+    left: 25px;
+
+}
