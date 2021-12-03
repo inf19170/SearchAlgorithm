@@ -28,6 +28,29 @@ const color = {
 
 }
 
+const symbols = {
+    4:"<i class=\"fas fa-tree\"></i>",
+    0:"<i class=\"fas fa-water\"></i>",
+    3:"<i class=\"fas fa-mountain\"></i>",
+    1:"<i class=\"fas fa-hiking\"></i>",
+    2: "<i class=\"fas fa-road\"></i>"
+
+}
+/*
+
+                             Wasser: <span id="runnedFieldsRiver">-</span> FE
+                            <br>
+                             Wiese: <span id="runnedFieldsFlat">-</span> FE
+                            <br>
+                             Weg: <span id="runnedFieldsWay">-</span> FE
+                            <br>
+                             Berg: <span id="runnedFieldsMountain">-</span> FE
+                            <br>
+                             Wald: <span id="runnedFieldsForest">-</span> FE
+
+
+ */
+
 
 
 
