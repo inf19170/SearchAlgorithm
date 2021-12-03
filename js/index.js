@@ -9,6 +9,8 @@ function getStart(){
 function setStart(obj){
     start = obj;
     document.getElementById(getStart()).style.textAlign = "center";
+    document.getElementById("startPoint").innerHTML = '<i style="color: lightgreen" class="fas fa-check"></i> ' + document.getElementById("startPoint").innerHTML;
+    document.getElementById("startSelect").innerHTML = '[' + getStart() + ']';
 }
 
 
@@ -22,6 +24,8 @@ function getEnd(){
 function setEnd(obj){
     end = obj;
     document.getElementById(getEnd()).style.textAlign = "center";
+    document.getElementById("endPoint").innerHTML = '<i style="color: lightgreen" class="fas fa-check"></i> ' + document.getElementById("endPoint").innerHTML;
+    document.getElementById("endSelect").innerHTML = '[' + getEnd() + ']';
 }
 
 
@@ -42,11 +46,6 @@ let parents = new Map();
 
 
 
-
-
-
-
-
 // Beim Starten der Seite soll das Gride auf der Seite platziert werden und die Suchzeit auf vorigen Wert angepasst werden
 window.onload = function(){
     displayGrid();
@@ -59,15 +58,15 @@ window.onload = function(){
 // Es wurde KEINE Lösung gefunden
 function noSolutionFound(){
     document.getElementsByTagName("body")[0].style.cursor = "auto";
-    document.getElementById("failTxt").setAttribute("style", "display: block");
+    document.getElementById("solutionTxt").setAttribute("style", "border: solid 3px; border-color: darkred; margin-bottom: 10px; background-color: rgb(220, 18, 18); text-align: center;");
+    document.getElementById("solutionTxt").innerHTML = 'Suche nicht erfolgreich! <i style ="color: black" class="fas fa-exclamation-triangle"></i>';
 }
 // Es wurde EINE Lösung gefunden
 function solutionFound(){
     document.getElementsByTagName("body")[0].style.cursor = "auto";
-    document.getElementById("successTxt").setAttribute("style", "display: block");
+    document.getElementById("solutionTxt").setAttribute("style", "border: solid 3px; border-color: darkgreen; margin-bottom: 10px; background-color: green; text-align: center;");
+    document.getElementById("solutionTxt").innerHTML = 'Suche erfolgreich! <i class="fas fa-check"></i>';
 }
-
-
 
 
 // Fügt Gride in Webseite hinzu
@@ -77,8 +76,7 @@ function displayGrid(){
 
 // initiiere Start, Ende, openList und starte den Algorithmus
 function init_grid(start, end){
-    setStart(start);
-    setEnd(end);
+   
     document.getElementById(getStart()).style.backgroundColor = "yellow";
     document.getElementById(getStart()).innerHTML = "S";
     setPathCosts(getStart(), 0);
@@ -92,6 +90,7 @@ function init_grid(start, end){
 
 // Startet den A* Algorithmus
 async function startAlgorithmus(){
+    document.getElementById("solutionTxt").innerHTML = 'Suchvorgang läuft! <i class="far fa-clock"></i>';
     document.getElementsByTagName("body")[0].style.cursor = "progress";
     while(openList.length > 0){
 
