@@ -11,7 +11,7 @@ function setSearchTimeToLocalStorage(){
 
 
 // Für Auswertung: Mehr Details
-// Berechnet zusätzliche Informationen zu dem gelaufenen Gride
+// Berechnet zusätzliche Informationen zu dem gelaufenen Grid
 function showMoreDetails(){
   // Display gelaufene Felder
     let current = getEnd(); // Weg wird von Ende zum Start zurück verfolgt

@@ -1,5 +1,5 @@
-// Funktionen um ein Random generiertes Gride zu verwenden
-function newGride(height, length){
+// Funktionen um ein Random generiertes Grid zu verwenden
+function newGrid(height, length){
     let string = "";
     for(let i = 0; i <height;i++){
         string +=newLine(length);
@@ -8,7 +8,7 @@ function newGride(height, length){
     return string;
 }
 
-// Neue Zeile für Gride
+// Neue Zeile für Grid
 function newLine(length){
     let string = "";
     for(let i = 0; i <length;i++){
@@ -19,15 +19,15 @@ function newLine(length){
     return string;
 }
 
-// Ein zufälliges Feld für Gride
+// Ein zufälliges Feld für Grid
 function randomField(){
     let highestValue = 4; // Gibt die höchste Nummer der Felder an 4 --> Wald
     return Math.round(Math.random()*highestValue);
 }
 
-// Liest die Datei für das Gride aus
+// Liest die Datei für das Grid aus
 function getData(){
-    //return newGride(40,40);
+    //return newGrid(40,40);
     let data =
         "1;1;1;1;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;1;1;4;4;1;1;1;1;3;3;3;3;0;0;4;1;1;1;1;1\n" +
         "1;1;1;4;4;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;4;4;4;4;1;1;1;3;3;0;0;0;4;4;1;1;1;1;1\n" +

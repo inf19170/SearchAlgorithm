@@ -47,7 +47,7 @@ let parents = new Map();
 
 
 
-// Beim Starten der Seite soll das Gride auf der Seite platziert werden und die Suchzeit auf vorigen Wert angepasst werden
+// Beim Starten der Seite soll das Grid auf der Seite platziert werden und die Suchzeit auf vorigen Wert angepasst werden
 window.onload = function () {
     displayGrid();
     let time = localStorage.getItem("searchTime");
@@ -70,7 +70,7 @@ function solutionFound() {
 }
 
 
-// Fügt Gride in Webseite hinzu
+// Fügt Grid in Webseite hinzu
 function displayGrid() {
     document.getElementById("grid").innerHTML = createGrid(getData());
 }
@@ -440,7 +440,7 @@ function removeStart() {
 }
 
 // Für Auswahl: Start und Ziel
-// Zeigt die Auswahl, ob Start oder Ziel im Gride an
+// Zeigt die Auswahl, ob Start oder Ziel im Grid an
 function displayOption(id, showOption) {
     let element = document.getElementById(id);
     // Wahr, wenn Maus auf Feld geht & // Falsch, wenn Maus das Feld verlässt
