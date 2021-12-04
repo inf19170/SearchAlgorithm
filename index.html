@@ -4,7 +4,7 @@
 
 <head>
 
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>A*-Algorithmus</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,14 +24,14 @@
     <script src="js/index.js"></script>
 
 
-
 </head>
 
 <body id="completeContent" class="bg-dark bg-gradient text-light">
-    <h1 class="display-7" id="titel"><b><u>A*-Algorithmus - Kürzester Weg vom Start zum Ziel</u></b></h1>
+    <br>
+    <h1 class="display-4" id="titel"><b><u>A*-Algorithmus - Kürzester Weg vom Start zum Ziel</u></b></h1>
 
-    <div id="content" class="container-lg">
-        <div class="row" id="contentRow">
+    <div id="content" class="container">
+        <div class="row">
 
             <div class="col-7" id="gridCol">
 
@@ -41,6 +41,8 @@
             </div>
 
             <div id="middleCol" class="col-2">
+
+
                 <br>
                 <br>
                 <br>
@@ -63,9 +65,9 @@
 
                 <div class="centerText form-check form-switch">
                     <label class="form-check-label" for="showSolution">
-                        <input onchange="switchVisibilitySearchArea()" class="form-check-input" type="checkbox"
-                            id="showSolution" disabled>
-
+                        <input onchange="switchVisibilitySearchArea()" class="form-check-input" type="checkbox" id="showSolution"
+                               disabled>
+                            
 
                         <i class="fas fa-search"></i> <i>Suchbereich</i></label>
                 </div>
@@ -90,9 +92,8 @@
                 </div>
 
                 <div class="centerText" id="divRunnedFields">
-                <br>
                     <h5><u>Durchlaufene Felder</u></h5>
-
+                   
                     <div class="row">
 
                         <div id="fieldNumber" class="col-5">
@@ -118,27 +119,25 @@
                             <br>
                             <i class="fas fa-tree"></i> Wald: <span id="runnedFieldsForest">-</span> FE
                         </div>
-
+                        
                     </div>
                     <br>
-                    <h5><i><b>Insgesamt: </b></i><span id="runnedFields">-</span> FE</li>
-                    </h5>
+                        <h5><i><b>Insgesamt: </b></i><span id="runnedFields">-</span> FE</li></h5>
                 </div>
 
                 <div class="insertSuccess">
 
-                    <h3 class="centerText"><u>Ergebnis</u></h3>
-                    <br>
+                    <h3 id="ergebnis" class="centerText"><u>Ergebnis</u></h3>
+
                     <div class="col" id="fieldSelect">
 
                         <div id="startPoint" class="row-4">Startpunkt: <span id="startSelect">-</span></div>
 
-<br>
 
                         <div id="endPoint" class="row-4">Zielpunkt: <span id="endSelect">-</span></div>
 
                     </div>
-               
+
 
                     <div class="p-2" id="solutionTxt">Bitte Start-/Zielpunkt auswählen!
 
