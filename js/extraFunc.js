@@ -1,3 +1,12 @@
+/**
+ * extraFunc.js
+ *
+ * Funktionen die extra Funktionen zu dem gegebenen Algorithmus bieten:
+ * Dazu zählt beispielsweise die Auswertung des Weges
+ *
+ */
+
+
 // Für Benutzerfreundlichkeit: Suchgeschwindigkeit
 // Fügt die ausgewählte Suchzeit in den localStorage, um beim neuladen die Informationen zu speichern!
 function setSearchTimeToLocalStorage(){

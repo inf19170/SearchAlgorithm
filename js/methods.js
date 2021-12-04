@@ -19,3 +19,46 @@ function roundFloat(float, deci){
     let factor = Math.pow(10, deci);
     return (Math.round(float*factor))/factor;
 }
+
+// Gibt alle Felder zurück, die um das gegebene Feld liegen
+function getFieldsAround(/*ID of field*/ pos) {
+    let list = new Array();
+    let posX = parseInt(pos.split(":")[0]);
+    let posY = parseInt(pos.split(":")[1]);
+
+    let newX = posX;
+    let newY = posY - 1;
+    let newPos = newX + ":" + newY;
+    //up
+    if (newX >= 0 && newY >= 0 && newX <= maxWidth && newY <= maxHeight && document.getElementById(newX + ":" + newY) != null) {
+        list.push(newPos);
+    }
+
+
+    newX = posX;
+    newY = posY + 1;
+    newPos = newX + ":" + newY;
+    //down
+    if (newX >= 0 && newY >= 0 && newX <= maxWidth && newY <= maxHeight && document.getElementById(newX + ":" + newY) != null) {
+        list.push(newPos);
+    }
+
+
+    newX = posX - 1;
+    newY = posY;
+    newPos = newX + ":" + newY;
+    //left
+    if (newX >= 0 && newY >= 0 && newX <= maxWidth && newY <= maxHeight && document.getElementById(newX + ":" + newY) != null) {
+        list.push(newPos);
+    }
+
+
+    newX = posX + 1;
+    newY = posY;
+    newPos = newX + ":" + newY;
+    //right
+    if (newX >= 0 && newY >= 0 && newX <= maxWidth && newY <= maxHeight && document.getElementById(newX + ":" + newY) != null) {
+        list.push(newPos);
+    }
+    return list;
+}
