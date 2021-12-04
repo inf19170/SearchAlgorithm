@@ -12,6 +12,7 @@
 #auswertung {
 
     border-radius: 8px;
+    background-color: black;
     border: solid white;
     transform: scale(0.8);
     position: relative;
@@ -46,9 +47,9 @@ table {
 }
 
 
-#middleCol {
+#settings {
     margin-left: 10px; 
-    margin-right: 25px;
+    margin-right: 10px;
 }
 
 
