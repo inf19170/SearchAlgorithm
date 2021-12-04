@@ -94,7 +94,7 @@ async function startAlgorithmus() {
         /*
             Wie weiter oben beschrieben, kann es den Fall geben, dass mehrere Felder gleichwertig sind (Gleiche Kosten).
             Damit hier der "idealste" Wert genommen wird, werden alle Felder auf ihren Abstand zum Ziel untersucht.
-            Danach wird das erste kleinste Feld als "shortPath" gewählt.
+            Danach wird das Feld mit dem kleinsten Abstand als "shortPath" gewählt.
 
          */
         if (shortestPathArray.length > 1) {
