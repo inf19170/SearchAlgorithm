@@ -9,7 +9,7 @@ function removeArrayElement(array, value){
     }
 }
 
-// Funktion wartet eingegebe Millisekunden bis Code weiter läuft
+// Funktion wartet eingegebenen Millisekunden bis Code weiter läuft
 function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }

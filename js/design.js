@@ -6,7 +6,7 @@
  */
 
 // Für Auswahl: Start und Ziel
-// Zeigt die Auswahl, ob Start oder Ziel im Gride an
+// Zeigt die Auswahl, ob Start oder Ziel im Grid an
 function displayOption(id, showOption) {
     let element = document.getElementById(id);
     // Wahr, wenn Maus auf Feld geht & // Falsch, wenn Maus das Feld verlässt
@@ -17,7 +17,7 @@ function displayOption(id, showOption) {
             element.innerHTML = "S";
             element.style.textAlign = "center";
             element.style.fontWeight = "bold";
-        } else if (getEnd() == null && id != getStart()) {
+        } else if (getEnd() == null && id.toString() !== getStart().toString()) {
             document.getElementById("grid").style.cursor = "pointer";
             element.style.backgroundColor = color["endBegin"];
             element.innerHTML = "E";
@@ -28,8 +28,8 @@ function displayOption(id, showOption) {
         }
 
     } else {
-        // Feld nur ändern, wenn es nicht das Start-, Endfeld oder besuchte Felder (Closedlist) ist
-        if (id != getStart() && id != getEnd() && !closedList.includes(id)) {
+        // Feld nur ändern, wenn es nicht das Start-, Endfeld oder besuchte Felder (closedList) ist
+        if (getStart() === null || getEnd() === null && id.toString() !== getStart().toString() ||(id.toString() !== getStart().toString() && id.toString() !== getEnd().toString() && !closedList.includes(id))) {
             let type = element.getAttribute("type");
             element.innerHTML = type;
             element.style.backgroundColor = color[type];
@@ -46,7 +46,7 @@ function switchVisibilitySearchArea() {
     for (let i = 0; i < closedList.length; i++) {
         let value = closedList[i];
         let element = document.getElementById(value);
-        if (value != getStart() && !solutionPath.includes(value)) {
+        if (value.toString() !== getStart().toString() && !solutionPath.includes(value)) {
             if (showSearch) {
                 element.style.backgroundColor = color["searchField"];
             } else {

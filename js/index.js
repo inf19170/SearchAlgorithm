@@ -27,20 +27,17 @@ function getSleepTime() {
 
 // Überprüft, ob das Ziel erreicht wurde
 function finished() {
-    if (document.getElementById(getEnd()).getAttribute("pathCost") != null) {
-        return true;
-    }
-    return false;
+    return document.getElementById(getEnd()).getAttribute("pathCost") != null;
 }
 
 
 // Gibt den Wert für die heuristische Funktion für die gegeben Position
 function heuristFunction(pos) {
-    let posX = parseInt(pos.split(":")[0]);
-    let posY = parseInt(pos.split(":")[1]);
-
+    // Heuristische Funktion kann nur verwendet werden, wenn "Ende" definiert ist!
     if (getEnd() == null) return undefined;
 
+    let posX = parseInt(pos.split(":")[0]);
+    let posY = parseInt(pos.split(":")[1]);
     let endX = parseInt(getEnd().split(":")[0]);
     let endY = parseInt(getEnd().split(":")[1]);
 
@@ -65,10 +62,10 @@ async function showPathTo(endPos) {
     let posThrowBoat = undefined;
 
     // Speichern des Weges in ein Array
-    let way = new Array();
-    while (current != getStart()) {
+    let way = [];
+    while (current.toString() !== getStart().toString()) {
         way.push(current);
-        if (document.getElementById(current).getAttribute("throwBoat") == "true") posThrowBoat = current;
+        if (document.getElementById(current).getAttribute("throwBoat").toString() === "true") posThrowBoat = current;
         current = parents.get(current);
     }
     way.push(getStart());
@@ -80,15 +77,15 @@ async function showPathTo(endPos) {
     for (let i = way.length - 1; i >= 0; i--) {
         let field = way[i];
         //TODO Optimierte Abfragen! Ggf. Switch-Case
-        if (field == endPos) {
+        if (field.toString() === endPos.toString()) {
             document.getElementById(field).style.backgroundColor = "darkred";
             document.getElementById(field).style.color = "white";
 
             // Feld bei dem das Boot nicht mehr vorhanden ist, wird anders eingefärbt
-        } else if (posThrowBoat !== undefined && field == posThrowBoat || i <= way.length - 2 && document.getElementById(way[i + 1]).getAttribute("type") == 0 && document.getElementById(field).getAttribute("type") != 0 && document.getElementById(field).getAttribute("hasBoat") == "false") {
+        } else if (posThrowBoat !== undefined && field.toString() === posThrowBoat.toString() || i <= way.length - 2 && document.getElementById(way[i + 1]).getAttribute("type").toString() === "0" && document.getElementById(field).getAttribute("type").toString() !== "0" && document.getElementById(field).getAttribute("hasBoat").toString() === "false") {
             document.getElementById(field).style.backgroundColor = "blue";
             document.getElementById(field).style.color = "white";
-        } else if (field != getStart()) {
+        } else if (field.toString() !== getStart().toString()) {
             document.getElementById(field).style.backgroundColor = "red";
         }
         let sleep = 25;
@@ -104,7 +101,7 @@ async function showPathTo(endPos) {
 
 }
 
-// Nutzer kann Start und Ende festlegen. Hierführ wird diese Funktion verwendet
+// Nutzer kann Start und Ende festlegen. Hierfür wird diese Funktion verwendet
 async function setStartAndEnd(id) {
     if (getStart() == null) {
         setStart(id);
@@ -113,7 +110,7 @@ async function setStartAndEnd(id) {
         document.getElementById("startSelect").innerHTML = symbols[document.getElementById(getStart()).getAttribute("type")] + ' [' + getStart() + ']';
         document.getElementById(getStart()).style.backgroundColor = "yellow";
         document.getElementById("resetbtn").disabled = false;
-    } else if (getStart() == id) {
+    } else if (getStart().toString() === id.toString()) {
         alert("Das Ziel darf sich nicht auf dem Startfeld befinden!");
     } else if (getEnd() == null) {
         setEnd(id);

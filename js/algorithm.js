@@ -49,8 +49,8 @@ async function startAlgorithmus() {
 
              */
 
-            if ((tmpType == 3 && tmpHasBoat.includes("false")) || (tmpType == 0 && tmpHasBoat.includes("true")) || (tmpType != 3 && tmpType != 0)) {
-                if (shortestPath == undefined) {
+            if ((tmpType.toString() === "3" && tmpHasBoat.toString() === "false") || (tmpType.toString() === "0" && tmpHasBoat.toString() === "true") || (tmpType.toString() !== "3" && tmpType.toString() !== "0")) {
+                if (shortestPath === undefined) {
                     shortestPath = tmpPath;
                 } else {
 
@@ -65,13 +65,13 @@ async function startAlgorithmus() {
                     }
                 }
 
-            } else if (tmpType == 3) {
+            } else if (tmpType.toString() === "3") {
 
                 // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden, sofern dies kostengünstiger ist!
-                if (shortestPath == undefined) {
+                if (shortestPath === undefined) {
                     shortestPath = tmpPath;
                 }
-                let tmpPathCost = parseFloat(document.getElementById(tmpPath).getAttribute("cost")) * (1 - reduze) + parseFloat(document.getElementById(tmpPath).getAttribute("pathCost")) + heuristFunction(tmpPath);
+                let tmpPathCost = parseFloat(document.getElementById(tmpPath).getAttribute("cost")) * (1 - reduction) + parseFloat(document.getElementById(tmpPath).getAttribute("pathCost")) + heuristFunction(tmpPath);
                 let shortestPathCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost")) + parseFloat(document.getElementById(shortestPath).getAttribute("pathCost")) + heuristFunction(shortestPath);
 
                 //TODO Überprüfe, ob es möglich ist die Abfrage in eine zu packen
@@ -117,7 +117,7 @@ async function startAlgorithmus() {
 
          */
         if ((shortestPath === undefined || openList.length === 0) && !finished()) {
-            alert("Es konnte kein 'shortestPath' gefunden werden!");
+            console.error("Es konnte kein 'shortestPath' gefunden werden!");
             noSolutionFound();
             break;
         }
@@ -138,7 +138,7 @@ async function startAlgorithmus() {
             // Füge das entfernte Feld in die ClosedList
             closedList.push(shortestPath);
 
-            /* Berechne die Schritte für die Zellen außenrum */
+            /* Berechne die Schritte für die Zellen außen rum */
             /*
                 Expandiere den Knotenpunkt:
                 Für alle Felder die sich neben dem Knoten befinden, werden die Kosten ermittelt. Sofern für dieses
@@ -151,12 +151,12 @@ async function startAlgorithmus() {
             let fieldCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost"));
 
             // Falls Boot abgelegt wurde, muss die Wegzeit reduziert werden
-            if (document.getElementById(shortestPath).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost * (1 - reduze);
+            if (document.getElementById(shortestPath).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost * (1 - reduction);
 
             // Addiere zu den Feldkosten die Pfadkosten des expandierten Knotens dazu.
+            //TODO Abfrage macht keinen Sinn
             if (parents.get(shortestPath) != null) {
-                let parentPath = shortestPath;
-                fieldCost += parseFloat(document.getElementById(parentPath).getAttribute("pathCost"));
+                fieldCost += parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"));
             }
 
             /*
@@ -175,7 +175,7 @@ async function startAlgorithmus() {
                     setPathCosts(pos, fieldCost);
 
                     // Setze, dass das Boot abgelegt wurde, wenn Wasser überquert wurde oder das Feld zuvor schon kein Boot mehr hatte
-                    if (type != 0 && document.getElementById(shortestPath).getAttribute("type") == 0 || document.getElementById(shortestPath).getAttribute("hasBoat") == "false") {
+                    if (type.toString() !== "0" && document.getElementById(shortestPath).getAttribute("type").toString() === "0" || document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "false") {
                         setHasBoat(pos, false);
                     }
                     openList.push(pos);
@@ -206,7 +206,7 @@ async function startAlgorithmus() {
         Dieser Fall dient als reine Sicherheitsvorkehrung. Es sollte in keinem Falle möglich sein, dass die Abfrage anschlägt.
      */
 
-    if (!finished() && openList.length == 0) {
+    if (!finished() && openList.length === 0) {
         noSolutionFound();
     }
 

@@ -8,7 +8,7 @@
 
 
 // Für Benutzerfreundlichkeit: Suchgeschwindigkeit
-// Fügt die ausgewählte Suchzeit in den localStorage, um beim neuladen die Informationen zu speichern!
+// Fügt die ausgewählte Suchzeit in den localStorage, um beim neu laden die Informationen zu speichern!
 function setSearchTimeToLocalStorage(){
 
     document.querySelector("#time").addEventListener ("input", function () {
@@ -39,22 +39,22 @@ function showMoreDetails(){
 
     let tmpType;
 
-    while(current != getStart()){
+    while(current.toString() !== getStart().toString()){
         tmpType = document.getElementById(current).getAttribute("type");
         let tmpThrowBoat = document.getElementById(current).getAttribute("throwBoat");
         let hasBoat = document.getElementById(current).getAttribute("hasBoat");
 
-        if(tmpThrowBoat == "true"){
+        if(tmpThrowBoat.toString() === "true"){
             throwBoat = true;
             posLostBoat = current;
             costs = document.getElementById(current).getAttribute("pathCost");
         }
 
-        if(throwBoat === false && hasBoat == "false"){
+        if(throwBoat === false && hasBoat.toString() === "false"){
             posLostBoat = current;
         }
 
-        if(current != getEnd()){
+        if(current.toString() !== getEnd()){
             amount["all"] = amount["all"] + 1;
             amount[type[tmpType]] = amount[type[tmpType]] + 1;
         }
@@ -65,7 +65,7 @@ function showMoreDetails(){
     amount["all"] = amount["all"] + 1;
     amount[type[tmpType]] = amount[type[tmpType]] + 1;
     // Überprüfe, ob Boot direkt am Start weggeworfen wurde
-    if(document.getElementById(getStart()).getAttribute("throwBoat") == "true"){
+    if(document.getElementById(getStart()).getAttribute("throwBoat").toString() === "true"){
         throwBoat = true;
         costs = document.getElementById(getStart()).getAttribute("pathCost");
     }
@@ -88,7 +88,7 @@ function showMoreDetails(){
     document.getElementById("runnedCosts").innerHTML = runnedCosts;
 
     // Gelaufene Zeitkosten, wenn Boot direkt zu Anfang weggeworfen wurde
-    let lowerRunnedCosts = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost"))-costs +costs*(1-reduze), roundFactor);
+    let lowerRunnedCosts = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost"))-costs +costs*(1-reduction), roundFactor);
     document.getElementById("lowerRunnedCosts").innerHTML = lowerRunnedCosts;
 
     let diff = runnedCosts -lowerRunnedCosts;
@@ -115,7 +115,7 @@ function showMoreDetails(){
         document.getElementById("throwBoat").innerHTML = '<i class="fas fa-times"></i>';
         document.getElementById("throwBoat").setAttribute("style", "color: rgb(255, 73, 73)");
 
-        if(document.getElementById(getEnd()).getAttribute("hasBoat") == "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type") == "0" || document.getElementById(getEnd()).getAttribute("hasBoat") == "false"){
+        if(document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type").toString() === "0" || document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "false"){
             document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" id="usedBoatSymbol"></i> '+"["+posLostBoat+"]";
             document.getElementById("usedBoatSymbol").setAttribute("style", "color: lightgreen");
 

@@ -1,8 +1,8 @@
-let start;
-let end;
+let start = undefined;
+let end = undefined;
 
 function getStart() {
-    if (start == null) {
+    if (start === undefined) {
         return null;
     }
     return start;
@@ -12,7 +12,7 @@ function setStart(obj) {
 }
 
 function getEnd() {
-    if (end == null) {
+    if (end === undefined) {
         return null;
     }
     return end;
@@ -23,8 +23,8 @@ function setEnd(obj) {
 
 
 
-let maxWidth;
-let maxHeight;
+let maxWidth = undefined;
+let maxHeight = undefined;
 
 let showSearch = false;
 
