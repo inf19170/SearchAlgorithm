@@ -56,31 +56,29 @@ async function startAlgorithmus() {
 
                     let tmpPathCost = parseFloat(document.getElementById(tmpPath).getAttribute("cost")) + parseFloat(document.getElementById(tmpPath).getAttribute("pathCost")) + heuristFunction(tmpPath);
                     let shortestPathCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost")) + parseFloat(document.getElementById(shortestPath).getAttribute("pathCost")) + heuristFunction(shortestPath);
-                    //TODO Überprüfe, ob es möglich ist die Abfrage in eine zu packen
-                    if (tmpPathCost < shortestPathCost) {
-                        shortestPath = tmpPath;
-                        shortestPathArray.push(tmpPath);
-                    } else if (tmpPathCost <= shortestPathCost) {
+                    if (tmpPathCost <= shortestPathCost) {
+                        if (tmpPathCost < shortestPathCost){
+                            shortestPath = tmpPath;
+                            shortestPathArray = []; // Array leeren, weil ein kürzer Weg gefunden wurde
+                        }
                         shortestPathArray.push(tmpPath);
                     }
                 }
 
             } else if (tmpType.toString() === "3") {
 
-                // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden, sofern dies kostengünstiger ist!
+                // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden (Damit der Berg bestiegen werden kann), sofern dies kostengünstiger ist!
                 if (shortestPath === undefined) {
                     shortestPath = tmpPath;
                 }
                 let tmpPathCost = parseFloat(document.getElementById(tmpPath).getAttribute("cost")) * (1 - reduction) + parseFloat(document.getElementById(tmpPath).getAttribute("pathCost")) + heuristFunction(tmpPath);
                 let shortestPathCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost")) + parseFloat(document.getElementById(shortestPath).getAttribute("pathCost")) + heuristFunction(shortestPath);
 
-                //TODO Überprüfe, ob es möglich ist die Abfrage in eine zu packen
-                if (tmpPathCost < shortestPathCost) {
-                    shortestPath = tmpPath;
-                    shortestPathArray.push(tmpPath);
-                    document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
-                    document.getElementById(tmpPath).setAttribute("throwBoat", true.toString());
-                } else if (tmpPathCost <= shortestPathCost) {
+                if (tmpPathCost <= shortestPathCost) {
+                    if (tmpPathCost < shortestPathCost){
+                        shortestPath = tmpPath;
+                        shortestPathArray = []; // Array leeren, weil ein kürzer Weg gefunden wurde
+                    }
                     shortestPathArray.push(tmpPath);
                     document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
                     document.getElementById(tmpPath).setAttribute("throwBoat", true.toString());
