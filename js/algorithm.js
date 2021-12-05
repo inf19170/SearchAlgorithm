@@ -61,7 +61,7 @@ async function startAlgorithmus() {
                             shortestPath = tmpPath;
                             shortestPathArray = []; // Array leeren, weil ein kürzer Weg gefunden wurde
                         }
-                        shortestPathArray.push(tmpPath);
+                        if(!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
                     }
                 }
 
@@ -79,7 +79,7 @@ async function startAlgorithmus() {
                         shortestPath = tmpPath;
                         shortestPathArray = []; // Array leeren, weil ein kürzer Weg gefunden wurde
                     }
-                    shortestPathArray.push(tmpPath);
+                    if(!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
                     document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
                     document.getElementById(tmpPath).setAttribute("throwBoat", true.toString());
                 }
@@ -95,10 +95,23 @@ async function startAlgorithmus() {
             Danach wird das Feld mit dem kleinsten Abstand als "shortPath" gewählt.
 
          */
+        for (let j = 0; j < shortestPathArray.length; j++) {
+            let element = shortestPathArray[j];
+            let tmpType2 = parseInt(document.getElementById(element).getAttribute("type"));
+            let tmpHasBoat2 = document.getElementById(element).getAttribute("hasBoat");
+            let tmpPathCost2 = 0;
+            if ((tmpType2.toString() === "3" && tmpHasBoat2.toString() === "false") || (tmpType2.toString() === "0" && tmpHasBoat2.toString() === "true") || (tmpType2.toString() !== "3" && tmpType2.toString() !== "0")) {
+                tmpPathCost2 = parseFloat(document.getElementById(element).getAttribute("cost")) + parseFloat(document.getElementById(element).getAttribute("pathCost")) + heuristFunction(element);
+
+            }else if (tmpType2.toString() === "3") {
+                tmpPathCost2 = parseFloat(document.getElementById(element).getAttribute("cost")) * (1 - reduction) + parseFloat(document.getElementById(element).getAttribute("pathCost")) + heuristFunction(element);
+
+            }
+        }
         if (shortestPathArray.length > 1) {
             let shortDiagonale = undefined;
-            for (let i = 0; i < shortestPathArray.length; i++) {
-                let pos = shortestPathArray[i];
+            for (let j = 0; j < shortestPathArray.length; j++) {
+                let pos = shortestPathArray[j];
                 //TODO Eventuell neue Funktion erstellen, die die Diagonale bestimmt
                 let heuristic = heuristFunction(pos);
                 if (shortDiagonale === undefined || heuristic < shortDiagonale) {
@@ -108,7 +121,6 @@ async function startAlgorithmus() {
                 }
             }
         }
-
         /*
             Falls es dazu kommen sollte, dass es keinen kürzesten Weg ("shortestPath") gefunden werden konnte,
             und / oder die openList leer ist und dazu das Ziel nicht erreicht wurde, so wurde keine Lösung gefunden.
@@ -165,8 +177,8 @@ async function startAlgorithmus() {
 
                 Zuletzt wird das Feld in openList eingefügt und in der Map "parents" der Elternknoten des Feldes gesetzt.
              */
-            for (let i = 0; i < fieldsAround.length; i++) {
-                let pos = fieldsAround[i];
+            for (let j = 0; j < fieldsAround.length; j++) {
+                let pos = fieldsAround[j];
                 //TODO Darf hier das Feld über eine kürzere Strecke erreicht werden und dies genutzt werden?
                 if (document.getElementById(pos).getAttribute("pathCost") == null || parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
                     let type = document.getElementById(pos).getAttribute("type");
