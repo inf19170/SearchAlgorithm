@@ -12,7 +12,7 @@ window.onload = function () {
 function init_algo() {
     setPathCosts(getStart(), 0);
     openList.push(getStart());
-    document.getElementById("solutionTxt").innerHTML = 'Suchvorgang läuft! <i class="far fa-clock"></i>';
+    document.getElementById("solutionTxt").innerHTML = '<h5>Suchvorgang läuft! <i class="far fa-clock"></i></h5>';
     document.getElementById("solutionTxt").setAttribute("style", "color: #F3DC44");
     document.getElementsByTagName("body")[0].style.cursor = "progress";
     startAlgorithmus();
