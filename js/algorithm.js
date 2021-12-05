@@ -1,3 +1,18 @@
+// Gibt den Diagonalen-Wert für die gegebene Position
+function diagonalValue(pos) {
+    // Heuristische Funktion kann nur verwendet werden, wenn "Ende" definiert ist!
+    if (getEnd() == null) return undefined;
+
+    let posX = parseInt(pos.split(":")[0]);
+    let posY = parseInt(pos.split(":")[1]);
+    let endX = parseInt(getEnd().split(":")[0]);
+    let endY = parseInt(getEnd().split(":")[1]);
+
+    let diff = 0;
+    diff += Math.abs(posX - endX);
+    diff += Math.abs(posY - endY);
+    return diff;
+}
 // Beginnt den optimierten und angepassten A* Algorithmus
 async function startAlgorithmus() {
 
@@ -100,7 +115,7 @@ async function startAlgorithmus() {
             for (let j = 0; j < shortestPathArray.length; j++) {
                 let pos = shortestPathArray[j];
                 //TODO Eventuell neue Funktion erstellen, die die Diagonale bestimmt
-                let diagonal = diagonal(pos);
+                let diagonal = diagonalValue(pos);
                 if (shortDiagonale === undefined || diagonal < shortDiagonale) {
                     shortestPath = pos;
                     //TODO Schauen ob das hier richtig ist:
@@ -251,3 +266,4 @@ function heuristFunction(pos) {
 function finished() {
     return openList.includes(getEnd());
 }
+
