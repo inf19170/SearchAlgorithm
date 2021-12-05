@@ -60,3 +60,22 @@ function switchVisibilitySearchArea() {
     showSearch = !showSearch;
 
 }
+
+const color = {
+    0:"#9bc2e6",
+    1:"#c6efce",
+    2:"#d6dce4",
+    3:"#806000",
+    4:"#548235",
+    "startBegin":"yellow",
+    "endBegin":"yellow",
+    "endFinishedBackground":"darkred",
+    "endFinishedText":"white",
+    "posThrowBoatBackground":"blue",
+    "posThrowBoatText":"white",
+    "waySolution":"red",
+    "searchField":"rgb(127,255,0)",
+    "waiting":"#F3DC44",
+    "check_mark": "lightgreen",
+    "x-symbol":"rgb(255, 73, 73)"
+}

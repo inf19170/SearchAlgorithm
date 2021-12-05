@@ -101,23 +101,20 @@ function showMoreDetails(){
 
     // Wurde das Boot weggeworfen?
     if(throwBoat === true){
-        document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check" id="throwBoatSymbol"></i> '+"["+posLostBoat+"]";
-        document.getElementById("throwBoatSymbol").setAttribute("style", "color: lightgreen");
-
+        document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check" style=\"color: '+color["check_mark"]+'"></i> '+"["+posLostBoat+"]";
         document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
-        document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
+        document.getElementById("usedBoat").setAttribute("style", "color: "+color["x-symbol"]);
     }else {
 
         document.getElementById("throwBoat").innerHTML = '<i class="fas fa-times"></i>';
-        document.getElementById("throwBoat").setAttribute("style", "color: rgb(255, 73, 73)");
+        document.getElementById("throwBoat").setAttribute("style", "color: "+color["x-symbol"]);
 
         if(document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type").toString() === "0" || document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "false"){
-            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" id="usedBoatSymbol"></i> '+"["+posLostBoat+"]";
-            document.getElementById("usedBoatSymbol").setAttribute("style", "color: lightgreen");
+            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" style=\"color: '+color["check_mark"]+'"></i> '+"["+posLostBoat+"]";
 
         }else{
             document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
-            document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
+            document.getElementById("usedBoat").setAttribute("style", "color: "+color["x-symbol"]);
         }
 
 

@@ -99,11 +99,9 @@ async function startAlgorithmus() {
             let shortDiagonale = undefined;
             for (let j = 0; j < shortestPathArray.length; j++) {
                 let pos = shortestPathArray[j];
-                //TODO Eventuell neue Funktion erstellen, die die Diagonale bestimmt
                 let diagonal = diagonalValue(pos);
                 if (shortDiagonale === undefined || diagonal < shortDiagonale) {
                     shortestPath = pos;
-                    //TODO Schauen ob das hier richtig ist:
                     shortDiagonale = diagonal;
                 }
             }
@@ -212,7 +210,7 @@ async function startAlgorithmus() {
             if (finished()) {
                 displayDiffMilliseconds();
                 document.getElementById("showSolution").removeAttribute("hidden");
-                await Sleep(250);
+                await Sleep(waitingShowSolution);
                 showSolution();
                 break;
             }

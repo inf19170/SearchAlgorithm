@@ -12,8 +12,8 @@ window.onload = function () {
 function init_algo() {
     setPathCosts(getStart(), 0);
     openList.push(getStart());
-    document.getElementById("solutionTxt").innerHTML = 'Suchvorgang läuft! <i class="far fa-clock"></i>';
-    document.getElementById("solutionTxt").setAttribute("style", "color: #F3DC44");
+    document.getElementById("solutionTxt").innerHTML = 'Suchvorgang läuft! '+symbols["waiting"];
+    document.getElementById("solutionTxt").setAttribute("style", "color: "+color["waiting"]);
     document.getElementsByTagName("body")[0].style.cursor = "progress";
     startAlgorithmus();
 }
@@ -75,23 +75,23 @@ async function showPathTo(endPos) {
         let field = way[i];
         //TODO Optimierte Abfragen! Ggf. Switch-Case
         if (field.toString() === endPos.toString()) {
-            document.getElementById(field).style.backgroundColor = "darkred";
-            document.getElementById(field).style.color = "white";
+            document.getElementById(field).style.backgroundColor = color["endFinishedBackground"];
+            document.getElementById(field).style.color = color["endFinishedText"];
 
             // Feld bei dem das Boot nicht mehr vorhanden ist, wird anders eingefärbt
         } else if (posThrowBoat !== undefined && field.toString() === posThrowBoat.toString() || i <= way.length - 2 && document.getElementById(way[i + 1]).getAttribute("type").toString() === "0" && document.getElementById(field).getAttribute("type").toString() !== "0" && document.getElementById(field).getAttribute("hasBoat").toString() === "false") {
-            document.getElementById(field).style.backgroundColor = "blue";
-            document.getElementById(field).style.color = "white";
+            document.getElementById(field).style.backgroundColor = color["posThrowBoatBackground"];
+            document.getElementById(field).style.color = color["posThrowBoatText"];
         } else if (field.toString() !== getStart().toString()) {
-            document.getElementById(field).style.backgroundColor = "red";
+            document.getElementById(field).style.backgroundColor = color["waySolution"];
         }
         let sleep = 25;
 
         // Die letzten 5 Felder des Weges werden langsamer angezeigt
-        if (i <= 5) { sleep = 100; }
+        if (i <= boundaryLastFields) { sleep = sleepTimeLastFields; }
         await Sleep(sleep);
     }
-    await Sleep(100);
+    await Sleep(waitingSwitchSearchArea);
     switchVisibilitySearchArea();
     document.getElementById("showSolution").disabled = false;
 
@@ -103,19 +103,19 @@ async function setStartAndEnd(id) {
     if (getStart() == null) {
         setStart(id);
         document.getElementById(getStart()).style.textAlign = "center";
-        document.getElementById("startPoint").innerHTML = '<i style="color: lightgreen" class="fas fa-check"></i> ' + document.getElementById("startPoint").innerHTML;
+        document.getElementById("startPoint").innerHTML = '<i style="color: '+color["check_mark"]+'" class="fas fa-check"></i> ' + document.getElementById("startPoint").innerHTML;
         document.getElementById("startSelect").innerHTML = symbols[document.getElementById(getStart()).getAttribute("type")] + ' [' + getStart() + ']';
-        document.getElementById(getStart()).style.backgroundColor = "yellow";
+        document.getElementById(getStart()).style.backgroundColor = color["startBegin"];
         document.getElementById("resetbtn").disabled = false;
     } else if (getStart().toString() === id.toString()) {
         alert("Das Ziel darf sich nicht auf dem Startfeld befinden!");
     } else if (getEnd() == null) {
         setEnd(id);
         document.getElementById(getEnd()).style.textAlign = "center";
-        document.getElementById("endPoint").innerHTML = '<i style="color: lightgreen" class="fas fa-check"></i> ' + document.getElementById("endPoint").innerHTML;
+        document.getElementById("endPoint").innerHTML = '<i style="color: '+color["check_mark"]+'" class="fas fa-check"></i> ' + document.getElementById("endPoint").innerHTML;
         document.getElementById("endSelect").innerHTML = symbols[document.getElementById(getEnd()).getAttribute("type")] + ' [' + getEnd() + '] ';
-        document.getElementById(getStart()).style.backgroundColor = "yellow";
-        await Sleep(100);
+        document.getElementById(getStart()).style.backgroundColor = color["endBegin"];
+        await Sleep(waitingInit_Algo);
         init_algo();
     }
 
@@ -136,13 +136,4 @@ function solutionFound() {
     document.getElementById("solutionTxt").innerHTML = 'Suche erfolgreich!&ensp;<i class="fas fa-check"></i>';
     showPathTo(getEnd());
 }
-
-
-/* Übeprüfe die Notwendigkeit dieser Funktionen: */
-
-// Returns the cost of the given field
-function getFieldCosts(pos) {
-    return document.getElementById(pos).getAttribute("cost");
-}
-
 

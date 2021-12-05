@@ -1,6 +1,14 @@
 const highestValue = 4; // Gibt die höchste Nummer der Felder an 4 --> Wald. Erhöhen, falls es Felder mit höhere Wertigkeit gibt
 const reduction = 0.1; // Wert, um wie viel die Wegkosten gesenkt werden, wenn das Boot nicht mehr getragen wird
 
+const boundaryLastFields = 5; // Anzahl der letzten Felder, bei denen "sleepTimeLastFields" anschlagen soll
+const sleepTimeLastFields = 100; //in ms: Zeit die zwischen den Feldern gewartet werden soll, wenn die letzten Felder angezeigt werden soll
+
+const waitingSwitchSearchArea = 100; //in ms: Wie lange soll gewartet werden, bis der Suchbereich nicht mehr angezeigt werden soll
+
+const waitingInit_Algo = 100; //in ms: Wie lange soll gewartet werden, bis Algorithmus starten soll
+
+const waitingShowSolution = 250;//in ms: Wie lange soll gewartet werden bis die Lösung angezeigt wird
 const type = {
     0:"river",
     1:"flat",
@@ -17,25 +25,17 @@ const cost = {
     4:11
 }
 
-const color = {
-    0:"#9bc2e6",
-    1:"#c6efce",
-    2:"#d6dce4",
-    3:"#806000",
-    4:"#548235",
-    "startBegin":"yellow",
-    "endBegin":"yellow",
-    "searchField":"rgb(127,255,0)"
 
-}
 
 const symbols = {
     0:"<i class=\"fas fa-water\"></i>",
     1:"<i class=\"fas fa-hiking\"></i>",
     2: "<i class=\"fas fa-road\"></i>",
     3:"<i class=\"fas fa-mountain\"></i>",
-    4:"<i class=\"fas fa-tree\"></i>"
-
+    4:"<i class=\"fas fa-tree\"></i>",
+    "waiting":"<i class=\"far fa-clock\"></i>",
+    "check_mark":"<i class=\"fas fa-check\"></i>",
+    "x-symbol":"<i class=\"fas fa-times\"></i>"
 }
 
 const data =
