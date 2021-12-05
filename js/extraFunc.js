@@ -99,10 +99,6 @@ function showMoreDetails(){
     document.getElementById("diffRunnedCosts").innerHTML = roundFloat(diff, roundFactor);
     }
 
-    console.log(throwBoat);
-    console.log(document.getElementById(getEnd()).getAttribute("hasBoat"));
-    console.log(document.getElementById(getEnd()).getAttribute("type"));
-
     // Wurde das Boot weggeworfen?
     if(throwBoat === true){
         document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check" id="throwBoatSymbol"></i> '+"["+posLostBoat+"]";
