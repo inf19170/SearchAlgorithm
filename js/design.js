@@ -21,7 +21,7 @@ function displayOption(id, showOption) {
         } else if (getEnd() == null && id.toString() !== getStart().toString()) {
             document.getElementById("grid").style.cursor = "pointer";
             element.style.backgroundColor = color["endBegin"];
-            element.innerHTML = "E";
+            element.innerHTML = "Z";
             element.style.textAlign = "center";
             element.style.textOverflow = "clip";
             element.style.fontWeight = "bold";
