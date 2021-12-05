@@ -125,7 +125,7 @@ async function setStartAndEnd(id) {
 function noSolutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
     document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #b60c00; text-align: center;");
-    document.getElementById("solutionTxt").innerHTML = 'Suche nicht erfolgreich!&ensp;<i style ="color: black" class="fas fa-exclamation-triangle"></i>';
+    document.getElementById("solutionTxt").innerHTML = '<h5>Suche nicht erfolgreich!&ensp;<i style ="color: black" class="fas fa-exclamation-triangle"></i></h5>';
     document.getElementById("showSolution").checked = "checked";
     document.getElementById("showSolution").disabled = false;
 }
@@ -133,7 +133,7 @@ function noSolutionFound() {
 function solutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
     document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkgreen; margin-bottom: 10px; background-color: green; text-align: center;");
-    document.getElementById("solutionTxt").innerHTML = 'Suche erfolgreich!&ensp;<i class="fas fa-check"></i>';
+    document.getElementById("solutionTxt").innerHTML = '<h5>Suche erfolgreich!&ensp;<i class="fas fa-check"></i></h5>';
     showPathTo(getEnd());
 }
 
@@ -144,5 +144,3 @@ function solutionFound() {
 function getFieldCosts(pos) {
     return document.getElementById(pos).getAttribute("cost");
 }
-
-
