@@ -62,3 +62,16 @@ function getFieldsAround(/*ID of field*/ pos) {
     }
     return list;
 }
+
+
+// Rundet die Zahl ab
+function roundLower(float){
+    if(float >=0){
+        let round = Math.round(float);
+        if(float - round >=0){
+            return round;
+        }else{
+            return  (round-1);
+        }
+    }
+}

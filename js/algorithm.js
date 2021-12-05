@@ -1,21 +1,6 @@
-// Gibt den Diagonalen-Wert für die gegebene Position
-function diagonalValue(pos) {
-    // Heuristische Funktion kann nur verwendet werden, wenn "Ende" definiert ist!
-    if (getEnd() == null) return undefined;
-
-    let posX = parseInt(pos.split(":")[0]);
-    let posY = parseInt(pos.split(":")[1]);
-    let endX = parseInt(getEnd().split(":")[0]);
-    let endY = parseInt(getEnd().split(":")[1]);
-
-    let diff = 0;
-    diff += Math.abs(posX - endX);
-    diff += Math.abs(posY - endY);
-    return diff;
-}
 // Beginnt den optimierten und angepassten A* Algorithmus
 async function startAlgorithmus() {
-
+    startTime = new Date();
     while (openList.length > 0) {
 
 
@@ -130,7 +115,6 @@ async function startAlgorithmus() {
          */
         if ((shortestPath === undefined || openList.length === 0) && !finished()) {
             console.error("Es konnte kein 'shortestPath' gefunden werden!");
-            noSolutionFound();
             break;
         }
         // Wenn shortestPath definiert ist, werden alle nicht mehr notwendigen Felder aus der openList entfernt
@@ -226,6 +210,7 @@ async function startAlgorithmus() {
                 wird die Lösung angezeigt und die Algorithmus wird abgebrochen.
             */
             if (finished()) {
+                displayDiffMilliseconds();
                 document.getElementById("showSolution").removeAttribute("hidden");
                 await Sleep(250);
                 showSolution();
@@ -242,6 +227,7 @@ async function startAlgorithmus() {
 
     if (!finished() && openList.length === 0) {
         noSolutionFound();
+        displayDiffMilliseconds();
     }
 
 }
@@ -249,7 +235,11 @@ async function startAlgorithmus() {
 
 // Gibt den Wert für die heuristische Funktion für die gegeben Position
 function heuristFunction(pos) {
-    // Heuristische Funktion kann nur verwendet werden, wenn "Ende" definiert ist!
+    return diagonalValue(pos);
+}
+// Gibt den Diagonalen-Wert für die gegebene Position
+function diagonalValue(pos) {
+    // Diagonale kann nur bestimmt werden, wenn "Ende" definiert ist!
     if (getEnd() == null) return undefined;
 
     let posX = parseInt(pos.split(":")[0]);

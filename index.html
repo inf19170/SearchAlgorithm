@@ -53,7 +53,7 @@
                 <p class="h6 centerText"><i class="fas fa-tachometer-alt"></i> Suchgeschwindigkeit:</p>
 
 
-                <input type="range" class="form-range" max="1000" min="500" step="100" value="1000" id="time"
+                <input type="range" class="form-range" max="1000" min="500" step="10" value="1000" id="time"
                     name="time" onmouseover="setSearchTimeToLocalStorage()">
                 <div class="row">
                     <div class="col beginText"><i>Langsam</i></div>
@@ -130,10 +130,15 @@
                     <div class="col" id="fieldSelect">
 
                         <div id="startPoint" class="row-4">S - Startpunkt: <span id="startSelect">-</span></div>
+
+
                         <div id="endPoint" class="row-4">Z - Zielpunkt: <span id="endSelect">-</span></div>
+                        <br>
+                        <div>
+                            <span id="minutes">-</span> min <span id="seconds">-</span> sek <span id="milliseconds">-</span> ms
+                        </div>
 
                     </div>
-
 
                     <div class="p-2" id="solutionTxt">Bitte Start-/Zielpunkt auswählen!
 
