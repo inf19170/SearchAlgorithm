@@ -25,9 +25,20 @@ function getSleepTime() {
     return 1000 - document.querySelector("#time").value;
 }
 
-// Überprüft, ob das Ziel erreicht wurde
-function finished() {
-    return openList.includes(getEnd());
+// Gibt den Diagonalen-Wert für die gegebene Position
+function diagonal(pos) {
+    // Heuristische Funktion kann nur verwendet werden, wenn "Ende" definiert ist!
+    if (getEnd() == null) return undefined;
+
+    let posX = parseInt(pos.split(":")[0]);
+    let posY = parseInt(pos.split(":")[1]);
+    let endX = parseInt(getEnd().split(":")[0]);
+    let endY = parseInt(getEnd().split(":")[1]);
+
+    let diff = 0;
+    diff += Math.abs(posX - endX);
+    diff += Math.abs(posY - endY);
+    return diff;
 }
 
 

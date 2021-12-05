@@ -95,29 +95,16 @@ async function startAlgorithmus() {
             Danach wird das Feld mit dem kleinsten Abstand als "shortPath" gewählt.
 
          */
-        for (let j = 0; j < shortestPathArray.length; j++) {
-            let element = shortestPathArray[j];
-            let tmpType2 = parseInt(document.getElementById(element).getAttribute("type"));
-            let tmpHasBoat2 = document.getElementById(element).getAttribute("hasBoat");
-            let tmpPathCost2 = 0;
-            if ((tmpType2.toString() === "3" && tmpHasBoat2.toString() === "false") || (tmpType2.toString() === "0" && tmpHasBoat2.toString() === "true") || (tmpType2.toString() !== "3" && tmpType2.toString() !== "0")) {
-                tmpPathCost2 = parseFloat(document.getElementById(element).getAttribute("cost")) + parseFloat(document.getElementById(element).getAttribute("pathCost")) + heuristFunction(element);
-
-            }else if (tmpType2.toString() === "3") {
-                tmpPathCost2 = parseFloat(document.getElementById(element).getAttribute("cost")) * (1 - reduction) + parseFloat(document.getElementById(element).getAttribute("pathCost")) + heuristFunction(element);
-
-            }
-        }
         if (shortestPathArray.length > 1) {
             let shortDiagonale = undefined;
             for (let j = 0; j < shortestPathArray.length; j++) {
                 let pos = shortestPathArray[j];
                 //TODO Eventuell neue Funktion erstellen, die die Diagonale bestimmt
-                let heuristic = heuristFunction(pos);
-                if (shortDiagonale === undefined || heuristic < shortDiagonale) {
+                let diagonal = diagonal(pos);
+                if (shortDiagonale === undefined || diagonal < shortDiagonale) {
                     shortestPath = pos;
                     //TODO Schauen ob das hier richtig ist:
-                    shortDiagonale = heuristic;
+                    shortDiagonale = diagonal;
                 }
             }
         }
@@ -242,4 +229,25 @@ async function startAlgorithmus() {
         noSolutionFound();
     }
 
+}
+
+
+// Gibt den Wert für die heuristische Funktion für die gegeben Position
+function heuristFunction(pos) {
+    // Heuristische Funktion kann nur verwendet werden, wenn "Ende" definiert ist!
+    if (getEnd() == null) return undefined;
+
+    let posX = parseInt(pos.split(":")[0]);
+    let posY = parseInt(pos.split(":")[1]);
+    let endX = parseInt(getEnd().split(":")[0]);
+    let endY = parseInt(getEnd().split(":")[1]);
+
+    let diff = 0;
+    diff += Math.abs(posX - endX);
+    diff += Math.abs(posY - endY);
+    return diff;
+}
+// Überprüft, ob das Ziel erreicht wurde
+function finished() {
+    return openList.includes(getEnd());
 }
