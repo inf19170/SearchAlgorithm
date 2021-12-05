@@ -150,12 +150,6 @@ caption { text-align: left; }
 
 }
 
-#infoTxt {
-    position: absolute;
-    left: 10%;
-
-}
-
 #completeContent {
     background-image: url('../files/MyWallpaper.jpeg');
     background-repeat: no-repeat;
