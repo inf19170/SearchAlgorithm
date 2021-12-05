@@ -27,7 +27,7 @@ function getSleepTime() {
 
 // Überprüft, ob das Ziel erreicht wurde
 function finished() {
-    return document.getElementById(getEnd()).getAttribute("pathCost") != null;
+    return openList.includes(getEnd());
 }
 
 
