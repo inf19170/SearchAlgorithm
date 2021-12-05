@@ -182,14 +182,36 @@ async function startAlgorithmus() {
                 //TODO Darf hier das Feld über eine kürzere Strecke erreicht werden und dies genutzt werden?
                 if (document.getElementById(pos).getAttribute("pathCost") == null || parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
                     let type = document.getElementById(pos).getAttribute("type");
-                    setPathCosts(pos, fieldCost);
 
                     // Setze, dass das Boot abgelegt wurde, wenn Wasser überquert wurde oder das Feld zuvor schon kein Boot mehr hatte
                     if (type.toString() !== "0" && document.getElementById(shortestPath).getAttribute("type").toString() === "0" || document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "false") {
                         setHasBoat(pos, false);
+
+                        /*
+                            Wert für "throwBoat" auf false setzen, sofern bei unserem neuen Weg throwBoat schon mal true ist (Das Boot wurde schon früher weggeworfen!)
+                         */
+                        if(document.getElementById(pos).getAttribute("throwBoat").toString() === "true"){
+                            let anotherWay = shortestPath;
+                            let anotherWayThrowBoat = false;
+
+                            while (anotherWay.toString() !== getStart().toString()){
+                                if(document.getElementById(shortestPath).getAttribute("throwBoat").toString() === "true"){
+                                    anotherWayThrowBoat = true;
+                                    anotherWay = getStart();
+                                }
+                                anotherWay = parents.get(anotherWay);
+                            }
+                            // Überprüfe dieselbe Abfrage noch für den Start:
+                            if(document.getElementById(getStart().toString()).getAttribute("throwBoat").toString() === "true"){
+                                anotherWayThrowBoat = true;
+                            }
+
+                            if(anotherWayThrowBoat === true) document.getElementById(pos).setAttribute("throwBoat", false.toString());
+                        }
                     }
                     openList.push(pos);
                     parents.set(pos, shortestPath);
+                    setPathCosts(pos, fieldCost);
                 }
 
             }
