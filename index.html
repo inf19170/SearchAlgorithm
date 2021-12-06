@@ -27,10 +27,10 @@
 </head>
 
 <body id="completeContent" class="text-light">
-    <h1 class="display-4" id="titel"><b><u>A*-Algorithmus - Kürzester Weg vom Start zum Ziel</u></b></h1>
+    <h1 class="display-4 centerText"><b><u>A*-Algorithmus - Kürzester Weg vom Start zum Ziel</u></b></h1>
 
-    <div id="content" class="container">
-        <div class="row" id="rowContent">
+    <div id="containerContent" class="container">
+        <div class="row" id="mainContent">
 
             <div class="col-7" id="gridCol">
 
@@ -56,8 +56,8 @@
                 <input type="range" class="form-range" max="1000" min="500" step="10" value="1000" id="time"
                     name="time" onmouseover="setSearchTimeToLocalStorage()">
                 <div class="row">
-                    <div class="col beginText"><i>Langsam</i></div>
-                    <div class="col" id="schnellText"><i>Schnell</i></div>
+                    <div class="col"><i>Langsam</i></div>
+                    <div class="col rightText"><i>Schnell</i></div>
                 </div>
                 <br>
 
@@ -77,11 +77,11 @@
 
             <div class="col" id="auswertung">
                 <br>
-                <p id="auswertungTitel" class="h5 centerText"><u><i class="fas fa-flag-checkered"></i>
+                <p class="h5 centerText"><u><i class="fas fa-flag-checkered"></i>
                         Auswertung - Übersicht</b></u>
                 </p>
                 <br>
-                <div class="centerText" id="rightCol">
+                <div class="centerText" id="overview">
                     <p><i><b>Boot in Wasser genutzt:&ensp;</b></i><span id="usedBoat">-</span></p>
                     <p><i><b>Boot weggeworfen:&ensp;</b></i><span id="throwBoat">-</span></p>
                     <p><i><b>Zeitkosten<sup>1</sup>:&ensp;</b></i><span id="runnedCosts">-</span> ZE</p>
@@ -89,7 +89,7 @@
                     <p><i><b>Diff. Zeitkosten<sup>3</sup>:&ensp;</b></i><span id="diffRunnedCosts">-</span> ZE</p>
                 </div>
 
-                <div class="centerText" id="divRunnedFields">
+                <div class="centerText" id="runnedFields">
                     <h5><u>Durchlaufene Pfadfelder</u></h5>
                     <br>
                     <div class="row">
@@ -120,7 +120,7 @@
                         
                     </div>
                     <br>
-                        <h5><i><b>Insgesamt: </b></i><span id="runnedFields">-</span> FE</li></h5>
+                        <h5><i><b>Insgesamt: </b></i><span id="runnedFieldsTotal">-</span> FE</li></h5>
                 </div>
 
                 <div class="insertSuccess">
@@ -164,5 +164,4 @@
     </div>
     </div>
 </body>
-
 </html>
