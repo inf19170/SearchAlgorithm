@@ -53,8 +53,8 @@
                 <p class="h6 centerText"><i class="fas fa-tachometer-alt"></i> Suchgeschwindigkeit:</p>
 
 
-                <input type="range" class="form-range" max="1000" min="500" step="10" value="1000" id="time"
-                    name="time" onmouseover="setSearchTimeToLocalStorage()">
+                <input type="range" class="form-range" max="1000" min="500" step="10" value="1000" id="time" name="time"
+                    onmouseover="setSearchTimeToLocalStorage()">
                 <div class="row">
                     <div class="col"><i>Langsam</i></div>
                     <div class="col rightText"><i>Schnell</i></div>
@@ -63,9 +63,9 @@
 
                 <div class="centerText form-check form-switch">
                     <label class="form-check-label" for="showSolution">
-                        <input onchange="switchVisibilitySearchArea()" class="form-check-input" type="checkbox" id="showSolution"
-                               disabled>
-                            
+                        <input onchange="switchVisibilitySearchArea()" class="form-check-input" type="checkbox"
+                            id="showSolution" disabled>
+
 
                         <i class="fas fa-search"></i> <i>Suchbereich</i></label>
                 </div>
@@ -117,10 +117,11 @@
                             <br>
                             <i class="fas fa-tree"></i> Wald: <span id="runnedFieldsForest">-</span> FE
                         </div>
-                        
+
                     </div>
                     <br>
-                        <h5><i><b>Insgesamt: </b></i><span id="runnedFieldsTotal">-</span> FE</li></h5>
+                    <h5><i><b>Insgesamt: </b></i><span id="runnedFieldsTotal">-</span> FE</li>
+                    </h5>
                 </div>
 
                 <div class="insertSuccess">
@@ -129,13 +130,15 @@
                     <br>
                     <div class="col" id="fieldSelect">
                         <h5><u>Auswahlpunkte</u></h5>
-                    <div id="startPoint" class="row-4">S - Startpunkt: <span id="startSelect">-</span></div>
+                        <div id="startPoint" class="row-4">S - Startpunkt: <span id="startSelect">-</span></div>
 
 
                         <div id="endPoint" class="row-4">Z - Zielpunkt: <span id="endSelect">-</span></div>
                         <br>
-                        <div><h5><u>Zeitanspruch</u></h5>
-                            <span id="minutes">-</span> min <span id="seconds">-</span> sek <span id="milliseconds">-</span> ms
+                        <div>
+                            <h5><u>Zeitanspruch</u></h5>
+                            <span id="minutes">-</span> min <span id="seconds">-</span> sek <span
+                                id="milliseconds">-</span> ms
                         </div>
 
                     </div>
@@ -148,20 +151,19 @@
 
             </div>
             <br>
-            
+
         </div>
         <br>
         <br>
         <p>
             <sup>1</sup> Zeitkosten, die beim normalem Durchlauf aufkommen!
             <br>
-            <sup>2</sup> Zeitkosten, die aufkommen würden, wenn direkt am Anfang das Boot weggeworfen wurde! 
+            <sup>2</sup> Zeitkosten, die aufkommen würden, wenn direkt am Anfang das Boot weggeworfen wurde!
             <br>&ensp; <i>(Unter der Bedingung, dass das Boot im Laufe des Weges weggeworfen wird!)</i>
             <br>
             <sup>3</sup> Zeitkosten, die gespart werden würden, wenn direkt am Anfang das Boot weggeworfen wurde!
         </p>
-
-    </div>
     </div>
 </body>
+
 </html>
