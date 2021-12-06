@@ -1,3 +1,10 @@
+/**
+ * randomGrid.js
+ *
+ * Mit Hilfe dieser JavaScript-Datei kann ein zufällig generiertes Grid erstellt werden
+ *
+ */
+
 // Ein zufälliges Feld für Grid
 function randomField(){
     return Math.round(Math.random()*highestValue);

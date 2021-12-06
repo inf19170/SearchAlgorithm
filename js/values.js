@@ -57,12 +57,11 @@ function displayDiffMilliseconds(){
 }
 
 
-// Setzt die Pfadkosten für die schon gelaufenen Felder (Wert ist ohne Heurisitische Funktion)
-function setPathCosts(/*ID of field*/ pos, value) {
-    if (document.getElementById(pos.toString()).getAttribute("pathCost") == null) {
-        document.getElementById(pos.toString()).setAttribute("pathCost", value);
-        document.getElementById(pos.toString()).setAttribute("title", value);
-    }
+// Setzt die Pfadkosten für die schon gelaufenen Felder (Wert ist ohne Heuristische Funktion)
+function setPathCosts(pos, value) {
+    pos = pos.toString();
+    document.getElementById(pos).setAttribute("pathCost", value);
+    document.getElementById(pos).setAttribute("title", FieldDescriptionToString(pos, undefined,value));
 }
 
 // Setze, ob er das Boot hat oder nicht

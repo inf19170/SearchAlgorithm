@@ -1,14 +1,34 @@
 const highestValue = 4; // Gibt die höchste Nummer der Felder an 4 --> Wald. Erhöhen, falls es Felder mit höhere Wertigkeit gibt
 const reduction = 0.1; // Wert, um wie viel die Wegkosten gesenkt werden, wenn das Boot nicht mehr getragen wird
 
+
+function FieldDescriptionToString(cords, fieldType, costs){
+    const fieldDescription ="[cords]\n[type]\n[costs]";
+    if(fieldType === undefined) fieldType = document.getElementById(cords).getAttribute("type");
+    let description = fieldDescription.replace("[cords]", "Position: ["+cords+"]");
+    description = description.replace("[type]", "Typ: "+typeGerman[fieldType]);
+    if(costs !== null){
+        description = description.replace("[costs]", "Kosten: "+costs+" ZE");
+    }else{
+        description = description.replace("[costs]", "Kosten: - ZE");
+    }
+    return description;
+}
+
 const type = {
-    0:"river",
-    1:"flat",
+    0:"water",
+    1:"meadow",
     2: "way",
     3:"mountain",
     4:"forest"
 }
-
+const typeGerman = {
+    0:"Wasser",
+    1:"Wiese",
+    2: "Weg",
+    3:"Berg",
+    4:"Wald"
+}
 const cost = {
     0:5,
     1:3,

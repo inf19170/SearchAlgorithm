@@ -29,10 +29,10 @@ function showMoreDetails() {
     let amount = {
         "all": 0,
         "forest": 0,
-        "river": 0,
+        "water": 0,
         "mountain": 0,
         "way": 0,
-        "flat": 0,
+        "meadow": 0,
     };
     let costs = 0; // Kosten, die bis zum Wegwerfen des Bootes entstanden sind
 
