@@ -73,8 +73,8 @@ function showMoreDetails() {
 
     // Feldkosten anzeigen lassen
     document.getElementById("runnedFieldsTotal").innerHTML = amount["all"].toString();
-    document.getElementById("runnedFieldsFlat").innerHTML = amount["flat"].toString();
-    document.getElementById("runnedFieldsRiver").innerHTML = amount["river"].toString();
+    document.getElementById("runnedFieldsFlat").innerHTML = amount["meadow"].toString();
+    document.getElementById("runnedFieldsRiver").innerHTML = amount["water"].toString();
     document.getElementById("runnedFieldsForest").innerHTML = amount["forest"].toString();
     document.getElementById("runnedFieldsMountain").innerHTML = amount["mountain"].toString();
     document.getElementById("runnedFieldsWay").innerHTML = amount["way"].toString();
