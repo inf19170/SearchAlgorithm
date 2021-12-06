@@ -61,7 +61,7 @@ function displayDiffMilliseconds(){
 function setPathCosts(pos, value) {
     pos = pos.toString();
     document.getElementById(pos).setAttribute("pathCost", value);
-    document.getElementById(pos).setAttribute("title", FieldDescriptionToString(pos, undefined,value));
+    document.getElementById(pos).setAttribute("title", FieldDescriptionToString(pos, undefined,value, undefined));
 }
 
 // Setze, ob er das Boot hat oder nicht

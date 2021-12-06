@@ -2,15 +2,29 @@ const highestValue = 4; // Gibt die höchste Nummer der Felder an 4 --> Wald. Er
 const reduction = 0.1; // Wert, um wie viel die Wegkosten gesenkt werden, wenn das Boot nicht mehr getragen wird
 
 
-function FieldDescriptionToString(cords, fieldType, costs){
-    const fieldDescription ="[cords]\n[type]\n[costs]";
+function FieldDescriptionToString(cords, fieldType, costs, boat){
+    const fieldDescription ="[cords]\n[type]\n[costs]\n[boat]";
     if(fieldType === undefined) fieldType = document.getElementById(cords).getAttribute("type");
+
     let description = fieldDescription.replace("[cords]", "Position: ["+cords+"]");
     description = description.replace("[type]", "Typ: "+typeGerman[fieldType]);
     if(costs !== null){
         description = description.replace("[costs]", "Kosten: "+costs+" ZE");
     }else{
         description = description.replace("[costs]", "Kosten: - ZE");
+    }
+    if(boat !== null || boat === undefined){
+        if(boat === undefined) boat = document.getElementById(cords).getAttribute("hasBoat");
+        boat = boat.toString();
+        if(boat === "true"){
+            description = description.replace("[boat]", "Boot vorhanden: Ja");
+
+        }else if(boat === "false"){
+            description = description.replace("[boat]", "Boot vorhanden: Nein");
+
+        }
+    }else{
+        description = description.replace("[boat]", "Boot vorhanden: -");
     }
     return description;
 }
