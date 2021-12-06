@@ -53,8 +53,8 @@
                 <p class="h6 centerText"><i class="fas fa-tachometer-alt"></i> Suchgeschwindigkeit:</p>
 
 
-                <input title="Einstellung der Suchgeschwindigkeit" type="range" class="form-range" max="1000" min="500" step="10" value="1000" id="time" name="time"
-                    onmouseover="setSearchTimeToLocalStorage()">
+                <input title="Einstellung der Suchgeschwindigkeit" type="range" class="form-range" max="1000" min="500"
+                    step="10" value="1000" id="time" name="time" onmouseover="setSearchTimeToLocalStorage()">
                 <div class="row">
                     <div class="col"><i>Langsam</i></div>
                     <div class="col rightText"><i>Schnell</i></div>
@@ -63,22 +63,22 @@
 
                 <div class="centerText form-check form-switch">
                     <label class="form-check-label" for="showSolution">
-                        <input title="Suchbereich anzeigen/ausblenden" onchange="switchVisibilitySearchArea()" class="form-check-input" type="checkbox"
-                            id="showSolution" disabled>
+                        <input title="Suchbereich anzeigen/ausblenden" onchange="switchVisibilitySearchArea()"
+                            class="form-check-input" type="checkbox" id="showSolution" disabled>
 
 
                         <i class="fas fa-search"></i> <i>Suchbereich</i></label>
                 </div>
                 <br><br>
-                <button title="Auswahlpunkte neu definieren" id="resetbtn" onclick="javascript:location.reload()" class="btn btn-outline-danger" disabled><i
-                        class="fas fa-redo-alt"></i> Zurücksetzen</button>
+                <button title="Auswahlpunkte neu definieren" id="resetbtn" onclick="javascript:location.reload()"
+                    class="btn btn-outline-danger" disabled><i class="fas fa-redo-alt"></i> Zurücksetzen</button>
 
             </div>
 
             <div class="col" id="auswertung">
                 <br>
-                <p class="h5 centerText"><i class="fas fa-flag-checkered"></i> <u>Auswertung - Übersicht</b></u>
-                </p>
+                <h5 class="centerText"><i class="fas fa-flag-checkered"></i> <u>Auswertung - Übersicht</b></u>
+                </h5>
                 <br>
                 <div class="centerText" id="overview">
                     <p><i><b>Boot in Wasser genutzt:&ensp;</b></i><span id="usedBoat">-</span></p>
