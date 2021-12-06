@@ -9,9 +9,9 @@
 
 // Für Benutzerfreundlichkeit: Suchgeschwindigkeit
 // Fügt die ausgewählte Suchzeit in den localStorage, um beim neu laden die Informationen zu speichern!
-function setSearchTimeToLocalStorage(){
+function setSearchTimeToLocalStorage() {
 
-    document.querySelector("#time").addEventListener ("input", function () {
+    document.querySelector("#time").addEventListener("input", function () {
         localStorage.setItem("searchTime", this.value);
     });
 
@@ -21,40 +21,40 @@ function setSearchTimeToLocalStorage(){
 
 // Für Auswertung: Mehr Details
 // Berechnet zusätzliche Informationen zu dem gelaufenen Grid
-function showMoreDetails(){
-  // Display gelaufene Felder
+function showMoreDetails() {
+    // Display gelaufene Felder
     let current = getEnd(); // Weg wird von Ende zum Start zurück verfolgt
     let throwBoat = false; // Wurde das Boot auf dem Weg weggeworfen?
     let posLostBoat = undefined;
     let amount = {
-        "all":0,
-        "forest":0,
-        "river":0,
-        "mountain":0,
-        "way":0,
-        "flat":0,
+        "all": 0,
+        "forest": 0,
+        "river": 0,
+        "mountain": 0,
+        "way": 0,
+        "flat": 0,
     };
     let costs = 0; // Kosten, die bis zum Wegwerfen des Bootes entstanden sind
 
 
     let tmpType;
 
-    while(current.toString() !== getStart().toString()){
+    while (current.toString() !== getStart().toString()) {
         tmpType = document.getElementById(current).getAttribute("type");
         let tmpThrowBoat = document.getElementById(current).getAttribute("throwBoat");
         let hasBoat = document.getElementById(current).getAttribute("hasBoat");
 
-        if(tmpThrowBoat.toString() === "true"){
+        if (tmpThrowBoat.toString() === "true") {
             throwBoat = true;
             posLostBoat = current;
             costs = document.getElementById(current).getAttribute("pathCost");
         }
 
-        if(throwBoat === false && hasBoat.toString() === "false"){
+        if (throwBoat === false && hasBoat.toString() === "false") {
             posLostBoat = current;
         }
 
-        if(current.toString() !== getEnd()){
+        if (current.toString() !== getEnd()) {
             amount["all"] = amount["all"] + 1;
             amount[type[tmpType]] = amount[type[tmpType]] + 1;
         }
@@ -65,14 +65,14 @@ function showMoreDetails(){
     amount["all"] = amount["all"] + 1;
     amount[type[tmpType]] = amount[type[tmpType]] + 1;
     // Überprüfe, ob Boot direkt am Start weggeworfen wurde
-    if(document.getElementById(getStart()).getAttribute("throwBoat").toString() === "true"){
+    if (document.getElementById(getStart()).getAttribute("throwBoat").toString() === "true") {
         throwBoat = true;
         costs = document.getElementById(getStart()).getAttribute("pathCost");
     }
 
 
     // Feldkosten anzeigen lassen
-    document.getElementById("runnedFields").innerHTML = amount["all"].toString();
+    document.getElementById("runnedFieldsTotal").innerHTML = amount["all"].toString();
     document.getElementById("runnedFieldsFlat").innerHTML = amount["flat"].toString();
     document.getElementById("runnedFieldsRiver").innerHTML = amount["river"].toString();
     document.getElementById("runnedFieldsForest").innerHTML = amount["forest"].toString();
@@ -88,34 +88,34 @@ function showMoreDetails(){
     document.getElementById("runnedCosts").innerHTML = runnedCosts;
 
     // Gelaufene Zeitkosten, wenn Boot direkt zu Anfang weggeworfen wurde
-    let lowerRunnedCosts = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost"))-costs +costs*(1-reduction), roundFactor);
+    let lowerRunnedCosts = roundFloat(parseFloat(document.getElementById(getEnd()).getAttribute("pathCost")) - costs + costs * (1 - reduction), roundFactor);
     document.getElementById("lowerRunnedCosts").innerHTML = lowerRunnedCosts;
 
-    let diff = runnedCosts -lowerRunnedCosts;
-    if(roundFloat(diff, roundFactor) > 0){
+    let diff = runnedCosts - lowerRunnedCosts;
+    if (roundFloat(diff, roundFactor) > 0) {
         document.getElementById("diffRunnedCosts").innerHTML = ' -' + roundFloat(diff, roundFactor);
     }
     else {
-    document.getElementById("diffRunnedCosts").innerHTML = roundFloat(diff, roundFactor);
+        document.getElementById("diffRunnedCosts").innerHTML = roundFloat(diff, roundFactor);
     }
 
     // Wurde das Boot weggeworfen?
-    if(throwBoat === true){
-        document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check" id="throwBoatSymbol"></i> '+"["+posLostBoat+"]";
+    if (throwBoat === true) {
+        document.getElementById("throwBoat").innerHTML = '<i class="fas fa-check" id="throwBoatSymbol"></i> ' + "[" + posLostBoat + "]";
         document.getElementById("throwBoatSymbol").setAttribute("style", "color: lightgreen");
 
         document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
         document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
-    }else {
+    } else {
 
         document.getElementById("throwBoat").innerHTML = '<i class="fas fa-times"></i>';
         document.getElementById("throwBoat").setAttribute("style", "color: rgb(255, 73, 73)");
 
-        if(document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type").toString() === "0" || document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "false"){
-            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" id="usedBoatSymbol"></i> '+"["+posLostBoat+"]";
+        if (document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type").toString() === "0" || document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "false") {
+            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" id="usedBoatSymbol"></i> ' + "[" + posLostBoat + "]";
             document.getElementById("usedBoatSymbol").setAttribute("style", "color: lightgreen");
 
-        }else{
+        } else {
             document.getElementById("usedBoat").innerHTML = '<i class="fas fa-times"></i>';
             document.getElementById("usedBoat").setAttribute("style", "color: rgb(255, 73, 73)");
         }
