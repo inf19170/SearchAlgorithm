@@ -22,10 +22,10 @@ function FieldDescriptionToString(cords, fieldType, pathCosts, boat){
         boat = boat.toString();
         if(boat === "true"){
             description = description.replace("[boat]", "Boot vorhanden: Ja");
-
+            fieldCosts = fieldCosts+" ZE";
         }else if(boat === "false"){
             description = description.replace("[boat]", "Boot vorhanden: Nein");
-            fieldCosts = (1-reduction)*fieldCosts;
+            fieldCosts = (1-reduction)*fieldCosts+" ZE (red.)";
         }
     }else{
         description = description.replace("[boat]", "Boot vorhanden: -");
