@@ -7,11 +7,11 @@ function FieldDescriptionToString(cords, fieldType, costs, boat){
     if(fieldType === undefined) fieldType = document.getElementById(cords).getAttribute("type");
 
     let description = fieldDescription.replace("[cords]", "Position: ["+cords+"]");
-    description = description.replace("[type]", "Typ: "+typeGerman[fieldType]);
+    description = description.replace("[type]", "Feldtyp: "+typeGerman[fieldType]);
     if(costs !== null){
-        description = description.replace("[costs]", "Kosten: "+costs+" ZE");
+        description = description.replace("[costs]", "Pfadkosten: "+costs+" ZE");
     }else{
-        description = description.replace("[costs]", "Kosten: - ZE");
+        description = description.replace("[costs]", "Pfadkosten: - ZE");
     }
     if(boat !== null || boat === undefined){
         if(boat === undefined) boat = document.getElementById(cords).getAttribute("hasBoat");
