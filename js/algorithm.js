@@ -82,6 +82,7 @@ async function startAlgorithmus() {
                     if(!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
                     document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
                     document.getElementById(tmpPath).setAttribute("throwBoat", true.toString());
+                    setPathCosts(tmpPath, parseFloat(document.getElementById(tmpPath).getAttribute("pathCost")));
                 }
             }
 
@@ -99,11 +100,9 @@ async function startAlgorithmus() {
             let shortDiagonale = undefined;
             for (let j = 0; j < shortestPathArray.length; j++) {
                 let pos = shortestPathArray[j];
-                //TODO Eventuell neue Funktion erstellen, die die Diagonale bestimmt
                 let diagonal = diagonalValue(pos);
                 if (shortDiagonale === undefined || diagonal < shortDiagonale) {
                     shortestPath = pos;
-                    //TODO Schauen ob das hier richtig ist:
                     shortDiagonale = diagonal;
                 }
             }
@@ -146,14 +145,12 @@ async function startAlgorithmus() {
             // Feldkosten für den expandierten Knoten davor
             let fieldCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost"));
 
-            // Falls Boot abgelegt wurde, muss die Wegzeit reduziert werden
+            // Falls Boot auf dem vorigen Feld abgelegt wurde, muss die Wegzeit reduziert werden
+            // Dasselbe auch, wenn das Boot auf dem jetzigen Feld weggeworfen wurde.
             if (document.getElementById(shortestPath).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost * (1 - reduction);
 
             // Addiere zu den Feldkosten die Pfadkosten des expandierten Knotens dazu.
-            //TODO Abfrage macht keinen Sinn
-            if (parents.get(shortestPath) != null) {
-                fieldCost += parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"));
-            }
+            let pathCost = parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"));
 
             /*
                 Für jedes Feld, dass um das gegebene Feld liegt, werden die Pfadkosten gesetzt.
@@ -165,7 +162,9 @@ async function startAlgorithmus() {
              */
             for (let j = 0; j < fieldsAround.length; j++) {
                 let pos = fieldsAround[j];
-                //TODO Darf hier das Feld über eine kürzere Strecke erreicht werden und dies genutzt werden?
+                if(document.getElementById(pos).getAttribute("throwBoat").toString() === "true") fieldCost = fieldCost * (1 - reduction);
+                fieldCost = fieldCost+pathCost;
+                //TODO Darf hier das Feld über eine andere Strecke erreicht werden um das Boot zu behalten?
                 if (document.getElementById(pos).getAttribute("pathCost") == null || parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
                     let type = document.getElementById(pos).getAttribute("type");
 
@@ -181,9 +180,9 @@ async function startAlgorithmus() {
                             let anotherWayThrowBoat = false;
 
                             while (anotherWay.toString() !== getStart().toString()){
-                                if(document.getElementById(shortestPath).getAttribute("throwBoat").toString() === "true"){
+                                if(document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true"){
                                     anotherWayThrowBoat = true;
-                                    anotherWay = getStart();
+                                    anotherWay = getStart(); // Abbruch Bedingung einleiten
                                 }
                                 anotherWay = parents.get(anotherWay);
                             }
