@@ -80,9 +80,6 @@ async function startAlgorithmus() {
                         shortestPathArray = []; // Array leeren, weil ein kürzer Weg gefunden wurde
                     }
                     if(!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
-                    document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
-                    document.getElementById(tmpPath).setAttribute("throwBoat", true.toString());
-                    setPathCosts(tmpPath, parseFloat(document.getElementById(tmpPath).getAttribute("pathCost")));
                 }
             }
 
@@ -121,7 +118,11 @@ async function startAlgorithmus() {
             Ist "shortestPath" definiert, wird dieses Feld aus der openList entfernt, expandiert und in die closedList hinzugefügt.
          */
         if(shortestPath !== undefined) {
-
+            if(document.getElementById(shortestPath).getAttribute("type").toString() === "3" && document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "true"){
+                document.getElementById(shortestPath).setAttribute("hasBoat", false.toString());
+                document.getElementById(shortestPath).setAttribute("throwBoat", true.toString());
+                setPathCosts(shortestPath,  document.getElementById(shortestPath).getAttribute("pathCost"));
+            }
             // Entferne das Feld mit dem kürzesten Weg aus der OpenList, weil dieses erweitert wird
             openList = removeArrayElement(openList, shortestPath);
 
@@ -145,12 +146,14 @@ async function startAlgorithmus() {
             // Feldkosten für den expandierten Knoten davor
             let fieldCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost"));
 
-            // Falls Boot auf dem vorigen Feld abgelegt wurde, muss die Wegzeit reduziert werden
-            // Dasselbe auch, wenn das Boot auf dem jetzigen Feld weggeworfen wurde.
+            // Falls Boot abgelegt wurde, muss die Wegzeit reduziert werden
             if (document.getElementById(shortestPath).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost * (1 - reduction);
 
             // Addiere zu den Feldkosten die Pfadkosten des expandierten Knotens dazu.
-            let pathCost = parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"));
+            //TODO Abfrage macht keinen Sinn
+            if (parents.get(shortestPath) != null) {
+                fieldCost += parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"));
+            }
 
             /*
                 Für jedes Feld, dass um das gegebene Feld liegt, werden die Pfadkosten gesetzt.
@@ -162,9 +165,7 @@ async function startAlgorithmus() {
              */
             for (let j = 0; j < fieldsAround.length; j++) {
                 let pos = fieldsAround[j];
-                if(document.getElementById(pos).getAttribute("throwBoat").toString() === "true") fieldCost = fieldCost * (1 - reduction);
-                fieldCost = fieldCost+pathCost;
-                //TODO Darf hier das Feld über eine andere Strecke erreicht werden um das Boot zu behalten?
+                //TODO Darf hier das Feld über eine kürzere Strecke erreicht werden und dies genutzt werden?
                 if (document.getElementById(pos).getAttribute("pathCost") == null || parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
                     let type = document.getElementById(pos).getAttribute("type");
 
