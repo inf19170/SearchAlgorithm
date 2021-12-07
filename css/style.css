@@ -62,7 +62,7 @@
 #footer {
     position: relative; 
     z-index: +1; 
-    background-color: rgb(20, 22, 25);
+    background-color: rgba(0, 14, 2, 0.877);
     margin-top: 10%;
 }
 
