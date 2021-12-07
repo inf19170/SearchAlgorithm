@@ -63,11 +63,12 @@
     position: relative; 
     z-index: +1; 
     background-color: rgb(20, 22, 25);
+    margin-top: 10%;
 }
 
 #infoTxt {
     position: relative;
-    bottom: 50px;
+    bottom: 25px;
 }
 
 /*Hauptinhalt: Rasterbild, Konfiguration und Auswertung*/
