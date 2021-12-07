@@ -3,14 +3,14 @@
     background-color: black;
     border: solid white;
     border-radius: 8px;
-    bottom: 100px;
+    bottom: 150px;
     position: relative;
     right: 10px;
-    transform: scale(0.8);
+    transform: scale(0.7);
 }
 
 /*Klasse, um Text in MITTIG abzubilden*/
-.centerText{
+.centerText {
     text-align: center;
 }
 
@@ -40,14 +40,6 @@
     color: white;
 } */
 
-/*Durchlaufene Pfadfelder*/
-#runnedFields {
-    border-bottom: dotted;
-    border-color:rgb(255, 255, 255);
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-}
-
 /*Verbergung der Anzeige im Vorfeld, wenn Suche NICHT erfolgreich*/
 #failTxt {
     display: none;
@@ -60,10 +52,22 @@
 }
 
 /*Ausgewählter Start-/Zielpunkt*/
-#fieldSelect{
+#fieldSelect {
     margin-bottom: 10%;
     margin-top: 5%;
     text-align: center;
+}
+
+/*Fußzeile*/
+#footer {
+    position: relative; 
+    z-index: +1; 
+    background-color: rgb(20, 22, 25);
+}
+
+#infoTxt {
+    position: relative;
+    bottom: 50px;
 }
 
 /*Hauptinhalt: Rasterbild, Konfiguration und Auswertung*/
@@ -85,8 +89,16 @@
 }
 
 /*Klasse, um Text RECHTS abzubilden*/
-.rightText{
+.rightText {
     text-align: end;
+}
+
+/*Durchlaufene Pfadfelder*/
+#runnedFields {
+    border-bottom: dotted;
+    border-color:rgb(255, 255, 255);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
 }
 
 /*Konfiguration*/
