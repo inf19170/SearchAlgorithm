@@ -71,6 +71,11 @@
     bottom: 25px;
 }
 
+/*Mail-Darstellung*/
+#mail {
+   color: white;
+}
+
 /*Hauptinhalt: Rasterbild, Konfiguration und Auswertung*/
 #mainContent {
     height: 610px;
