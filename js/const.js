@@ -29,6 +29,7 @@ function FieldDescriptionToString(cords, fieldType, pathCosts, boat){
         }
     }else{
         description = description.replace("[boat]", "Boot vorhanden: -");
+        fieldCosts = fieldCosts+" ZE";
     }
     description = description.replace("[costs]", "Feldkosten: "+fieldCosts);
     return description;
