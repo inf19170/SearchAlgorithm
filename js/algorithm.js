@@ -80,8 +80,6 @@ async function startAlgorithmus() {
                         shortestPathArray = []; // Array leeren, weil ein kürzer Weg gefunden wurde
                     }
                     if(!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
-                    document.getElementById(tmpPath).setAttribute("hasBoat", false.toString());
-                    document.getElementById(tmpPath).setAttribute("throwBoat", true.toString());
                 }
             }
 
@@ -99,11 +97,9 @@ async function startAlgorithmus() {
             let shortDiagonale = undefined;
             for (let j = 0; j < shortestPathArray.length; j++) {
                 let pos = shortestPathArray[j];
-                //TODO Eventuell neue Funktion erstellen, die die Diagonale bestimmt
                 let diagonal = diagonalValue(pos);
                 if (shortDiagonale === undefined || diagonal < shortDiagonale) {
                     shortestPath = pos;
-                    //TODO Schauen ob das hier richtig ist:
                     shortDiagonale = diagonal;
                 }
             }
@@ -122,7 +118,11 @@ async function startAlgorithmus() {
             Ist "shortestPath" definiert, wird dieses Feld aus der openList entfernt, expandiert und in die closedList hinzugefügt.
          */
         if(shortestPath !== undefined) {
-
+            if(document.getElementById(shortestPath).getAttribute("type").toString() === "3" && document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "true"){
+                document.getElementById(shortestPath).setAttribute("hasBoat", false.toString());
+                document.getElementById(shortestPath).setAttribute("throwBoat", true.toString());
+                setPathCosts(shortestPath,  document.getElementById(shortestPath).getAttribute("pathCost"));
+            }
             // Entferne das Feld mit dem kürzesten Weg aus der OpenList, weil dieses erweitert wird
             openList = removeArrayElement(openList, shortestPath);
 
@@ -181,9 +181,9 @@ async function startAlgorithmus() {
                             let anotherWayThrowBoat = false;
 
                             while (anotherWay.toString() !== getStart().toString()){
-                                if(document.getElementById(shortestPath).getAttribute("throwBoat").toString() === "true"){
+                                if(document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true"){
                                     anotherWayThrowBoat = true;
-                                    anotherWay = getStart();
+                                    anotherWay = getStart(); // Abbruch Bedingung einleiten
                                 }
                                 anotherWay = parents.get(anotherWay);
                             }
