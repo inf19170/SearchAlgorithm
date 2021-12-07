@@ -2,16 +2,20 @@ const highestValue = 4; // Gibt die höchste Nummer der Felder an 4 --> Wald. Er
 const reduction = 0.1; // Wert, um wie viel die Wegkosten gesenkt werden, wenn das Boot nicht mehr getragen wird
 
 
-function FieldDescriptionToString(cords, fieldType, costs, boat){
-    const fieldDescription ="[cords]\n[type]\n[costs]\n[boat]";
+function FieldDescriptionToString(cords, fieldType, pathCosts, boat){
+    const fieldDescription ="[cords]\n[type]\n[costs]\n[pathCosts]\n[boat]";
+
     if(fieldType === undefined) fieldType = document.getElementById(cords).getAttribute("type");
+
+    let fieldCosts = cost[fieldType];
+
 
     let description = fieldDescription.replace("[cords]", "Position: ["+cords+"]");
     description = description.replace("[type]", "Feldtyp: "+typeGerman[fieldType]);
-    if(costs !== null){
-        description = description.replace("[costs]", "Pfadkosten: "+costs+" ZE");
+    if(pathCosts !== null){
+        description = description.replace("[pathCosts]", "Pfadkosten: "+pathCosts+" ZE");
     }else{
-        description = description.replace("[costs]", "Pfadkosten: - ZE");
+        description = description.replace("[pathCosts]", "Pfadkosten: - ZE");
     }
     if(boat !== null || boat === undefined){
         if(boat === undefined) boat = document.getElementById(cords).getAttribute("hasBoat");
@@ -21,11 +25,12 @@ function FieldDescriptionToString(cords, fieldType, costs, boat){
 
         }else if(boat === "false"){
             description = description.replace("[boat]", "Boot vorhanden: Nein");
-
+            fieldCosts = (1-reduction)*fieldCosts;
         }
     }else{
         description = description.replace("[boat]", "Boot vorhanden: -");
     }
+    description = description.replace("[costs]", "Feldkosten: "+fieldCosts);
     return description;
 }
 
