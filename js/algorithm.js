@@ -184,9 +184,10 @@ async function startAlgorithmus() {
                                 if(document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true"){
                                     anotherWayThrowBoat = true;
                                     anotherWay = getStart(); // Abbruch Bedingung einleiten
-                                }else{
-                                    anotherWay = parents.get(anotherWay);
+                                    continue;
                                 }
+                                anotherWay = parents.get(anotherWay);
+
                             }
                             // Überprüfe dieselbe Abfrage noch für den Start:
                             if(document.getElementById(getStart().toString()).getAttribute("throwBoat").toString() === "true"){
