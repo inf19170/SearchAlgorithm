@@ -183,17 +183,14 @@ async function startAlgorithmus() {
                             while (anotherWay.toString() !== getStart().toString()){
                                 if(document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true"){
                                     anotherWayThrowBoat = true;
-                                    anotherWay = getStart(); // Abbruch Bedingung einleiten
-                                    continue;
+                                    break;
                                 }
                                 anotherWay = parents.get(anotherWay);
-
                             }
                             // Überprüfe dieselbe Abfrage noch für den Start:
                             if(document.getElementById(getStart().toString()).getAttribute("throwBoat").toString() === "true"){
                                 anotherWayThrowBoat = true;
                             }
-
                             if(anotherWayThrowBoat === true) document.getElementById(pos).setAttribute("throwBoat", false.toString());
                         }
                     }
