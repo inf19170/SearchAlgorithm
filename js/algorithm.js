@@ -235,7 +235,7 @@ async function startAlgorithmus() {
 
 // Gibt den Wert für die heuristische Funktion für die gegeben Position
 function heuristFunction(pos) {
-    return diagonalValue(pos);
+    return 2*diagonalValue(pos);
 }
 // Gibt den Diagonalen-Wert für die gegebene Position
 function diagonalValue(pos) {
