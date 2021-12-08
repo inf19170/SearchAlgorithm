@@ -33,7 +33,9 @@ function FieldDescriptionToString(cords, fieldType, pathCosts, boat){
         fieldCosts = fieldCosts+" ZE";
     }
     description = description.replace("[costs]", "Feldkosten: "+fieldCosts);
-    description = description.replace("[heuristic]", "Heuristische Funk.: "+heuristFunction(cords));
+    let heuristic = heuristFunction(cords);
+    if(heuristic === undefined) heuristic = "undefiniert";
+    description = description.replace("[heuristic]", "Heuristische Funk.: "+heuristic);
     return description;
 }
 
