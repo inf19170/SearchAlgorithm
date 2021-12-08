@@ -236,7 +236,11 @@ async function startAlgorithmus() {
 
 // Gibt den Wert für die heuristische Funktion für die gegeben Position
 function heuristFunction(pos) {
-    return 2*diagonalValue(pos); // 2 für die geringste mögliche Feldkosten
+    let diagonal = diagonalValue(pos);
+    if(diagonal !== undefined){
+        return 2*diagonal; // 2 für die geringste mögliche Feldkosten
+    }
+    return diagonal;
 }
 // Gibt den Diagonalen-Wert für die gegebene Position
 function diagonalValue(pos) {
