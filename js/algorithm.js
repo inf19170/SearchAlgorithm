@@ -184,8 +184,9 @@ async function startAlgorithmus() {
                                 if(document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true"){
                                     anotherWayThrowBoat = true;
                                     anotherWay = getStart(); // Abbruch Bedingung einleiten
+                                }else{
+                                    anotherWay = parents.get(anotherWay);
                                 }
-                                anotherWay = parents.get(anotherWay);
                             }
                             // Überprüfe dieselbe Abfrage noch für den Start:
                             if(document.getElementById(getStart().toString()).getAttribute("throwBoat").toString() === "true"){
@@ -235,7 +236,7 @@ async function startAlgorithmus() {
 
 // Gibt den Wert für die heuristische Funktion für die gegeben Position
 function heuristFunction(pos) {
-    return 2*diagonalValue(pos);
+    return 2*diagonalValue(pos); // 2 für die geringste mögliche Feldkosten
 }
 // Gibt den Diagonalen-Wert für die gegebene Position
 function diagonalValue(pos) {
