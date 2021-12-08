@@ -26,25 +26,6 @@ function getSleepTime() {
 }
 
 
-
-
-// Gibt den Wert für die heuristische Funktion für die gegeben Position
-function heuristFunction(pos) {
-    // Heuristische Funktion kann nur verwendet werden, wenn "Ende" definiert ist!
-    if (getEnd() == null) return undefined;
-
-    let posX = parseInt(pos.split(":")[0]);
-    let posY = parseInt(pos.split(":")[1]);
-    let endX = parseInt(getEnd().split(":")[0]);
-    let endY = parseInt(getEnd().split(":")[1]);
-
-    let diff = 0;
-    diff += Math.abs(posX - endX);
-    diff += Math.abs(posY - endY);
-    return diff;
-}
-
-
 // Zeigt Lösung & Auswertung
 function showSolution() {
     solutionFound();
