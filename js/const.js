@@ -1,9 +1,10 @@
 const highestValue = 4; // Gibt die höchste Nummer der Felder an 4 --> Wald. Erhöhen, falls es Felder mit höhere Wertigkeit gibt
+
 const reduction = 0.1; // Wert, um wie viel die Wegkosten gesenkt werden, wenn das Boot nicht mehr getragen wird
 
-
+// Erstellt individuell für jedes Feld den Titel (Text, der beim Maus-Hovern erscheint)
 function FieldDescriptionToString(cords, fieldType, pathCosts, boat){
-    const fieldDescription ="[cords]\n[type]\n[costs]\n[pathCosts]\n[boat]";
+    const fieldDescription ="[cords]\n[type]\n[costs]\n[pathCosts]\n[heuristic]\n[boat]";
 
     if(fieldType === undefined) fieldType = document.getElementById(cords).getAttribute("type");
 
@@ -32,6 +33,7 @@ function FieldDescriptionToString(cords, fieldType, pathCosts, boat){
         fieldCosts = fieldCosts+" ZE";
     }
     description = description.replace("[costs]", "Feldkosten: "+fieldCosts);
+    description = description.replace("[heuristic]", "Heuristische Funk.: "+heuristFunction(cords));
     return description;
 }
 
@@ -42,6 +44,7 @@ const type = {
     3:"mountain",
     4:"forest"
 }
+// Übersetzung der Feldbezeichnungen
 const typeGerman = {
     0:"Wasser",
     1:"Wiese",
@@ -49,6 +52,8 @@ const typeGerman = {
     3:"Berg",
     4:"Wald"
 }
+
+// Kosten für die Feldtypen
 const cost = {
     0:5,
     1:3,
@@ -57,6 +62,7 @@ const cost = {
     4:11
 }
 
+// Farbcodes für Feldtypen sowie für Start- & Ziel- oder Such-Feld
 const color = {
     0:"#9bc2e6",
     1:"#c6efce",
@@ -68,7 +74,7 @@ const color = {
     "searchField":"rgb(127,255,0)"
 
 }
-
+// Symbole für die einzelnen Feldtypen
 const symbols = {
     0:"<i class=\"fas fa-water\"></i>",
     1:"<i class=\"fas fa-hiking\"></i>",
@@ -78,6 +84,7 @@ const symbols = {
 
 }
 
+// Mit dieser Variable kann das Spielfeld angepasst oder geändert werden
 const data =
     "1;1;1;1;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;1;1;4;4;1;1;1;1;3;3;3;3;0;0;4;1;1;1;1;1\n" +
     "1;1;1;4;4;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;4;4;4;4;1;1;1;3;3;0;0;0;4;4;1;1;1;1;1\n" +
