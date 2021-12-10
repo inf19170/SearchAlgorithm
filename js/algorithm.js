@@ -13,6 +13,7 @@ async function startAlgorithmus() {
             kann in Kommentaren weiter unten gelesen werden.
 
          */
+        let tryMountain = false;
         for (let i = 0; i < openList.length; i++) {
             let tmpPath = openList[i];
             let tmpType = parseInt(document.getElementById(tmpPath).getAttribute("type"));
@@ -49,7 +50,7 @@ async function startAlgorithmus() {
 
              */
 
-            if ((tmpType.toString() === "3" && tmpHasBoat.toString() === "false") || (tmpType.toString() === "0" && tmpHasBoat.toString() === "true") || (tmpType.toString() !== "3" && tmpType.toString() !== "0")) {
+            if (!tryMountain && ((tmpType.toString() === "3" && tmpHasBoat.toString() === "false") || (tmpType.toString() === "0" && tmpHasBoat.toString() === "true") || (tmpType.toString() !== "3" && tmpType.toString() !== "0"))) {
                 if (shortestPath === undefined) {
                     shortestPath = tmpPath;
                 } else {
@@ -65,7 +66,7 @@ async function startAlgorithmus() {
                     }
                 }
 
-            } else if (tmpType.toString() === "3") {
+            } else if (tryMountain && tmpType.toString() === "3") {
 
                 // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden (Damit der Berg bestiegen werden kann), sofern dies kostengünstiger ist!
                 if (shortestPath === undefined) {
@@ -82,7 +83,11 @@ async function startAlgorithmus() {
                     if(!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
                 }
             }
-
+            // Falls kein "normaler" Weg zu einem Ziel geführt hat, wird probiert einen Berg zu nehmen und dabei das Boot wegzuwerfen!
+            if(i === openList.length-1 && shortestPath === undefined){
+                tryMountain = true;
+                i = 0;
+            }
 
 
         }
@@ -104,6 +109,8 @@ async function startAlgorithmus() {
                 }
             }
         }
+
+
         /*
             Falls es dazu kommen sollte, dass es keinen kürzesten Weg ("shortestPath") gefunden werden konnte,
             und / oder die openList leer ist und dazu das Ziel nicht erreicht wurde, so wurde keine Lösung gefunden.
@@ -196,6 +203,7 @@ async function startAlgorithmus() {
                     }
                     openList.push(pos);
                     parents.set(pos, shortestPath);
+                    childs.set(shortestPath, pos);
                     setPathCosts(pos, fieldCost);
                 }
 
