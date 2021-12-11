@@ -118,10 +118,12 @@ async function startAlgorithmus() {
             while(possiblePath){
                 await Sleep(getSleepTime());
                 possiblePath = false;
-                if(finished()) continue;
+                if(finished()){
+                    setPathCosts(getEnd(), calculatePathCost(parents.get(getEnd().toString())));
+                    continue;
+                }
                 for(let j = 0; j < openList.length; j++){
                     let field = openList[j];
-                    if(field == "27:7") console.log(field);
                     let tmpType = document.getElementById(field).getAttribute("type");
                     let tmpHasBoat = document.getElementById(field).getAttribute("hasBoat");
 
@@ -132,7 +134,6 @@ async function startAlgorithmus() {
                         //document.getElementById(field).style.backgroundColor = "pink";
                         for (let z = 0; z < fieldsAround.length; z++) {
                             let fieldAround = fieldsAround[z];
-                            if(field == "27:7") console.log(fieldAround);
 
                             if(!openList.includes(fieldAround)){
                                 if(document.getElementById(fieldAround).getAttribute("hasBoat").toString() === "true" && closedList.includes(fieldAround)){
@@ -150,7 +151,7 @@ async function startAlgorithmus() {
                         }
                         if(shortestPathFieldAround !== undefined){
                             possiblePath = true;
-                            document.getElementById(field).style.backgroundColor = color["searchField"];
+                            if(field.toString() !== getEnd()) document.getElementById(field).style.backgroundColor = color["searchField"];
                             //document.getElementById(field).style.backgroundColor = "purple";
                             document.getElementById(field).setAttribute("hasBoat", true.toString());
                             document.getElementById(field).setAttribute("throwBoat", false.toString());
@@ -167,7 +168,7 @@ async function startAlgorithmus() {
                             fieldsAround = getFieldsAround(field);
                             for (let z = 0; z < fieldsAround.length; z++) {
                                 let tempField = fieldsAround[z];
-                                if(tempField == "27:7") console.log("2. Mal: "+tempField);
+                                if(tempField == getEnd()) console.log("2. Mal: "+tempField);
                                 let tmpType = document.getElementById(tempField).getAttribute("type");
                                 let tmpHasBoat = document.getElementById(tempField).getAttribute("hasBoat");
                                 if(!openList.includes(tempField) && document.getElementById(tempField).getAttribute("pathCost") == null){
@@ -179,27 +180,28 @@ async function startAlgorithmus() {
                                 // Nur Elemente, die Wasser sind und kein Boot haben!
                                 if (tmpType.toString() === "0" && tmpHasBoat.toString() === "false") {
                                     possiblePath = true;
-                                    document.getElementById(tempField).style.backgroundColor = color["searchField"];
-                                    //document.getElementById(tempField).style.backgroundColor = "black";
+                                    if(tempField.toString() !== getEnd().toString()) document.getElementById(tempField).style.backgroundColor = color["searchField"];
                                     document.getElementById(tempField).setAttribute("hasBoat", true.toString());
                                     document.getElementById(tempField).setAttribute("throwBoat", false.toString());
                                     parents.set(tempField, field);
                                     addChilds(field, tempField);
                                     openList = removeArrayElement(openList, tempField);
                                     let newFieldsAround = getFieldsAround(tempField);
+                                    let newFieldCost = calculatePathCost(tempField);
                                     for (let t = 0; t < newFieldsAround.length; t++) {
-                                        if(!openList.includes(newFieldsAround[t]) && document.getElementById(newFieldsAround[t]).getAttribute("pathCost") == null){
+                                        if(!openList.includes(newFieldsAround[t]) && (document.getElementById(newFieldsAround[t]).getAttribute("pathCost") == null)){
                                             openList.push(newFieldsAround[t]);
                                             document.getElementById(newFieldsAround[t]).setAttribute("hasBoat", false.toString());
                                             document.getElementById(newFieldsAround[t]).setAttribute("throwBoat", false.toString());
                                             if(newFieldsAround[t].toString() === getEnd()){
                                                 document.getElementById(newFieldsAround[t]).setAttribute("hasBoat", true.toString());
                                                 document.getElementById(newFieldsAround[t]).setAttribute("throwBoat", false.toString());
+                                                parents.set(newFieldsAround[t], tempField);
+                                                setPathCosts(newFieldsAround[t],newFieldCost);
                                             }
                                             parents.set(newFieldsAround[t], tempField);
                                             addChilds(tempField, newFieldsAround[t]);
-                                            let fieldCost = calculatePathCost(tempField);
-                                            setPathCosts(newFieldsAround[t],fieldCost);
+                                            setPathCosts(newFieldsAround[t],newFieldCost);
                                         }
                                     }
                                     closedList.push(tempField);
