@@ -119,8 +119,10 @@ async function startAlgorithmus() {
                 await Sleep(getSleepTime());
                 possiblePath = false;
                 if(finished()){
-                    setPathCosts(getEnd(), calculatePathCost(parents.get(getEnd().toString())));
-                    continue;
+                    if(parents.get(getEnd().toString()) !== undefined){
+                        setPathCosts(getEnd(), calculatePathCost(parents.get(getEnd().toString())));
+                        continue;
+                    }
                 }
                 for(let j = 0; j < openList.length; j++){
                     let field = openList[j];
