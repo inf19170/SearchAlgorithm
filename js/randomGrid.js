@@ -33,9 +33,6 @@ function newGrid(height, length){
 
 
 function randomPosition(){
-    return;
-    console.log(maxHeight);
-    console.log(maxWidth);
     const height = maxHeight-1;
     const width = maxWidth-1;
 
