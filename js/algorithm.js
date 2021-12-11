@@ -4,10 +4,9 @@ async function startAlgorithmus() {
     while (openList.length > 0) {
 
 
-        // Ermittle das mögliche Feld aus der OpenList mit dem kürzesten Weg
+            // Ermittle das mögliche Feld aus der OpenList mit dem kürzesten Weg
         let shortestPath = undefined;
         let shortestPathArray = [];
-
         /*
             Alle offenen Felder (openList) werden durchgegangen. Was genau im einzelnen gemacht wird,
             kann in Kommentaren weiter unten gelesen werden.
@@ -22,12 +21,13 @@ async function startAlgorithmus() {
             /*
                 Hier werden alle Felder aus der openListe entfernt, die keine Relevanz mehr haben. Dazu zählen Wasserfelder
                 bei denen kein Boot mehr vorhanden ist
-             */
+             *//*
             if (tmpType.toString() === "0" && tmpHasBoat.toString() === "false") {
-                openList = removeArrayElement(openList, tmpPath);
+                if(i === openList.length-1){ i--; }
                 i--; // Dadurch, dass ein Element aus der Liste entfernt wurde, ist das nächste Element an derselben i. Stelle wie gerade eben.
+                openList = removeArrayElement(openList, tmpPath);
                 continue; // Für Schleife mit nächsten Element aus!
-            }
+            }*/
 
             /*
                 Nachfolgend wird ermittelt, welche Felder nach der gegebene Logik betretbar sind
@@ -66,8 +66,8 @@ async function startAlgorithmus() {
                     }
                 }
 
-            } else if (tryMountain && tmpType.toString() === "3") {
-
+            }
+            if (tryMountain && tmpType.toString() === "3") {
                 // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden (Damit der Berg bestiegen werden kann), sofern dies kostengünstiger ist!
                 if (shortestPath === undefined) {
                     shortestPath = tmpPath;
@@ -84,12 +84,10 @@ async function startAlgorithmus() {
                 }
             }
             // Falls kein "normaler" Weg zu einem Ziel geführt hat, wird probiert einen Berg zu nehmen und dabei das Boot wegzuwerfen!
-            if(i === openList.length-1 && shortestPath === undefined){
+            if(i === openList.length-1 && shortestPath === undefined && tryMountain === false){
                 tryMountain = true;
-                i = 0;
+                i = -1;
             }
-
-
         }
 
         /*
@@ -110,6 +108,115 @@ async function startAlgorithmus() {
             }
         }
 
+
+        /*
+            Initialisiere Suche mit Optimierung für Wasserfelder, dass dort das Boot erhalten bleibt:
+         */
+
+        if (shortestPath === undefined && openList.length > 0) {
+            let possiblePath = true;
+            while(possiblePath){
+                await Sleep(getSleepTime());
+                possiblePath = false;
+                if(finished()) continue;
+                for(let j = 0; j < openList.length; j++){
+                    let field = openList[j];
+                    if(field == "27:7") console.log(field);
+                    let tmpType = document.getElementById(field).getAttribute("type");
+                    let tmpHasBoat = document.getElementById(field).getAttribute("hasBoat");
+
+                    // Nur Elemente, die Wasser sind und kein Boot haben!
+                    if (tmpType.toString() === "0" && tmpHasBoat.toString() === "false") {
+                        let fieldsAround = getFieldsAround(field);
+                        let shortestPathFieldAround = undefined;
+                        //document.getElementById(field).style.backgroundColor = "pink";
+                        for (let z = 0; z < fieldsAround.length; z++) {
+                            let fieldAround = fieldsAround[z];
+                            if(field == "27:7") console.log(fieldAround);
+
+                            if(!openList.includes(fieldAround)){
+                                if(document.getElementById(fieldAround).getAttribute("hasBoat").toString() === "true" && closedList.includes(fieldAround)){
+                                    //document.getElementById(field).style.backgroundColor = color["searchField"];
+                                    //document.getElementById(fieldAround).style.backgroundColor = "orange";
+                                    if(shortestPathFieldAround === undefined) {
+                                        shortestPathFieldAround = fieldAround;
+                                    }else{
+                                        if(document.getElementById(shortestPathFieldAround).getAttribute("pathCost") > document.getElementById(fieldAround).getAttribute("pathCost")){
+                                            shortestPathFieldAround = fieldAround;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(shortestPathFieldAround !== undefined){
+                            possiblePath = true;
+                            document.getElementById(field).style.backgroundColor = color["searchField"];
+                            //document.getElementById(field).style.backgroundColor = "purple";
+                            document.getElementById(field).setAttribute("hasBoat", true.toString());
+                            document.getElementById(field).setAttribute("throwBoat", false.toString());
+                            parents.set(field, shortestPathFieldAround);
+                            addChilds(shortestPathFieldAround, field);
+                            openList = removeArrayElement(openList, field);
+                            closedList.push(field);
+                            let fieldCost = calculatePathCost(shortestPathFieldAround);
+                            setPathCosts(field,fieldCost);
+
+                        }
+                        // Das Feld expandieren, wenn es das Boot hat:
+                        if(document.getElementById(field).getAttribute("hasBoat").toString() === "true"){
+                            fieldsAround = getFieldsAround(field);
+                            for (let z = 0; z < fieldsAround.length; z++) {
+                                let tempField = fieldsAround[z];
+                                if(tempField == "27:7") console.log("2. Mal: "+tempField);
+                                let tmpType = document.getElementById(tempField).getAttribute("type");
+                                let tmpHasBoat = document.getElementById(tempField).getAttribute("hasBoat");
+                                if(!openList.includes(tempField) && document.getElementById(tempField).getAttribute("pathCost") == null){
+                                    openList.push(tempField);
+                                    document.getElementById(tempField).setAttribute("hasBoat", false.toString());
+                                    document.getElementById(tempField).setAttribute("throwBoat", false.toString());
+                                    possiblePath = true;
+                                }
+                                // Nur Elemente, die Wasser sind und kein Boot haben!
+                                if (tmpType.toString() === "0" && tmpHasBoat.toString() === "false") {
+                                    possiblePath = true;
+                                    document.getElementById(tempField).style.backgroundColor = color["searchField"];
+                                    //document.getElementById(tempField).style.backgroundColor = "black";
+                                    document.getElementById(tempField).setAttribute("hasBoat", true.toString());
+                                    document.getElementById(tempField).setAttribute("throwBoat", false.toString());
+                                    parents.set(tempField, field);
+                                    addChilds(field, tempField);
+                                    openList = removeArrayElement(openList, tempField);
+                                    let newFieldsAround = getFieldsAround(tempField);
+                                    for (let t = 0; t < newFieldsAround.length; t++) {
+                                        if(!openList.includes(newFieldsAround[t]) && document.getElementById(newFieldsAround[t]).getAttribute("pathCost") == null){
+                                            openList.push(newFieldsAround[t]);
+                                            document.getElementById(newFieldsAround[t]).setAttribute("hasBoat", false.toString());
+                                            document.getElementById(newFieldsAround[t]).setAttribute("throwBoat", false.toString());
+                                            if(newFieldsAround[t].toString() === getEnd()){
+                                                document.getElementById(newFieldsAround[t]).setAttribute("hasBoat", true.toString());
+                                                document.getElementById(newFieldsAround[t]).setAttribute("throwBoat", false.toString());
+                                            }
+                                            parents.set(newFieldsAround[t], tempField);
+                                            addChilds(tempField, newFieldsAround[t]);
+                                            let fieldCost = calculatePathCost(tempField);
+                                            setPathCosts(newFieldsAround[t],fieldCost);
+                                        }
+                                    }
+                                    closedList.push(tempField);
+                                    let fieldCost = calculatePathCost(field);
+                                    setPathCosts(tempField,fieldCost);
+
+                                }
+                            }
+                        }
+
+
+
+                    }
+                }
+
+            }
+        }
 
         /*
             Falls es dazu kommen sollte, dass es keinen kürzesten Weg ("shortestPath") gefunden werden konnte,
@@ -137,9 +244,9 @@ async function startAlgorithmus() {
             if (shortestPath.toString() !== getStart().toString()) {
                 document.getElementById(shortestPath).style.backgroundColor = color["searchField"];
             }
-
             // Füge das entfernte Feld in die ClosedList
             closedList.push(shortestPath);
+
 
             /* Berechne die Schritte für die Zellen außen rum */
             /*
@@ -157,7 +264,6 @@ async function startAlgorithmus() {
             if (document.getElementById(shortestPath).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost * (1 - reduction);
 
             // Addiere zu den Feldkosten die Pfadkosten des expandierten Knotens dazu.
-            //TODO Abfrage macht keinen Sinn
             if (parents.get(shortestPath) != null) {
                 fieldCost += parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"));
             }
@@ -179,7 +285,15 @@ async function startAlgorithmus() {
                     // Setze, dass das Boot abgelegt wurde, wenn Wasser überquert wurde oder das Feld zuvor schon kein Boot mehr hatte
                     if (type.toString() !== "0" && document.getElementById(shortestPath).getAttribute("type").toString() === "0" || document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "false") {
                         setHasBoat(pos, false);
+                    }
+                    /*
+                        Überprüfen, ob ein neuer kürzer Weg gefunden wurde
+                        --> Ja:
+                            - Ggf. throwBoat anpassen
+                            - Für alle Felder danach müssen die "pathCost", "hasBoat" und "throwBoat" angepasst werden
 
+                     */
+                    if(parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost){
                         /*
                             Wert für "throwBoat" auf false setzen, sofern bei unserem neuen Weg throwBoat schon mal true ist (Das Boot wurde schon früher weggeworfen!)
                          */
@@ -200,10 +314,40 @@ async function startAlgorithmus() {
                             }
                             if(anotherWayThrowBoat === true) document.getElementById(pos).setAttribute("throwBoat", false.toString());
                         }
+
+                        /*
+                            Für alle Nachfolger müssen die "pathCost" und "hasBoat" angepasst werden
+                         */
+                        let hasBoat = document.getElementById(pos).getAttribute("hasBoat");
+
+                        let currentArray = [pos];
+                        while(currentArray.length >0){
+                            let current = currentArray[0];
+                            let children = childs.get(currentArray[0]);
+                            if(children !== null && children !== undefined){
+                                for (let z = 0; z < children.length; z++) {
+                                    let child = children[z];
+                                    let parent = current;
+                                    document.getElementById(child).setAttribute("hasBoat", hasBoat);
+                                    if(hasBoat.toString() === "false" && document.getElementById(child).getAttribute("throwBoat").toString() === "true") document.getElementById(child).setAttribute("throwBoat", "false");
+                                    let tmpFieldCost = parseFloat(document.getElementById(parent).getAttribute("cost"));
+
+                                    if (document.getElementById(parent).getAttribute("hasBoat").includes("false")) tmpFieldCost = tmpFieldCost * (1 - reduction);
+
+                                    if (parents.get(parent) != null) {
+                                        tmpFieldCost += parseFloat(document.getElementById(parent).getAttribute("pathCost"));
+                                    }
+                                    setPathCosts(child, tmpFieldCost);
+                                }
+                            }
+                            currentArray = removeArrayElement(currentArray, current);
+                        }
+                        removeChilds(parents.get(pos), pos);
+                    }else{
+                        openList.push(pos);
                     }
-                    openList.push(pos);
                     parents.set(pos, shortestPath);
-                    childs.set(shortestPath, pos);
+                    addChilds(shortestPath, pos);
                     setPathCosts(pos, fieldCost);
                 }
 
@@ -212,17 +356,18 @@ async function startAlgorithmus() {
             // Wartezeit zwischen den Suchschritten (kann von Benutzer manuell verändert werden)
             await Sleep(getSleepTime());
 
-            /*
-                Nachdem alle Knoten expandiert sind, wird überprüft, ob das Ziel erreicht wurde. Falls dies der Fall ist,
-                wird die Lösung angezeigt und die Algorithmus wird abgebrochen.
-            */
-            if (finished()) {
-                displayDiffMilliseconds();
-                document.getElementById("showSolution").removeAttribute("hidden");
-                await Sleep(250);
-                showSolution();
-                break;
-            }
+
+        }
+        /*
+            Nachdem alle Knoten expandiert sind, wird überprüft, ob das Ziel erreicht wurde. Falls dies der Fall ist,
+            wird die Lösung angezeigt und die Algorithmus wird abgebrochen.
+        */
+        if (finished()) {
+            displayDiffMilliseconds();
+            document.getElementById("showSolution").removeAttribute("hidden");
+            await Sleep(250);
+            showSolution();
+            break;
         }
 
     }
@@ -232,7 +377,7 @@ async function startAlgorithmus() {
         Dieser Fall dient als reine Sicherheitsvorkehrung. Es sollte in keinem Falle möglich sein, dass die Abfrage anschlägt.
      */
 
-    if (!finished() && openList.length === 0) {
+    if (!finished()) {
         noSolutionFound();
         displayDiffMilliseconds();
     }
@@ -265,6 +410,6 @@ function diagonalValue(pos) {
 }
 // Überprüft, ob das Ziel erreicht wurde
 function finished() {
-    return openList.includes(getEnd());
+    return (openList.includes(getEnd()) || closedList.includes(getEnd()));
 }
 

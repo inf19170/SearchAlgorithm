@@ -30,3 +30,26 @@ function newGrid(height, length){
     }
     return string;
 }
+
+
+function randomPosition(){
+    return;
+    console.log(maxHeight);
+    console.log(maxWidth);
+    const height = maxHeight-1;
+    const width = maxWidth-1;
+
+    let randomHeight = Math.round(Math.random()*height);
+    let randomWidth = Math.round(Math.random()*width);
+
+    const start = randomWidth+":"+randomHeight;
+    displayOption(start, true);
+    setStartAndEnd(start);
+
+    randomHeight = Math.round(Math.random()*height);
+    randomWidth = Math.round(Math.random()*width);
+    const end = randomWidth+":"+randomHeight;
+
+    displayOption(end, true);
+    setStartAndEnd(end);
+}

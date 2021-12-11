@@ -112,7 +112,10 @@ function showMoreDetails() {
         document.getElementById("throwBoat").setAttribute("style", "color: rgb(255, 73, 73)");
 
         if (document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type").toString() === "0" || document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "false") {
-            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" id="usedBoatSymbol"></i> ' + "[" + posLostBoat + "]";
+            document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" id="usedBoatSymbol"></i> '
+                if(document.getElementById(getEnd().toString()).getAttribute("type").toString() !== "0"){
+                    document.getElementById("usedBoat").innerHTML += "[" + posLostBoat + "]";
+                }
             document.getElementById("usedBoatSymbol").setAttribute("style", "color: lightgreen");
 
         } else {

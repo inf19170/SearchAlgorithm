@@ -5,6 +5,7 @@ window.onload = function () {
     if (time != null) {
         document.getElementById("time").setAttribute("value", time);
     }
+    if(localStorage.getItem("debug") !== null && localStorage.getItem("debug").toString() === "true") randomPosition();
 }
 
 
@@ -45,6 +46,7 @@ async function showPathTo(endPos) {
         way.push(current);
         if (document.getElementById(current).getAttribute("throwBoat").toString() === "true") posThrowBoat = current;
         current = parents.get(current);
+        console.log(current);
     }
     way.push(getStart());
 
@@ -124,4 +126,19 @@ function solutionFound() {
 // Returns the cost of the given field
 function getFieldCosts(pos) {
     return document.getElementById(pos).getAttribute("cost");
+}
+
+
+function calculatePathCost(parent){
+    // Feldkosten für den expandierten Knoten davor
+    let fieldCost = parseFloat(document.getElementById(parent).getAttribute("cost"));
+
+    // Falls Boot abgelegt wurde, muss die Wegzeit reduziert werden
+    if (document.getElementById(parent).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost * (1 - reduction);
+
+    // Addiere zu den Feldkosten die Pfadkosten des expandierten Knotens dazu.
+    if (parents.get(parent) != null) {
+        fieldCost += parseFloat(document.getElementById(parent).getAttribute("pathCost"));
+    }
+    return fieldCost;
 }
