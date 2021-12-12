@@ -90,7 +90,7 @@ async function setStartAndEnd(id) {
         document.getElementById("startSelect").innerHTML = symbols[document.getElementById(getStart()).getAttribute("type")] + ' [' + getStart() + ']';
         document.getElementById(getStart()).style.backgroundColor = "yellow";
         document.getElementById("resetbtn").disabled = false;
-    } else if (getStart().toString() === id.toString()) {
+    } else if (getStart().toString() === id.toString() && getEnd() === null) {
         alert("Das Ziel darf sich nicht auf dem Startfeld befinden!");
     } else if (getEnd() == null) {
         setEnd(id);
