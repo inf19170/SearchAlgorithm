@@ -4,7 +4,7 @@ async function startAlgorithmus() {
     while (openList.length > 0) {
 
 
-            // Ermittle das mögliche Feld aus der OpenList mit dem kürzesten Weg
+        // Ermittle das mögliche Feld aus der OpenList mit dem kürzesten Weg
         let shortestPath = undefined;
         let shortestPathArray = [];
         /*
@@ -58,11 +58,11 @@ async function startAlgorithmus() {
                     let tmpPathCost = parseFloat(document.getElementById(tmpPath).getAttribute("cost")) + parseFloat(document.getElementById(tmpPath).getAttribute("pathCost")) + heuristFunction(tmpPath);
                     let shortestPathCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost")) + parseFloat(document.getElementById(shortestPath).getAttribute("pathCost")) + heuristFunction(shortestPath);
                     if (tmpPathCost <= shortestPathCost) {
-                        if (tmpPathCost < shortestPathCost){
+                        if (tmpPathCost < shortestPathCost) {
                             shortestPath = tmpPath;
                             shortestPathArray = []; // Array leeren, weil ein kürzer Weg gefunden wurde
                         }
-                        if(!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
+                        if (!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
                     }
                 }
 
@@ -76,15 +76,15 @@ async function startAlgorithmus() {
                 let shortestPathCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost")) + parseFloat(document.getElementById(shortestPath).getAttribute("pathCost")) + heuristFunction(shortestPath);
 
                 if (tmpPathCost <= shortestPathCost) {
-                    if (tmpPathCost < shortestPathCost){
+                    if (tmpPathCost < shortestPathCost) {
                         shortestPath = tmpPath;
                         shortestPathArray = []; // Array leeren, weil ein kürzer Weg gefunden wurde
                     }
-                    if(!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
+                    if (!shortestPathArray.includes(tmpPath)) shortestPathArray.push(tmpPath);
                 }
             }
             // Falls kein "normaler" Weg zu einem Ziel geführt hat, wird probiert einen Berg zu nehmen und dabei das Boot wegzuwerfen!
-            if(i === openList.length-1 && shortestPath === undefined && tryMountain === false){
+            if (i === openList.length - 1 && shortestPath === undefined && tryMountain === false) {
                 tryMountain = true;
                 i = -1;
             }
@@ -115,16 +115,16 @@ async function startAlgorithmus() {
 
         if (shortestPath === undefined && openList.length > 0) {
             let possiblePath = true;
-            while(possiblePath){
+            while (possiblePath) {
                 await Sleep(getSleepTime());
                 possiblePath = false;
-                if(finished()){
-                    if(parents.get(getEnd().toString()) !== undefined){
+                if (finished()) {
+                    if (parents.get(getEnd().toString()) !== undefined) {
                         setPathCosts(getEnd(), calculatePathCost(parents.get(getEnd().toString())));
                         continue;
                     }
                 }
-                for(let j = 0; j < openList.length; j++){
+                for (let j = 0; j < openList.length; j++) {
                     let field = openList[j];
                     let tmpType = document.getElementById(field).getAttribute("type");
                     let tmpHasBoat = document.getElementById(field).getAttribute("hasBoat");
@@ -137,23 +137,23 @@ async function startAlgorithmus() {
                         for (let z = 0; z < fieldsAround.length; z++) {
                             let fieldAround = fieldsAround[z];
 
-                            if(!openList.includes(fieldAround)){
-                                if(document.getElementById(fieldAround).getAttribute("hasBoat").toString() === "true" && closedList.includes(fieldAround)){
+                            if (!openList.includes(fieldAround)) {
+                                if (document.getElementById(fieldAround).getAttribute("hasBoat").toString() === "true" && closedList.includes(fieldAround)) {
                                     //document.getElementById(field).style.backgroundColor = color["searchField"];
                                     //document.getElementById(fieldAround).style.backgroundColor = "orange";
-                                    if(shortestPathFieldAround === undefined) {
+                                    if (shortestPathFieldAround === undefined) {
                                         shortestPathFieldAround = fieldAround;
-                                    }else{
-                                        if(document.getElementById(shortestPathFieldAround).getAttribute("pathCost") > document.getElementById(fieldAround).getAttribute("pathCost")){
+                                    } else {
+                                        if (document.getElementById(shortestPathFieldAround).getAttribute("pathCost") > document.getElementById(fieldAround).getAttribute("pathCost")) {
                                             shortestPathFieldAround = fieldAround;
                                         }
                                     }
                                 }
                             }
                         }
-                        if(shortestPathFieldAround !== undefined){
+                        if (shortestPathFieldAround !== undefined) {
                             possiblePath = true;
-                            if(field.toString() !== getEnd()) document.getElementById(field).style.backgroundColor = color["searchField"];
+                            if (field.toString() !== getEnd()) document.getElementById(field).style.backgroundColor = color["searchField"];
                             //document.getElementById(field).style.backgroundColor = "purple";
                             document.getElementById(field).setAttribute("hasBoat", true.toString());
                             document.getElementById(field).setAttribute("throwBoat", false.toString());
@@ -162,18 +162,18 @@ async function startAlgorithmus() {
                             openList = removeArrayElement(openList, field);
                             closedList.push(field);
                             let fieldCost = calculatePathCost(shortestPathFieldAround);
-                            setPathCosts(field,fieldCost);
+                            setPathCosts(field, fieldCost);
 
                         }
                         // Das Feld expandieren, wenn es das Boot hat:
-                        if(document.getElementById(field).getAttribute("hasBoat").toString() === "true"){
+                        if (document.getElementById(field).getAttribute("hasBoat").toString() === "true") {
                             fieldsAround = getFieldsAround(field);
                             for (let z = 0; z < fieldsAround.length; z++) {
                                 let tempField = fieldsAround[z];
-                                if(tempField == getEnd()) console.log("2. Mal: "+tempField);
+                                if (tempField == getEnd()) console.log("2. Mal: " + tempField);
                                 let tmpType = document.getElementById(tempField).getAttribute("type");
                                 let tmpHasBoat = document.getElementById(tempField).getAttribute("hasBoat");
-                                if(!openList.includes(tempField) && document.getElementById(tempField).getAttribute("pathCost") == null){
+                                if (!openList.includes(tempField) && document.getElementById(tempField).getAttribute("pathCost") == null) {
                                     openList.push(tempField);
                                     document.getElementById(tempField).setAttribute("hasBoat", false.toString());
                                     document.getElementById(tempField).setAttribute("throwBoat", false.toString());
@@ -182,7 +182,7 @@ async function startAlgorithmus() {
                                 // Nur Elemente, die Wasser sind und kein Boot haben!
                                 if (tmpType.toString() === "0" && tmpHasBoat.toString() === "false") {
                                     possiblePath = true;
-                                    if(tempField.toString() !== getEnd().toString()) document.getElementById(tempField).style.backgroundColor = color["searchField"];
+                                    if (tempField.toString() !== getEnd().toString()) document.getElementById(tempField).style.backgroundColor = color["searchField"];
                                     document.getElementById(tempField).setAttribute("hasBoat", true.toString());
                                     document.getElementById(tempField).setAttribute("throwBoat", false.toString());
                                     parents.set(tempField, field);
@@ -191,29 +191,28 @@ async function startAlgorithmus() {
                                     let newFieldsAround = getFieldsAround(tempField);
                                     let newFieldCost = calculatePathCost(tempField);
                                     for (let t = 0; t < newFieldsAround.length; t++) {
-                                        if(!openList.includes(newFieldsAround[t]) && (document.getElementById(newFieldsAround[t]).getAttribute("pathCost") == null)){
+                                        if (!openList.includes(newFieldsAround[t]) && (document.getElementById(newFieldsAround[t]).getAttribute("pathCost") == null)) {
                                             openList.push(newFieldsAround[t]);
                                             document.getElementById(newFieldsAround[t]).setAttribute("hasBoat", false.toString());
                                             document.getElementById(newFieldsAround[t]).setAttribute("throwBoat", false.toString());
-                                            if(newFieldsAround[t].toString() === getEnd()){
+                                            if (newFieldsAround[t].toString() === getEnd()) {
                                                 document.getElementById(newFieldsAround[t]).setAttribute("hasBoat", true.toString());
                                                 document.getElementById(newFieldsAround[t]).setAttribute("throwBoat", false.toString());
                                                 parents.set(newFieldsAround[t], tempField);
-                                                setPathCosts(newFieldsAround[t],newFieldCost);
+                                                setPathCosts(newFieldsAround[t], newFieldCost);
                                             }
                                             parents.set(newFieldsAround[t], tempField);
                                             addChilds(tempField, newFieldsAround[t]);
-                                            setPathCosts(newFieldsAround[t],newFieldCost);
+                                            setPathCosts(newFieldsAround[t], newFieldCost);
                                         }
                                     }
                                     closedList.push(tempField);
                                     let fieldCost = calculatePathCost(field);
-                                    setPathCosts(tempField,fieldCost);
+                                    setPathCosts(tempField, fieldCost);
 
                                 }
                             }
                         }
-
 
 
                     }
@@ -235,11 +234,11 @@ async function startAlgorithmus() {
         /*
             Ist "shortestPath" definiert, wird dieses Feld aus der openList entfernt, expandiert und in die closedList hinzugefügt.
          */
-        if(shortestPath !== undefined) {
-            if(document.getElementById(shortestPath).getAttribute("type").toString() === "3" && document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "true"){
+        if (shortestPath !== undefined) {
+            if (document.getElementById(shortestPath).getAttribute("type").toString() === "3" && document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "true") {
                 document.getElementById(shortestPath).setAttribute("hasBoat", false.toString());
                 document.getElementById(shortestPath).setAttribute("throwBoat", true.toString());
-                setPathCosts(shortestPath,  document.getElementById(shortestPath).getAttribute("pathCost"));
+                setPathCosts(shortestPath, document.getElementById(shortestPath).getAttribute("pathCost"));
             }
             // Entferne das Feld mit dem kürzesten Weg aus der OpenList, weil dieses erweitert wird
             openList = removeArrayElement(openList, shortestPath);
@@ -297,26 +296,26 @@ async function startAlgorithmus() {
                             - Für alle Felder danach müssen die "pathCost", "hasBoat" und "throwBoat" angepasst werden
 
                      */
-                    if(parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost){
+                    if (parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
                         /*
                             Wert für "throwBoat" auf false setzen, sofern bei unserem neuen Weg throwBoat schon mal true ist (Das Boot wurde schon früher weggeworfen!)
                          */
-                        if(document.getElementById(pos).getAttribute("throwBoat").toString() === "true"){
+                        if (document.getElementById(pos).getAttribute("throwBoat").toString() === "true") {
                             let anotherWay = shortestPath;
                             let anotherWayThrowBoat = false;
 
-                            while (anotherWay.toString() !== getStart().toString()){
-                                if(document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true"){
+                            while (anotherWay.toString() !== getStart().toString()) {
+                                if (document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true") {
                                     anotherWayThrowBoat = true;
                                     break;
                                 }
                                 anotherWay = parents.get(anotherWay);
                             }
                             // Überprüfe dieselbe Abfrage noch für den Start:
-                            if(document.getElementById(getStart().toString()).getAttribute("throwBoat").toString() === "true"){
+                            if (document.getElementById(getStart().toString()).getAttribute("throwBoat").toString() === "true") {
                                 anotherWayThrowBoat = true;
                             }
-                            if(anotherWayThrowBoat === true) document.getElementById(pos).setAttribute("throwBoat", false.toString());
+                            if (anotherWayThrowBoat === true) document.getElementById(pos).setAttribute("throwBoat", false.toString());
                         }
 
                         /*
@@ -325,15 +324,15 @@ async function startAlgorithmus() {
                         let hasBoat = document.getElementById(pos).getAttribute("hasBoat");
 
                         let currentArray = [pos];
-                        while(currentArray.length >0){
+                        while (currentArray.length > 0) {
                             let current = currentArray[0];
                             let children = childs.get(currentArray[0]);
-                            if(children !== null && children !== undefined){
+                            if (children !== null && children !== undefined) {
                                 for (let z = 0; z < children.length; z++) {
                                     let child = children[z];
                                     let parent = current;
                                     document.getElementById(child).setAttribute("hasBoat", hasBoat);
-                                    if(hasBoat.toString() === "false" && document.getElementById(child).getAttribute("throwBoat").toString() === "true") document.getElementById(child).setAttribute("throwBoat", "false");
+                                    if (hasBoat.toString() === "false" && document.getElementById(child).getAttribute("throwBoat").toString() === "true") document.getElementById(child).setAttribute("throwBoat", "false");
                                     let tmpFieldCost = parseFloat(document.getElementById(parent).getAttribute("cost"));
 
                                     if (document.getElementById(parent).getAttribute("hasBoat").includes("false")) tmpFieldCost = tmpFieldCost * (1 - reduction);
@@ -347,7 +346,7 @@ async function startAlgorithmus() {
                             currentArray = removeArrayElement(currentArray, current);
                         }
                         removeChilds(parents.get(pos), pos);
-                    }else{
+                    } else {
                         openList.push(pos);
                     }
                     parents.set(pos, shortestPath);
@@ -392,11 +391,12 @@ async function startAlgorithmus() {
 // Gibt den Wert für die heuristische Funktion für die gegeben Position
 function heuristFunction(pos) {
     let diagonal = diagonalValue(pos);
-    if(diagonal !== undefined){
-        return 2*diagonal; // 2 für die geringste mögliche Feldkosten
+    if (diagonal !== undefined) {
+        return 2 * diagonal; // 2 für die geringste mögliche Feldkosten
     }
     return diagonal;
 }
+
 // Gibt den Diagonalen-Wert für die gegebene Position
 function diagonalValue(pos) {
     // Diagonale kann nur bestimmt werden, wenn "Ende" definiert ist!
@@ -412,6 +412,7 @@ function diagonalValue(pos) {
     diff += Math.abs(posY - endY);
     return diff;
 }
+
 // Überprüft, ob das Ziel erreicht wurde
 function finished() {
     return (openList.includes(getEnd()) || closedList.includes(getEnd()));

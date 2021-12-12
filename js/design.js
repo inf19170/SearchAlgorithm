@@ -10,7 +10,7 @@
 function displayOption(id, showOption) {
     let element = document.getElementById(id);
     // Wahr, wenn Maus auf Feld geht & // Falsch, wenn Maus das Feld verlässt
-     if (showOption) {
+    if (showOption) {
         if (getStart() == null) {
             document.getElementById("grid").style.cursor = "pointer";
             element.style.backgroundColor = color["startBegin"];
@@ -31,7 +31,7 @@ function displayOption(id, showOption) {
 
     } else {
         // Feld nur ändern, wenn es nicht das Start-, Endfeld oder besuchte Felder (closedList) ist
-        if (getStart() === null || getEnd() === null && id.toString() !== getStart().toString() ||(id.toString() !== getStart().toString() && id.toString() !== getEnd().toString() && !closedList.includes(id))) {
+        if (getStart() === null || getEnd() === null && id.toString() !== getStart().toString() || (id.toString() !== getStart().toString() && id.toString() !== getEnd().toString() && !closedList.includes(id))) {
             let type = element.getAttribute("type");
             element.innerHTML = type;
             element.style.backgroundColor = color[type];

@@ -1,5 +1,5 @@
 // Gibt die Rohdaten für das Grid aus
-function getData(){
+function getData() {
     //return newGrid(40,40);
     return data;
 }
@@ -18,7 +18,7 @@ function createGrid(data) {
         let rowCells = allRows[singleRow].split(',');
 
         for (let rowCell = 0; rowCell < rowCells.length; rowCell++) {
-            let row  = rowCells[rowCell].split(";");
+            let row = rowCells[rowCell].split(";");
 
             /*
                 Diese Schleife durchläuft alle Elemente innerhalb einer Zeile
@@ -26,9 +26,9 @@ function createGrid(data) {
             for (let i = 0; i < row.length; i++) {
                 let type = row[i];
                 let field = new Field(type);
-                table += field.createHTML(i,singleRow);
+                table += field.createHTML(i, singleRow);
             }
-            if(maxWidth === undefined || maxWidth > row.length) maxWidth = row.length;
+            if (maxWidth === undefined || maxWidth > row.length) maxWidth = row.length;
         }
         table += '</tr>';
         maxHeight = allRows.length;

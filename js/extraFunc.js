@@ -18,7 +18,6 @@ function setSearchTimeToLocalStorage() {
 }
 
 
-
 // Für Auswertung: Mehr Details
 // Berechnet zusätzliche Informationen zu dem gelaufenen Grid
 function showMoreDetails() {
@@ -94,8 +93,7 @@ function showMoreDetails() {
     let diff = runnedCosts - lowerRunnedCosts;
     if (roundFloat(diff, roundFactor) > 0) {
         document.getElementById("diffRunnedCosts").innerHTML = ' -' + roundFloat(diff, roundFactor);
-    }
-    else {
+    } else {
         document.getElementById("diffRunnedCosts").innerHTML = roundFloat(diff, roundFactor);
     }
 
@@ -113,9 +111,9 @@ function showMoreDetails() {
 
         if (document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "true" && document.getElementById(parents.get(getEnd()).toString()).getAttribute("type").toString() === "0" || document.getElementById(getEnd()).getAttribute("hasBoat").toString() === "false") {
             document.getElementById("usedBoat").innerHTML = '<i class="fas fa-check" id="usedBoatSymbol"></i> '
-                if(posLostBoat !== undefined || document.getElementById(getEnd().toString()).getAttribute("type").toString() !== "0" && posLostBoat.toString() === getEnd()){
-                    document.getElementById("usedBoat").innerHTML += "[" + posLostBoat + "]";
-                }
+            if (posLostBoat !== undefined || document.getElementById(getEnd().toString()).getAttribute("type").toString() !== "0" && posLostBoat.toString() === getEnd()) {
+                document.getElementById("usedBoat").innerHTML += "[" + posLostBoat + "]";
+            }
             document.getElementById("usedBoatSymbol").setAttribute("style", "color: lightgreen");
 
         } else {
@@ -125,7 +123,6 @@ function showMoreDetails() {
 
 
     }
-
 
 
 }

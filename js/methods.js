@@ -1,11 +1,11 @@
 // Entfernt element "value" aus dem Array und gibt das Array ohne das Element zurück
-function removeArrayElement(array, value){
+function removeArrayElement(array, value) {
     let length = array.length;
     let pos = array.indexOf(value);
-    if(pos === 0){
-        return array.slice(1,length);
-    }else{
-        return array.slice(0,pos).concat(array.slice(pos+1, length));
+    if (pos === 0) {
+        return array.slice(1, length);
+    } else {
+        return array.slice(0, pos).concat(array.slice(pos + 1, length));
     }
 }
 
@@ -15,9 +15,9 @@ function Sleep(milliseconds) {
 }
 
 // Rundet eine Kommazahl auf deci Nachstellen
-function roundFloat(float, deci){
+function roundFloat(float, deci) {
     let factor = Math.pow(10, deci);
-    return (Math.round(float*factor))/factor;
+    return (Math.round(float * factor)) / factor;
 }
 
 // Gibt alle Felder zurück, die um das gegebene Feld liegen
@@ -65,13 +65,13 @@ function getFieldsAround(/*ID of field*/ pos) {
 
 
 // Rundet die Zahl ab
-function roundLower(float){
-    if(float >=0){
+function roundLower(float) {
+    if (float >= 0) {
         let round = Math.round(float);
-        if(float - round >=0){
+        if (float - round >= 0) {
             return round;
-        }else{
-            return  (round-1);
+        } else {
+            return (round - 1);
         }
     }
 }

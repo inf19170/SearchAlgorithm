@@ -5,7 +5,7 @@ window.onload = function () {
     if (time != null) {
         document.getElementById("time").setAttribute("value", time);
     }
-    if(localStorage.getItem("debug") !== null && localStorage.getItem("debug").toString() === "true") randomPosition();
+    if (localStorage.getItem("debug") !== null && localStorage.getItem("debug").toString() === "true") randomPosition();
 }
 
 
@@ -20,7 +20,6 @@ function init_algo() {
 }
 
 
-
 // Gibt den Wert für die Wartezeit bei den Suchschritten aus
 function getSleepTime() {
     return 1000 - document.querySelector("#time").value;
@@ -32,7 +31,6 @@ function showSolution() {
     solutionFound();
     showMoreDetails();
 }
-
 
 
 // Zeigt den Lösungweg des Algorithmus
@@ -71,7 +69,9 @@ async function showPathTo(endPos) {
         let sleep = 25;
 
         // Die letzten 5 Felder des Weges werden langsamer angezeigt
-        if (i <= 5) { sleep = 100; }
+        if (i <= 5) {
+            sleep = 100;
+        }
         await Sleep(sleep);
     }
     await Sleep(100);
@@ -112,6 +112,7 @@ function noSolutionFound() {
     document.getElementById("showSolution").checked = "checked";
     document.getElementById("showSolution").disabled = false;
 }
+
 // Es wurde EINE Lösung gefunden
 function solutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
@@ -129,7 +130,7 @@ function getFieldCosts(pos) {
 }
 
 
-function calculatePathCost(parent){
+function calculatePathCost(parent) {
     // Feldkosten für den expandierten Knoten davor
     let fieldCost = parseFloat(document.getElementById(parent).getAttribute("cost"));
 
