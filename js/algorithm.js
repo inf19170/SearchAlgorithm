@@ -1,3 +1,6 @@
+//TODO Überprüfe alle Felder ob die neben an in der ClosedList sind und einen kürzeren Weg haben, dann diesen auf Elternteil setzen
+//TODO Bug Fixen wenn er weg über Wasser sucht
+
 // Beginnt den optimierten und angepassten A* Algorithmus
 async function startAlgorithmus() {
     startTime = new Date();
@@ -317,17 +320,23 @@ async function startAlgorithmus() {
                             }
                             if (anotherWayThrowBoat === true) document.getElementById(pos).setAttribute("throwBoat", false.toString());
                         }
-
+                        /*
+                            Setze frühzeitig neues Elternteil + Kosten, um die Berechnung für die neuen Felder korrekt durchzuführen
+                            Davor muss noch aus dem alten Elternknoten das Kind entfernt werden
+                         */
+                        removeChilds(parents.get(pos), pos);
+                        parents.set(pos, shortestPath);
+                        setPathCosts(pos, fieldCost);
                         /*
                             Für alle Nachfolger müssen die "pathCost" und "hasBoat" angepasst werden
                          */
-                        let hasBoat = document.getElementById(pos).getAttribute("hasBoat");
+                        let hasBoat = document.getElementById(pos).getAttribute("hasBoat"); // Wert für die aktuelle Position (pos) wurde schon angepasst
 
                         let currentArray = [pos];
                         while (currentArray.length > 0) {
                             let current = currentArray[0];
                             let children = childs.get(currentArray[0]);
-                            if (children !== null && children !== undefined) {
+                            if (children !== null && children !== undefined && children.length > 0) {
                                 for (let z = 0; z < children.length; z++) {
                                     let child = children[z];
                                     let parent = current;
@@ -345,13 +354,15 @@ async function startAlgorithmus() {
                             }
                             currentArray = removeArrayElement(currentArray, current);
                         }
-                        removeChilds(parents.get(pos), pos);
                     } else {
                         openList.push(pos);
                     }
                     parents.set(pos, shortestPath);
-                    addChilds(shortestPath, pos);
                     setPathCosts(pos, fieldCost);
+                    addChilds(shortestPath, pos);
+
+
+
                 }
 
             }

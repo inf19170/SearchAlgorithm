@@ -63,7 +63,6 @@ function getFieldsAround(/*ID of field*/ pos) {
     return list;
 }
 
-
 // Rundet die Zahl ab
 function roundLower(float) {
     if (float >= 0) {

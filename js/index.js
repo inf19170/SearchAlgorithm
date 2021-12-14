@@ -44,7 +44,6 @@ async function showPathTo(endPos) {
         way.push(current);
         if (document.getElementById(current).getAttribute("throwBoat").toString() === "true") posThrowBoat = current;
         current = parents.get(current);
-        console.log(current);
     }
     way.push(getStart());
 

@@ -36,10 +36,9 @@ function showMoreDetails() {
     let costs = 0; // Kosten, die bis zum Wegwerfen des Bootes entstanden sind
 
 
-    let tmpType;
 
     while (current.toString() !== getStart().toString()) {
-        tmpType = document.getElementById(current).getAttribute("type");
+        let tmpType = document.getElementById(current).getAttribute("type");
         let tmpThrowBoat = document.getElementById(current).getAttribute("throwBoat");
         let hasBoat = document.getElementById(current).getAttribute("hasBoat");
 
@@ -60,12 +59,13 @@ function showMoreDetails() {
         current = parents.get(current);
     }
     // Durchlaufene Wege für Startfeld addieren
-    tmpType = document.getElementById(getStart()).getAttribute("type");
+    let tmpType = document.getElementById(getStart()).getAttribute("type");
     amount["all"] = amount["all"] + 1;
     amount[type[tmpType]] = amount[type[tmpType]] + 1;
     // Überprüfe, ob Boot direkt am Start weggeworfen wurde
     if (document.getElementById(getStart()).getAttribute("throwBoat").toString() === "true") {
         throwBoat = true;
+        posLostBoat = current;
         costs = document.getElementById(getStart()).getAttribute("pathCost");
     }
 
