@@ -118,32 +118,46 @@ async function startAlgorithmus() {
 
         if (shortestPath === undefined && openList.length > 0) {
             let possiblePath = true;
+            let tmpInt = 1;
+            // Solange Wasserfelder expandieren, bis es keine Felder mehr gibt oder keine Fehler mehr expandiert werden können
             while (possiblePath) {
                 await Sleep(getSleepTime());
                 possiblePath = false;
+
+                /* Überprüfe, ob Ziel erreicht wurde, falls ja:
+                    Feldkosten setzen und while Schleife abbrechen
+                 */
                 if (finished()) {
                     if (parents.get(getEnd().toString()) !== undefined) {
                         setPathCosts(getEnd(), calculatePathCost(parents.get(getEnd().toString())));
                         continue;
                     }
                 }
+
+                // Alle Elemente in der OpenList durchgehen (Alle möglichen Wasserfelder, die kein Boot haben)
                 for (let j = 0; j < openList.length; j++) {
                     let field = openList[j];
                     let tmpType = document.getElementById(field).getAttribute("type");
                     let tmpHasBoat = document.getElementById(field).getAttribute("hasBoat");
-
-                    // Nur Elemente, die Wasser sind und kein Boot haben!
+                    // Nur Elemente durchgehen, die Wasser sind und kein Boot haben!
                     if (tmpType.toString() === "0" && tmpHasBoat.toString() === "false") {
+                        // Felder, die um das Wasserfeld herumliegen
                         let fieldsAround = getFieldsAround(field);
                         let shortestPathFieldAround = undefined;
-                        //document.getElementById(field).style.backgroundColor = "pink";
+
+                        // Umliegende Felder durchgehen
                         for (let z = 0; z < fieldsAround.length; z++) {
                             let fieldAround = fieldsAround[z];
 
-                            if (!openList.includes(fieldAround)) {
-                                if (document.getElementById(fieldAround).getAttribute("hasBoat").toString() === "true" && closedList.includes(fieldAround)) {
-                                    //document.getElementById(field).style.backgroundColor = color["searchField"];
-                                    //document.getElementById(fieldAround).style.backgroundColor = "orange";
+                            // Feld darf nicht in der openList sein (--> Muss schon expandiert sein; in den ClosedList sein!)
+                            if (!openList.includes(fieldAround) && closedList.includes(fieldAround)) {
+
+                                // Feld muss Boot vorhanden haben
+                                if (document.getElementById(fieldAround).getAttribute("hasBoat").toString() === "true") {
+                                    /*
+                                        Ermitteln des kürzesten Weges des Feldes, bei dem das Boot noch erhalten ist
+                                     */
+
                                     if (shortestPathFieldAround === undefined) {
                                         shortestPathFieldAround = fieldAround;
                                     } else {
@@ -154,10 +168,15 @@ async function startAlgorithmus() {
                                 }
                             }
                         }
+                        // Sofern ein Element gefunden wurde, das in der closedList war und Boot hat
                         if (shortestPathFieldAround !== undefined) {
-                            possiblePath = true;
+                            tmpInt++;
+                            possiblePath = true; // Setze Bedienung, dass While-Schleife erneut durchlaufen soll
+
+                            // Farbe ändern, wenn es nicht das Ziel ist
                             if (field.toString() !== getEnd()) document.getElementById(field).style.backgroundColor = color["searchField"];
-                            //document.getElementById(field).style.backgroundColor = "purple";
+
+                            // Attribute anpassen
                             document.getElementById(field).setAttribute("hasBoat", true.toString());
                             document.getElementById(field).setAttribute("throwBoat", false.toString());
                             parents.set(field, shortestPathFieldAround);
@@ -172,52 +191,16 @@ async function startAlgorithmus() {
                         if (document.getElementById(field).getAttribute("hasBoat").toString() === "true") {
                             fieldsAround = getFieldsAround(field);
                             for (let z = 0; z < fieldsAround.length; z++) {
-                                let tempField = fieldsAround[z];
-                                if (tempField == getEnd()) console.log("2. Mal: " + tempField);
-                                let tmpType = document.getElementById(tempField).getAttribute("type");
-                                let tmpHasBoat = document.getElementById(tempField).getAttribute("hasBoat");
-                                if (!openList.includes(tempField) && document.getElementById(tempField).getAttribute("pathCost") == null) {
-                                    openList.push(tempField);
-                                    document.getElementById(tempField).setAttribute("hasBoat", false.toString());
-                                    document.getElementById(tempField).setAttribute("throwBoat", false.toString());
-                                    possiblePath = true;
-                                }
-                                // Nur Elemente, die Wasser sind und kein Boot haben!
-                                if (tmpType.toString() === "0" && tmpHasBoat.toString() === "false") {
-                                    possiblePath = true;
-                                    if (tempField.toString() !== getEnd().toString()) document.getElementById(tempField).style.backgroundColor = color["searchField"];
-                                    document.getElementById(tempField).setAttribute("hasBoat", true.toString());
-                                    document.getElementById(tempField).setAttribute("throwBoat", false.toString());
-                                    parents.set(tempField, field);
-                                    addChilds(field, tempField);
-                                    openList = removeArrayElement(openList, tempField);
-                                    let newFieldsAround = getFieldsAround(tempField);
-                                    let newFieldCost = calculatePathCost(tempField);
-                                    for (let t = 0; t < newFieldsAround.length; t++) {
-                                        if (!openList.includes(newFieldsAround[t]) && (document.getElementById(newFieldsAround[t]).getAttribute("pathCost") == null)) {
-                                            openList.push(newFieldsAround[t]);
-                                            document.getElementById(newFieldsAround[t]).setAttribute("hasBoat", false.toString());
-                                            document.getElementById(newFieldsAround[t]).setAttribute("throwBoat", false.toString());
-                                            if (newFieldsAround[t].toString() === getEnd()) {
-                                                document.getElementById(newFieldsAround[t]).setAttribute("hasBoat", true.toString());
-                                                document.getElementById(newFieldsAround[t]).setAttribute("throwBoat", false.toString());
-                                                parents.set(newFieldsAround[t], tempField);
-                                                setPathCosts(newFieldsAround[t], newFieldCost);
-                                            }
-                                            parents.set(newFieldsAround[t], tempField);
-                                            addChilds(tempField, newFieldsAround[t]);
-                                            setPathCosts(newFieldsAround[t], newFieldCost);
-                                        }
-                                    }
-                                    closedList.push(tempField);
-                                    let fieldCost = calculatePathCost(field);
-                                    setPathCosts(tempField, fieldCost);
+                                let tmp = fieldsAround[z];
+                                if(!closedList.includes(tmp) && !openList.includes(tmp)){
+                                    openList.push(tmp);
+                                    document.getElementById(tmp).setAttribute("hasBoat", false.toString());
+                                    document.getElementById(tmp).setAttribute("throwBoat", false.toString());
+                                    possiblePath = true; // Setze Bedienung, dass While-Schleife erneut durchlaufen soll
 
                                 }
                             }
                         }
-
-
                     }
                 }
 
@@ -284,7 +267,6 @@ async function startAlgorithmus() {
              */
             for (let j = 0; j < fieldsAround.length; j++) {
                 let pos = fieldsAround[j];
-                //TODO Darf hier das Feld über eine kürzere Strecke erreicht werden und dies genutzt werden?
                 if (document.getElementById(pos).getAttribute("pathCost") == null || parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
                     let type = document.getElementById(pos).getAttribute("type");
 
