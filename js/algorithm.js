@@ -118,7 +118,6 @@ async function startAlgorithmus() {
 
         if (shortestPath === undefined && openList.length > 0) {
             let possiblePath = true;
-            let tmpInt = 1;
             // Solange Wasserfelder expandieren, bis es keine Felder mehr gibt oder keine Fehler mehr expandiert werden können
             while (possiblePath) {
                 await Sleep(getSleepTime());
@@ -170,7 +169,6 @@ async function startAlgorithmus() {
                         }
                         // Sofern ein Element gefunden wurde, das in der closedList war und Boot hat
                         if (shortestPathFieldAround !== undefined) {
-                            tmpInt++;
                             possiblePath = true; // Setze Bedienung, dass While-Schleife erneut durchlaufen soll
 
                             // Farbe ändern, wenn es nicht das Ziel ist
