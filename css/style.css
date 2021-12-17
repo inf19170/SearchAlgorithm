@@ -132,7 +132,7 @@
     margin-bottom: 20px; 
     text-align: center;
     animation-name: rainbowColor;
-    animation-duration: 3s;
+    animation-duration: 7s;
     animation-iteration-count: infinite;
 }
 
@@ -140,8 +140,8 @@
      0% {color: red;}
     20% {color: orange;}
     40% {color: cyan;}
-    60% {color :blue;}
-    80% {color: green;}
+    60% {color: greenyellow;}
+    80% {color:blue;}
    100% {color: orangered;}
   }
 
