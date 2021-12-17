@@ -128,11 +128,22 @@
 /*Inhalt vom Suchstatus*/
 #solutionTxt {
     position: relative;
-    color: rgb(212, 168, 255);
     border: groove;  
     margin-bottom: 20px; 
     text-align: center;
+    animation-name: rainbowColor;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
 }
+
+@keyframes rainbowColor {
+     0% {color: red;}
+    20% {color: orange;}
+    40% {color: cyan;}
+    60% {color :blue;}
+    80% {color: green;}
+   100% {color: orangered;}
+  }
 
 /*Verbergung der Anzeige im Vorfeld, wenn Suche erfolgreich*/
 #successTxt {
