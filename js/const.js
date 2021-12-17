@@ -73,7 +73,8 @@ const color = {
     4: "#548235",
     "startBegin": "yellow",
     "endBegin": "yellow",
-    "searchField": "rgb(127,255,0)"
+    "searchField": "rgb(127,255,0)",
+    "openList": "pink"
 
 }
 // Symbole für die einzelnen Feldtypen

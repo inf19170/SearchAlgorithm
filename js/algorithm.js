@@ -337,7 +337,7 @@ async function startAlgorithmus() {
                         }
                     } else {
                         openList.push(pos);
-                        if(pos.toString() !== getEnd().toString()) document.getElementById(pos).style.backgroundColor = "pink";
+                        if(pos.toString() !== getEnd().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
                     }
                     parents.set(pos, shortestPath);
                     setPathCosts(pos, fieldCost);
