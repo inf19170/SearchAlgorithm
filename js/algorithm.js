@@ -277,18 +277,12 @@ async function startAlgorithmus() {
                         Überprüfen, ob ein neuer kürzer Weg gefunden wurde
                         --> Ja:
                             - Ggf. throwBoat anpassen
-                            - Für alle Felder danach müssen die "pathCost", "hasBoat" und "throwBoat" angepasst werden
+                            - Element in die openList wieder aufnehmen und aus closedList nehmen
+                            - //TODO LÖSCHEN: Für alle Felder danach müssen die "pathCost", "hasBoat" und "throwBoat" angepasst werden
 
                      */
                     if (parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
-                        if(childs.get(pos) !== undefined){
-                            console.log("Kürzer Weg für Feld ["+pos+"] gefunden");
-                            console.log("alte Kosten: "+parseFloat(document.getElementById(pos).getAttribute("pathCost")));
-                            console.log("neue Kosten: "+fieldCost);
-                            console.log("Kinder:");
-                            console.log(childs.get(pos));
-                        }
-
+                        if(closedList.includes(pos)) closedList = removeArrayElement(closedList, pos);
                         /*
                             Wert für "throwBoat" auf false setzen, sofern bei unserem neuen Weg throwBoat schon mal true ist (Das Boot wurde schon früher weggeworfen!)
                          */
@@ -320,30 +314,31 @@ async function startAlgorithmus() {
                             //TODO Löschen! Diese Bedienung wird erfüllt, wenn das Element wieder in die openList hinzugefügt wird!
                             Für alle Nachfolger müssen die "pathCost" und "hasBoat" angepasst werden
                          */
-                        let hasBoat = document.getElementById(pos).getAttribute("hasBoat"); // Wert für die aktuelle Position (pos) wurde schon angepasst
+                        /*
+                           let hasBoat = document.getElementById(pos).getAttribute("hasBoat"); // Wert für die aktuelle Position (pos) wurde schon angepasst
 
-                        let currentArray = [pos];
-                     /*   while (currentArray.length > 0) {
-                            let current = currentArray[0];
-                            let children = childs.get(currentArray[0]);
-                            if (children !== null && children !== undefined && children.length > 0) {
-                                for (let z = 0; z < children.length; z++) {
-                                    let child = children[z];
-                                    let parent = current;
-                                    document.getElementById(child).setAttribute("hasBoat", hasBoat);
-                                    if (hasBoat.toString() === "false" && document.getElementById(child).getAttribute("throwBoat").toString() === "true") document.getElementById(child).setAttribute("throwBoat", "false");
-                                    let tmpFieldCost = parseFloat(document.getElementById(parent).getAttribute("cost"));
+                           let currentArray = [pos];
+                           while (currentArray.length > 0) {
+                               let current = currentArray[0];
+                               let children = childs.get(currentArray[0]);
+                               if (children !== null && children !== undefined && children.length > 0) {
+                                   for (let z = 0; z < children.length; z++) {
+                                       let child = children[z];
+                                       let parent = current;
+                                       document.getElementById(child).setAttribute("hasBoat", hasBoat);
+                                       if (hasBoat.toString() === "false" && document.getElementById(child).getAttribute("throwBoat").toString() === "true") document.getElementById(child).setAttribute("throwBoat", "false");
+                                       let tmpFieldCost = parseFloat(document.getElementById(parent).getAttribute("cost"));
 
-                                    if (document.getElementById(parent).getAttribute("hasBoat").includes("false")) tmpFieldCost = tmpFieldCost * (1 - reduction);
+                                       if (document.getElementById(parent).getAttribute("hasBoat").includes("false")) tmpFieldCost = tmpFieldCost * (1 - reduction);
 
-                                    if (parents.get(parent) != null) {
-                                        tmpFieldCost += parseFloat(document.getElementById(parent).getAttribute("pathCost"));
-                                    }
-                                    setPathCosts(child, tmpFieldCost);
-                                }
-                            }
-                            currentArray = removeArrayElement(currentArray, current);
-                        } */
+                                       if (parents.get(parent) != null) {
+                                           tmpFieldCost += parseFloat(document.getElementById(parent).getAttribute("pathCost"));
+                                       }
+                                       setPathCosts(child, tmpFieldCost);
+                                   }
+                               }
+                               currentArray = removeArrayElement(currentArray, current);
+                           } */
                     }
                     openList.push(pos);
                     if(pos.toString() !== getEnd().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
