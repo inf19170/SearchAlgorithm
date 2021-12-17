@@ -62,7 +62,7 @@ function switchVisibilitySearchArea() {
         let element = document.getElementById(value);
         if (value.toString() !== getStart().toString() && !solutionPath.includes(value)) {
             if (showSearch) {
-                element.style.backgroundColor = "pink";
+                element.style.backgroundColor = color["openList"];
             } else {
                 element.style.backgroundColor = color[element.getAttribute("type")];
             }
