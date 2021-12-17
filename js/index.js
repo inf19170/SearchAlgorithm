@@ -106,7 +106,7 @@ async function setStartAndEnd(id) {
 // Es wurde KEINE Lösung gefunden
 function noSolutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
-    document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #b60c00; text-align: center;");
+    document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #b60c00; text-align: center; color: white;");
     document.getElementById("solutionTxt").innerHTML = '<h5>Suche nicht erfolgreich!&ensp;<i style ="color: black" class="fas fa-exclamation-triangle"></i></h5>';
     document.getElementById("showSolution").checked = "checked";
     document.getElementById("showSolution").disabled = false;
@@ -115,7 +115,7 @@ function noSolutionFound() {
 // Es wurde EINE Lösung gefunden
 function solutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
-    document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkgreen; margin-bottom: 10px; background-color: green; text-align: center;");
+    document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkgreen; margin-bottom: 10px; background-color: green; text-align: center; color: white;");
     document.getElementById("solutionTxt").innerHTML = '<h5>Suche erfolgreich!&ensp;<i class="fas fa-check"></i></h5>';
     showPathTo(getEnd());
 }
