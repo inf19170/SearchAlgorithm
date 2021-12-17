@@ -63,18 +63,21 @@ function initDiffMilliseconds() {
     return diffMilliseconds = new Date().getTime() - startTime.getTime();
 }
 
-function displayDiffMilliseconds() {
+function setDiffMilliseconds() {
     let time = initDiffMilliseconds();
     let minutes = roundLower(time / (1000 * 60));
     time -= minutes * (1000 * 60);
     let seconds = roundLower(time / (1000));
     time -= seconds * (1000);
     let milliseconds = time;
+    displayDiffMilliseconds(minutes, seconds, milliseconds);
+}
+
+function displayDiffMilliseconds(minutes, seconds, milliseconds) {
     document.getElementById("minutes").innerHTML = minutes;
     document.getElementById("seconds").innerHTML = seconds;
     document.getElementById("milliseconds").innerHTML = milliseconds;
 }
-
 
 // Setzt die Pfadkosten für die schon gelaufenen Felder (Wert ist ohne Heuristische Funktion)
 function setPathCosts(pos, value) {

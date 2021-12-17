@@ -31,7 +31,7 @@ function displayOption(id, showOption) {
 
     } else {
         // Feld nur ändern, wenn es nicht das Start-, Endfeld oder besuchte Felder (closedList) ist
-        if (getStart() === null || getEnd() === null && id.toString() !== getStart().toString() || (id.toString() !== getStart().toString() && id.toString() !== getEnd().toString() && !closedList.includes(id))) {
+        if (getStart() === null || getEnd() === null && id.toString() !== getStart().toString() || (id.toString() !== getStart().toString() && id.toString() !== getEnd().toString() && !closedList.includes(id) && !openList.includes(id))) {
             let type = element.getAttribute("type");
             element.innerHTML = type;
             element.style.backgroundColor = color[type];
@@ -51,6 +51,18 @@ function switchVisibilitySearchArea() {
         if (value.toString() !== getStart().toString() && !solutionPath.includes(value)) {
             if (showSearch) {
                 element.style.backgroundColor = color["searchField"];
+            } else {
+                element.style.backgroundColor = color[element.getAttribute("type")];
+            }
+
+        }
+    }
+    for (let i = 0; i < openList.length; i++) {
+        let value = openList[i];
+        let element = document.getElementById(value);
+        if (value.toString() !== getStart().toString() && !solutionPath.includes(value)) {
+            if (showSearch) {
+                element.style.backgroundColor = "pink";
             } else {
                 element.style.backgroundColor = color[element.getAttribute("type")];
             }

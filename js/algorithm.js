@@ -4,6 +4,7 @@
 // Beginnt den optimierten und angepassten A* Algorithmus
 async function startAlgorithmus() {
     startTime = new Date();
+    displayDiffMilliseconds("...","...","...");
     while (openList.length > 0) {
 
 
@@ -185,7 +186,7 @@ async function startAlgorithmus() {
                             setPathCosts(field, fieldCost);
 
                         }
-                        // Das Feld expandieren, wenn es das Boot hat:
+                        // Die Felder die um das neue Wasserfeld mit Boot liegen müssen ggf. in die openList eingefügt werden (Wenn nicht in der ClosedList oder openList schon vorhanden):
                         if (document.getElementById(field).getAttribute("hasBoat").toString() === "true") {
                             fieldsAround = getFieldsAround(field);
                             for (let z = 0; z < fieldsAround.length; z++) {
@@ -336,6 +337,7 @@ async function startAlgorithmus() {
                         }
                     } else {
                         openList.push(pos);
+                        if(pos.toString() !== getEnd().toString()) document.getElementById(pos).style.backgroundColor = "pink";
                     }
                     parents.set(pos, shortestPath);
                     setPathCosts(pos, fieldCost);
@@ -357,7 +359,7 @@ async function startAlgorithmus() {
             wird die Lösung angezeigt und die Algorithmus wird abgebrochen.
         */
         if (finished()) {
-            displayDiffMilliseconds();
+            setDiffMilliseconds();
             document.getElementById("showSolution").removeAttribute("hidden");
             await Sleep(250);
             showSolution();
@@ -373,7 +375,7 @@ async function startAlgorithmus() {
 
     if (!finished()) {
         noSolutionFound();
-        displayDiffMilliseconds();
+        setDiffMilliseconds();
     }
 
 }
