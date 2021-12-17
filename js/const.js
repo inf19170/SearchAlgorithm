@@ -74,7 +74,7 @@ const color = {
     "startBegin": "yellow",
     "endBegin": "yellow",
     "searchField": "rgb(127,255,0)",
-    "openList": "pink"
+    "openList": "#FDDA16"
 
 }
 // Symbole für die einzelnen Feldtypen
