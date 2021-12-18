@@ -1,3 +1,14 @@
+/**
+ * values.js
+ *
+ * Variablen, die für die Verwendung des Algorithmus benötigt werden. Diese Ändern sich im Laufe des Algorithmus:
+ *      - openList
+ *      - closedList
+ *      - Startpunkt
+ *      - Zielpunkt
+ *      etc.
+ *
+ */
 let start = undefined;
 let end = undefined;
 

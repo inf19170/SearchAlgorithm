@@ -1,3 +1,11 @@
+/**
+ * methods.js
+ *
+ * Methoden & Funktionen die eine speziellallsierte Aufgaben bieten:
+ *      - Auswertung des Weges
+ *      - Dauer des Algorithmus bis der Algorithmus beendet wurde
+ *
+ */
 // Entfernt element "value" aus dem Array und gibt das Array ohne das Element zurück
 function removeArrayElement(array, value) {
     let length = array.length;
@@ -63,7 +71,7 @@ function getFieldsAround(/*ID of field*/ pos) {
     return list;
 }
 
-// Rundet die Zahl ab
+// Rundet eine Kommazahl ab
 function roundLower(float) {
     if (float >= 0) {
         let round = Math.round(float);

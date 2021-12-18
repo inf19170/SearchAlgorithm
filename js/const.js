@@ -1,43 +1,17 @@
-const highestValue = 4; // Gibt die höchste Nummer der Felder an 4 --> Wald. Erhöhen, falls es Felder mit höhere Wertigkeit gibt
+/**
+ * const.js
+ *
+ * Konstanten die während des Algorithmus nicht verändert werden
+ *      - verschiedene Typen von Felder
+ *      - Kostenreduzierung wenn das Boot wegfällt
+ *      - Kosten der einzelnen Felder
+ *      - Farbcodes
+ *       etc.
+ */
+const highestValue = 4; // Gibt die Anzahl an verschiedenen Feldtypen an. Dabei entsprechen 5 Feldtypen dem Wert 4. Erhöhen, falls es weitere Feldtypen gibt
 
-const reduction = 0.1; // Wert, um wie viel die Wegkosten gesenkt werden, wenn das Boot nicht mehr getragen wird
+const reduction = 0.1; // Wert, um wie viel die Wegkosten gesenkt werden, wenn das Boot nicht mehr getragen wird.
 
-// Erstellt individuell für jedes Feld den Titel (Text, der beim Maus-Hovern erscheint)
-function FieldDescriptionToString(cords, fieldType, pathCosts, boat) {
-    const fieldDescription = "[cords]\n[type]\n[costs]\n[pathCosts]\n[heuristic]\n[boat]";
-
-    if (fieldType === undefined) fieldType = document.getElementById(cords).getAttribute("type");
-
-    let fieldCosts = cost[fieldType];
-
-
-    let description = fieldDescription.replace("[cords]", "Position: [" + cords + "]");
-    description = description.replace("[type]", "Feldtyp: " + typeGerman[fieldType]);
-    if (pathCosts !== null) {
-        description = description.replace("[pathCosts]", "Pfadkosten: " + pathCosts + " ZE");
-    } else {
-        description = description.replace("[pathCosts]", "Pfadkosten: - ZE");
-    }
-    if (boat !== null || boat === undefined) {
-        if (boat === undefined) boat = document.getElementById(cords).getAttribute("hasBoat");
-        boat = boat.toString();
-        if (boat === "true") {
-            description = description.replace("[boat]", "Boot vorhanden: Ja");
-            fieldCosts = fieldCosts + " ZE";
-        } else if (boat === "false") {
-            description = description.replace("[boat]", "Boot vorhanden: Nein");
-            fieldCosts = (1 - reduction) * fieldCosts + " ZE (red.)";
-        }
-    } else {
-        description = description.replace("[boat]", "Boot vorhanden: -");
-        fieldCosts = fieldCosts + " ZE";
-    }
-    description = description.replace("[costs]", "Feldkosten: " + fieldCosts);
-    let heuristic = heuristFunction(cords);
-    if (heuristic === undefined) heuristic = "undefiniert";
-    description = description.replace("[heuristic]", "Heuristische Funk.: " + heuristic);
-    return description;
-}
 
 const type = {
     0: "water",
@@ -87,7 +61,50 @@ const symbols = {
 
 }
 
+// Erstellt individuell für jedes Feld den Titel (Text, der beim Maus-Hover erscheint)
+function FieldDescriptionToString(cords, fieldType, pathCosts, boat) {
+    const fieldDescription = "[cords]\n[type]\n[costs]\n[pathCosts]\n[heuristic]\n[boat]";
+
+    if (fieldType === undefined) fieldType = document.getElementById(cords).getAttribute("type");
+
+    let fieldCosts = cost[fieldType];
+
+
+    let description = fieldDescription.replace("[cords]", "Position: [" + cords + "]");
+    description = description.replace("[type]", "Feldtyp: " + typeGerman[fieldType]);
+    if (pathCosts !== null) {
+        description = description.replace("[pathCosts]", "Pfadkosten: " + pathCosts + " ZE");
+    } else {
+        description = description.replace("[pathCosts]", "Pfadkosten: - ZE");
+    }
+    if (boat !== null || boat === undefined) {
+        if (boat === undefined) boat = document.getElementById(cords).getAttribute("hasBoat");
+        boat = boat.toString();
+        if (boat === "true") {
+            description = description.replace("[boat]", "Boot vorhanden: Ja");
+            fieldCosts = fieldCosts + " ZE";
+        } else if (boat === "false") {
+            description = description.replace("[boat]", "Boot vorhanden: Nein");
+            fieldCosts = (1 - reduction) * fieldCosts + " ZE (red.)";
+        }
+    } else {
+        description = description.replace("[boat]", "Boot vorhanden: -");
+        fieldCosts = fieldCosts + " ZE";
+    }
+    description = description.replace("[costs]", "Feldkosten: " + fieldCosts);
+    let heuristic = heuristFunction(cords);
+    if (heuristic === undefined) heuristic = "undefiniert";
+    description = description.replace("[heuristic]", "Heuristische Funk.: " + heuristic);
+    return description;
+}
+
+
 // Mit dieser Variable kann das Spielfeld angepasst oder geändert werden
+/* Formmitbedingungen sind:
+        - Einzelne Felder werden durch ";" getrennt
+        - Eine neue Zeile wird durch "\n" eingeleitet
+        - Die Letzte Zeile enthält kein "\n"
+ */
 const data =
     "1;1;1;1;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;1;1;4;4;1;1;1;1;3;3;3;3;0;0;4;1;1;1;1;1\n" +
     "1;1;1;4;4;4;4;4;4;1;1;1;1;1;1;1;1;1;1;1;1;4;4;4;4;1;1;1;3;3;0;0;0;4;4;1;1;1;1;1\n" +

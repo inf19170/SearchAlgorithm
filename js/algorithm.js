@@ -1,56 +1,70 @@
+/**
+ * algorithm.js
+ *
+ * Funktion(-en) für den eigentlichen Algorithmus
+ *      - Algorithmus an sich
+ *      - Heuristische Funktion
+ *      - Wert für die Diagonale zwischen 2 Punkten
+ *      - Funktion zur Überprüfung, ob das Ziel erreicht wurde
+ *
+ */
 //TODO Überprüfe alle Felder ob die neben an in der ClosedList sind und einen kürzeren Weg haben, dann diesen auf Elternteil setzen
-//TODO Bug Fixen wenn er weg über Wasser sucht
 
 // Beginnt den optimierten und angepassten A* Algorithmus
 async function startAlgorithmus() {
-    startTime = new Date();
-    displayDiffMilliseconds("...","...","...");
+
+    startTime = new Date(); // Setzt die Startzeit für den Beginn der Suche des Algorithmus
+
+    // Algorithmus läuft solange, wie die openList noch Elemente enthält
     while (openList.length > 0) {
 
 
-        // Ermittle das mögliche Feld aus der OpenList mit dem kürzesten Weg
-        let shortestPath = undefined;
-        let shortestPathArray = [];
+        // Ermittle das Feld aus der OpenList mit dem kürzesten Kosten (Pfadkosten + Feldkosten + Heuristische Funktion)
+        let shortestPath = undefined; // Kürzestes Element
+        let shortestPathArray = []; // Kürzeste Elemente, die dieselben Kosten aufweisen
+
+
         /*
-            Alle offenen Felder (openList) werden durchgegangen. Was genau im einzelnen gemacht wird,
-            kann in Kommentaren weiter unten gelesen werden.
+            Solange tryMountain "false" ist, wird kein Boot auf einem Berg weggeworfen.
+            Sollte die Algorithmus kein Feld ermitteln können, den er gehen kann, wird tryMountain auf "true" gesetzt, um zu überprüfen,
+            ob es möglich ist, dass mit Hilfe von "Boot wegwerfen" auf einem Bergfeld ein Weg gefunden werden kann.
 
          */
         let tryMountain = false;
+
+        /*
+            Alle offenen Felder (openList) werden durchgegangen.
+
+         */
         for (let i = 0; i < openList.length; i++) {
+            /*
+                Variablen definieren für das i-Element aus der openList
+                    - Feld-ID
+                    - Feld-Typ
+                    - Boolean, ob Boot vorhanden ist oder nicht
+             */
             let tmpPath = openList[i];
             let tmpType = parseInt(document.getElementById(tmpPath).getAttribute("type"));
             let tmpHasBoat = document.getElementById(tmpPath).getAttribute("hasBoat");
 
-            /*
-                Hier werden alle Felder aus der openListe entfernt, die keine Relevanz mehr haben. Dazu zählen Wasserfelder
-                bei denen kein Boot mehr vorhanden ist
-             *//*
-            if (tmpType.toString() === "0" && tmpHasBoat.toString() === "false") {
-                if(i === openList.length-1){ i--; }
-                i--; // Dadurch, dass ein Element aus der Liste entfernt wurde, ist das nächste Element an derselben i. Stelle wie gerade eben.
-                openList = removeArrayElement(openList, tmpPath);
-                continue; // Für Schleife mit nächsten Element aus!
-            }*/
 
             /*
                 Nachfolgend wird ermittelt, welche Felder nach der gegebene Logik betretbar sind
 
                 Bei jeder Abfrage wird anfangs "shortestPath" mit dem ersten Wert initialisiert. Falls es Felder gibt,
-                die dieselben Kosten aufweisen, wie "shortestPath", so werden diese Elemente in eine Liste mitaufgenommen,
+                die dieselben Kosten (Pfadkosten + Feldkosten + Heuristische Funktion) aufweisen, wie "shortestPath", so werden diese Elemente in eine Liste mitaufgenommen,
                 um später den "idealsten" Wert aus dieser Liste zu nehmen. Diese Funktion dient der Optimierung der Auswahl
                 des kürzesten Weges!
 
                 1. If-Abfrage:
                     - Berge, bei denen das Boot nicht mehr im Besitz ist
                     - Wasser, bei denen noch ein Boot vorhanden ist
-                    - Alle anderen Felder, die zuvor nicht abgefragt wurden (hier: Berg & Wasser)
+                    - Alle anderen Felder, die zuvor nicht abgefragt wurden
+                    - Felder wie Berge mit Boot oder Wasser ohne Boot werden hier nicht berücksichtigt!
 
                 2. If-Abfrage:
-                    - Falls die erste Abfrage fehlschlägt (hier speziell: Berg und Boot ist nicht im Besitz) und das Feld
-                      ein Berg ist wird überprüft, ob es günstiger ist, dass Boot weg zu werfen und den Berg nehmen.
-
-                Einen "Else"-Fall gibt es nicht!
+                    - Falls durch die erste Abfrage kein Feld ermittelt werden konnte, wird überprüft, ob ein Feld ermittelt werden kann,
+                      wenn dafür ein Boot auf einem Berg weggeworfen wird.
 
              */
 
@@ -90,14 +104,15 @@ async function startAlgorithmus() {
             // Falls kein "normaler" Weg zu einem Ziel geführt hat, wird probiert einen Berg zu nehmen und dabei das Boot wegzuwerfen!
             if (i === openList.length - 1 && shortestPath === undefined && tryMountain === false) {
                 tryMountain = true;
-                i = -1;
+                i = -1; // Variable i wird beim Beginn der for-schleife um 1 erhöht. Um daher beim Neudurchlauf die For-Schleife von Anfang (Position "0") an läuft, muss i auf "-1" gesetzt werden.
             }
         }
 
         /*
-            Wie weiter oben beschrieben, kann es den Fall geben, dass mehrere Felder gleichwertig sind (Gleiche Kosten).
-            Damit hier der "idealste" Wert genommen wird, werden alle Felder auf ihren Abstand zum Ziel untersucht.
+            Wie weiter oben beschrieben, kann es den Fall geben, dass mehrere Felder gleichwertig sind (gleiche Kosten).
+            Damit hier das "idealste" Feld expandiert wird, werden alle Felder auf ihren Abstand zum Ziel untersucht.
             Danach wird das Feld mit dem kleinsten Abstand als "shortPath" gewählt.
+            Falls es gleiche Felder gibt, die denselben Abstand haben, wird das zuerst gefundene Element genommen.
 
          */
         if (shortestPathArray.length > 1) {
@@ -114,9 +129,9 @@ async function startAlgorithmus() {
 
 
         /*
+            Der nachfolgende Code-Abschnitt kommt zustande, falls durch die zu vorigen Abfragen kein Element für shortestPath ermittelt werden konnte.
             Initialisiere Suche mit Optimierung für Wasserfelder, dass dort das Boot erhalten bleibt:
          */
-
         if (shortestPath === undefined && openList.length > 0) {
             let possiblePath = true;
             // Solange Wasserfelder expandieren, bis es keine Felder mehr gibt oder keine Fehler mehr expandiert werden können
@@ -134,7 +149,7 @@ async function startAlgorithmus() {
                     }
                 }
 
-                // Alle Elemente in der OpenList durchgehen (Alle möglichen Wasserfelder, die kein Boot haben)
+                // Alle Elemente in der OpenList durchgehen
                 for (let j = 0; j < openList.length; j++) {
                     let field = openList[j];
                     let tmpType = document.getElementById(field).getAttribute("type");
@@ -186,7 +201,7 @@ async function startAlgorithmus() {
                             setPathCosts(field, fieldCost);
 
                         }
-                        // Die Felder die um das neue Wasserfeld mit Boot liegen müssen ggf. in die openList eingefügt werden (Wenn nicht in der ClosedList oder openList schon vorhanden):
+                        // Die Felder, die um das neue Wasserfeld mit Boot liegen müssen ggf. in die openList eingefügt werden (Wenn nicht in der ClosedList oder openList schon vorhanden):
                         if (document.getElementById(field).getAttribute("hasBoat").toString() === "true") {
                             fieldsAround = getFieldsAround(field);
                             for (let z = 0; z < fieldsAround.length; z++) {
@@ -215,24 +230,28 @@ async function startAlgorithmus() {
             console.error("Es konnte kein 'shortestPath' gefunden werden!");
             break;
         }
-        // Wenn shortestPath definiert ist, werden alle nicht mehr notwendigen Felder aus der openList entfernt
+
         /*
             Ist "shortestPath" definiert, wird dieses Feld aus der openList entfernt, expandiert und in die closedList hinzugefügt.
          */
         if (shortestPath !== undefined) {
+
+            // Falls das ausgewählte Feld ein Berg ist, auf dem das Boot weggeworfen werden muss, wir diese Attribute sowie dessen Kosten direkt hier gesetzt
             if (document.getElementById(shortestPath).getAttribute("type").toString() === "3" && document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "true") {
                 document.getElementById(shortestPath).setAttribute("hasBoat", false.toString());
                 document.getElementById(shortestPath).setAttribute("throwBoat", true.toString());
                 setPathCosts(shortestPath, document.getElementById(shortestPath).getAttribute("pathCost"));
             }
+
             // Entferne das Feld mit dem kürzesten Weg aus der OpenList, weil dieses erweitert wird
             openList = removeArrayElement(openList, shortestPath);
 
-            // Feld wird grün eingefärbt, wenn es nicht das Startfeld ist
+            // Alle expandierten Felder werden grün eingefärbt. Ausnahme: Startfeld
             if (shortestPath.toString() !== getStart().toString()) {
                 document.getElementById(shortestPath).style.backgroundColor = color["searchField"];
             }
-            // Füge das entfernte Feld in die ClosedList
+
+            // Füge das Feld in die ClosedList
             closedList.push(shortestPath);
 
 
@@ -241,54 +260,63 @@ async function startAlgorithmus() {
                 Expandiere den Knotenpunkt:
                 Für alle Felder die sich neben dem Knoten befinden, werden die Kosten ermittelt. Sofern für dieses
                 noch keine Pfadkosten definiert wurden (Bedeutet, dass dieses Feld noch von keiner anderen Stelle aus erreicht wurde)
+                oder es einen günstigeren Weg gibt.
 
              */
+
+            // Felder, die um das Feld liegen
             let fieldsAround = getFieldsAround(shortestPath);
 
-            // Feldkosten für den expandierten Knoten davor
-            let fieldCost = parseFloat(document.getElementById(shortestPath).getAttribute("cost"));
-
-            // Falls Boot abgelegt wurde, muss die Wegzeit reduziert werden
-            if (document.getElementById(shortestPath).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost * (1 - reduction);
-
-            // Addiere zu den Feldkosten die Pfadkosten des expandierten Knotens dazu.
-            if (parents.get(shortestPath) != null) {
-                fieldCost += parseFloat(document.getElementById(shortestPath).getAttribute("pathCost"));
-            }
+            // Berechnen der Feldkosten für die nachfolgenden Felder
+            let fieldCost = calculatePathCost(shortestPath);
 
             /*
                 Für jedes Feld, dass um das gegebene Feld liegt, werden die Pfadkosten gesetzt.
 
-                Sofern der Elternknoten des Feldes von Typ "Wasser" war und das jetzige Feld nicht mehr, so wird bei diesem der Wert
+                Sofern der Elternknoten des Feldes von Typ "Wasser" war und das jetzige Feld kein Wasserfeld mehr ist, so wird bei diesem der Wert
                 "hasBoat" auf "false" gesetzt. Dasselbe gilt, wenn das Elternteil schon selbst kein Boot mehr hatte.
 
                 Zuletzt wird das Feld in openList eingefügt und in der Map "parents" der Elternknoten des Feldes gesetzt.
              */
             for (let j = 0; j < fieldsAround.length; j++) {
                 let pos = fieldsAround[j];
+
+                // Werte nur ändern, falls noch keine Pfadkosten exsisiteren oder ein kürzerer Weg gefunden wurde
                 if (document.getElementById(pos).getAttribute("pathCost") == null || parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
                     let type = document.getElementById(pos).getAttribute("type");
 
-                    // Setze, dass das Boot abgelegt wurde, wenn Wasser überquert wurde oder das Feld zuvor schon kein Boot mehr hatte
+                    // Setze, dass das Boot nicht mehr vorhanden ist, wenn Wasser überquert wurde & jetziges Feld kein Wasser ist oder das Feld zuvor schon kein Boot mehr hatte
                     if (type.toString() !== "0" && document.getElementById(shortestPath).getAttribute("type").toString() === "0" || document.getElementById(shortestPath).getAttribute("hasBoat").toString() === "false") {
                         setHasBoat(pos, false);
+                        document.getElementById(pos).setAttribute("throwBoat", false.toString());
                     }
+
                     /*
                         Überprüfen, ob ein neuer kürzer Weg gefunden wurde
                         --> Ja:
                             - Ggf. throwBoat anpassen
                             - Element in die openList wieder aufnehmen und aus closedList nehmen
-                            - //TODO LÖSCHEN: Für alle Felder danach müssen die "pathCost", "hasBoat" und "throwBoat" angepasst werden
-
+                     */
+                    /*
+                        Falls ein kürzer Weg gefunden wurde, muss ein paar Änderungen vorgenommen werden:
                      */
                     if (parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
+                        // Falls Element in der closedList ist, muss es aus dieser entfernt werden, weil es wieder in die openList hinzugefügt wird.
                         if(closedList.includes(pos)) closedList = removeArrayElement(closedList, pos);
+
                         /*
                             Wert für "throwBoat" auf false setzen, sofern bei unserem neuen Weg throwBoat schon mal true ist (Das Boot wurde schon früher weggeworfen!)
+                            und unser Feld das Attribute "throwBoat" auf "true" hat.
                          */
+                        //TODO überprüfe, ob es diesen Fall überhaupt gibt!
+                        //TODO Dieser Fall sollte eigentlich nicht exsisitieren
                         if (document.getElementById(pos).getAttribute("throwBoat").toString() === "true") {
                             let anotherWay = shortestPath;
                             let anotherWayThrowBoat = false;
+
+                            /*
+                                Überprüfung, ob das Boot auf dem neuen Weg schon früher weggeworfen wurde
+                             */
 
                             while (anotherWay.toString() !== getStart().toString()) {
                                 if (document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true") {
@@ -303,6 +331,8 @@ async function startAlgorithmus() {
                             }
                             if (anotherWayThrowBoat === true) document.getElementById(pos).setAttribute("throwBoat", false.toString());
                         }
+
+
                         /*
                             Setze frühzeitig neues Elternteil + Kosten, um die Berechnung für die neuen Felder korrekt durchzuführen
                             Davor muss noch aus dem alten Elternknoten das Kind entfernt werden
@@ -310,36 +340,17 @@ async function startAlgorithmus() {
                         removeChilds(parents.get(pos), pos);
                         parents.set(pos, shortestPath);
                         setPathCosts(pos, fieldCost);
-                        /*
-                            //TODO Löschen! Diese Bedienung wird erfüllt, wenn das Element wieder in die openList hinzugefügt wird!
-                            Für alle Nachfolger müssen die "pathCost" und "hasBoat" angepasst werden
-                         */
-                        /*
-                           let hasBoat = document.getElementById(pos).getAttribute("hasBoat"); // Wert für die aktuelle Position (pos) wurde schon angepasst
-
-                           let currentArray = [pos];
-                           while (currentArray.length > 0) {
-                               let current = currentArray[0];
-                               let children = childs.get(currentArray[0]);
-                               if (children !== null && children !== undefined && children.length > 0) {
-                                   for (let z = 0; z < children.length; z++) {
-                                       let child = children[z];
-                                       let parent = current;
-                                       document.getElementById(child).setAttribute("hasBoat", hasBoat);
-                                       if (hasBoat.toString() === "false" && document.getElementById(child).getAttribute("throwBoat").toString() === "true") document.getElementById(child).setAttribute("throwBoat", "false");
-                                       let tmpFieldCost = parseFloat(document.getElementById(parent).getAttribute("cost"));
-
-                                       if (document.getElementById(parent).getAttribute("hasBoat").includes("false")) tmpFieldCost = tmpFieldCost * (1 - reduction);
-
-                                       if (parents.get(parent) != null) {
-                                           tmpFieldCost += parseFloat(document.getElementById(parent).getAttribute("pathCost"));
-                                       }
-                                       setPathCosts(child, tmpFieldCost);
-                                   }
-                               }
-                               currentArray = removeArrayElement(currentArray, current);
-                           } */
                     }
+
+                    /*
+                        Element in die openList setzen und optisch einfärben
+
+                        Elternknoten für dieses Feld setzen
+
+                        Kinder für die Elternknoten erweitern
+
+                        Pfadkosten setzen
+                     */
                     openList.push(pos);
                     if(pos.toString() !== getEnd().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
                     parents.set(pos, shortestPath);
@@ -352,21 +363,20 @@ async function startAlgorithmus() {
 
             }
 
-            // Wartezeit zwischen den Suchschritten (kann von Benutzer manuell verändert werden)
+            // Wartezeit zwischen den Suchschritten (kann von Benutzer verändert werden)
             await Sleep(getSleepTime());
 
 
         }
         /*
-            Nachdem alle Knoten expandiert sind, wird überprüft, ob das Ziel erreicht wurde. Falls dies der Fall ist,
+            Nachdem der Knoten expandiert wurde, wird überprüft, ob das Ziel erreicht wurde. Falls dies der Fall ist,
             wird die Lösung angezeigt und die Algorithmus wird abgebrochen.
         */
         if (finished()) {
-            setDiffMilliseconds();
-            document.getElementById("showSolution").removeAttribute("hidden");
-            await Sleep(250);
+            setDiffMilliseconds(); // Zeitanspruch setzen
+            await Sleep(250); // Kurze Verzögerung, bis Lösung angezeigt wird
             showSolution();
-            break;
+            break; // While-Schleife soll abgebrochen werden
         }
 
     }
@@ -384,16 +394,32 @@ async function startAlgorithmus() {
 }
 
 
+// Kostenberechnung für die Pfadkosten
+function calculatePathCost(parent) {
+    // Feldkosten für den expandierte Knoten
+    let fieldCost = parseFloat(document.getElementById(parent).getAttribute("cost"));
+
+    // Falls Boot abgelegt wurde, muss die Wegzeit reduziert werden
+    if (document.getElementById(parent).getAttribute("hasBoat").includes("false")) fieldCost = fieldCost * (1 - reduction);
+
+    // Addiere zu den Feldkosten die Pfadkosten des expandierten Knotens dazu.
+    if (parents.get(parent) != null) {
+        fieldCost += parseFloat(document.getElementById(parent).getAttribute("pathCost"));
+    }
+    return fieldCost;
+}
+
 // Gibt den Wert für die heuristische Funktion für die gegeben Position
+// Hier: Diagonal-Wert * 2 (2 für die geringste mögliche Feldkosten)
 function heuristFunction(pos) {
     let diagonal = diagonalValue(pos);
     if (diagonal !== undefined) {
-        return 2 * diagonal; // 2 für die geringste mögliche Feldkosten
+        return diagonal * 2;
     }
     return diagonal;
 }
 
-// Gibt den Diagonalen-Wert für die gegebene Position
+// Gibt den Diagonalen-Wert für die gegebene Position zum Ziel zurück
 function diagonalValue(pos) {
     // Diagonale kann nur bestimmt werden, wenn "Ende" definiert ist!
     if (getEnd() == null) return undefined;
@@ -410,6 +436,7 @@ function diagonalValue(pos) {
 }
 
 // Überprüft, ob das Ziel erreicht wurde
+// Hier: Wenn Ziel in der openList / closedList enthalten ist. Das letztere kommt zum Einsatz,wenn die Wasserfelder expandiert werden
 function finished() {
     return (openList.includes(getEnd()) || closedList.includes(getEnd()));
 }

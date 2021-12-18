@@ -1,3 +1,9 @@
+/**
+ * loadFile.js
+ *
+ * Funktionen um das Grid auszulesen & zu erstellen
+ *
+ */
 // Gibt die Rohdaten für das Grid aus
 function getData() {
     //return newGrid(40,40);
@@ -6,7 +12,6 @@ function getData() {
 
 /* Nachfolgend Quellcode wurde aus https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626 kopiert und für die Aufgabe angepasst */
 // Create HTML Code for grid
-//TODO Funktion überarbeiten
 function createGrid(data) {
     let allRows = data.split(/\r?\n|\r/); // Aufteilen der Daten bei allen möglichen Zeilenumbrüchen
     let table = '<table>';
@@ -28,7 +33,8 @@ function createGrid(data) {
                 let field = new Field(type);
                 table += field.createHTML(i, singleRow);
             }
-            if (maxWidth === undefined || maxWidth > row.length) maxWidth = row.length;
+            // Breite auf maximal Wert setzen
+            if (maxWidth === undefined || maxWidth < row.length) maxWidth = row.length;
         }
         table += '</tr>';
         maxHeight = allRows.length;

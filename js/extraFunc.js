@@ -1,8 +1,9 @@
 /**
  * extraFunc.js
  *
- * Funktionen die extra Funktionen zu dem gegebenen Algorithmus bieten:
- * Dazu zählt beispielsweise die Auswertung des Weges
+ * Funktionen die extra Funktionalitäten bieten:
+ *      - Auswertung des Weges
+ *      - Dauer des Algorithmus bis der Algorithmus beendet wurde
  *
  */
 
