@@ -42,10 +42,13 @@ async function setStartAndEnd(id) {
         document.getElementById("startSelect").innerHTML = symbols[document.getElementById(getStart()).getAttribute("type")] + ' [' + getStart() + ']';
         document.getElementById(getStart()).style.backgroundColor = "yellow";
         document.getElementById("resetbtn").disabled = false;
+        document.getElementById(getStart()).setAttribute("title", FieldDescriptionToString(getStart().toString(), undefined, 0, undefined).toString());
     } else if (getStart().toString() === id.toString() && getEnd() === null) {
         alert("Das Ziel darf sich nicht auf dem Startfeld befinden!");
     } else if (getEnd() == null) {
         setEnd(id);
+        document.getElementById(getEnd()).setAttribute("title", FieldDescriptionToString(getEnd().toString(), undefined, undefined, undefined).toString());
+        document.getElementById(getStart()).setAttribute("title", FieldDescriptionToString(getStart().toString(), undefined, 0, undefined).toString());
         document.getElementById(getEnd()).style.textAlign = "center";
         document.getElementById("endPoint").innerHTML = '<i style="color: lightgreen" class="fas fa-check"></i> ' + document.getElementById("endPoint").innerHTML;
         document.getElementById("endSelect").innerHTML = symbols[document.getElementById(getEnd()).getAttribute("type")] + ' [' + getEnd() + '] ';

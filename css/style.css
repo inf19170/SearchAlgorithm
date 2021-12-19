@@ -28,18 +28,6 @@
     position: relative;
 }
 
-/* UNKLAR, WO VERWENDET
-
-.danger {
-    color: rgb(255, 91, 91);
-}
-  
-.danger:hover {
-    background: #f44336;
-    border-radius: 8px;
-    color: white;
-} */
-
 /*Verbergung der Anzeige im Vorfeld, wenn Suche NICHT erfolgreich*/
 #failTxt {
     display: none;

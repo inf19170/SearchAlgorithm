@@ -15,7 +15,7 @@ async function startAlgorithmus() {
 
     startTime = new Date(); // Setzt die Startzeit für den Beginn der Suche des Algorithmus
 
-    // Algorithmus läuft solange, wie die openList noch Elemente enthält
+    // Algorithmus läuft so lange, wie die openList noch Elemente enthält
     while (openList.length > 0) {
 
 
@@ -26,8 +26,8 @@ async function startAlgorithmus() {
 
         /*
             Solange tryMountain "false" ist, wird kein Boot auf einem Berg weggeworfen.
-            Sollte die Algorithmus kein Feld ermitteln können, den er gehen kann, wird tryMountain auf "true" gesetzt, um zu überprüfen,
-            ob es möglich ist, dass mit Hilfe von "Boot wegwerfen" auf einem Bergfeld ein Weg gefunden werden kann.
+            Sollte der Algorithmus kein Feld ermitteln können, den er gehen kann, wird tryMountain auf "true" gesetzt, um zu überprüfen,
+            ob es möglich ist, dass mithilfe von "Boot wegwerfen" auf einem Bergfeld ein Weg gefunden werden kann.
 
          */
         let tryMountain = false;
@@ -53,7 +53,7 @@ async function startAlgorithmus() {
 
                 Bei jeder Abfrage wird anfangs "shortestPath" mit dem ersten Wert initialisiert. Falls es Felder gibt,
                 die dieselben Kosten (Pfadkosten + Feldkosten + Heuristische Funktion) aufweisen, wie "shortestPath", so werden diese Elemente in eine Liste mitaufgenommen,
-                um später den "idealsten" Wert aus dieser Liste zu nehmen. Diese Funktion dient der Optimierung der Auswahl
+                um später den "idealen" Wert aus dieser Liste zu nehmen. Diese Funktion dient der Optimierung der Auswahl
                 des kürzesten Weges!
 
                 1. If-Abfrage:
@@ -86,7 +86,7 @@ async function startAlgorithmus() {
 
             }
             if (tryMountain && tmpType.toString() === "3") {
-                // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weg geworfen werden (Damit der Berg bestiegen werden kann), sofern dies kostengünstiger ist!
+                // Falls das nächste kürzere Feld ein Berg ist, soll das Boot weggeworfen werden (Damit der Berg bestiegen werden kann), sofern dies kostengünstiger ist!
                 if (shortestPath === undefined) {
                     shortestPath = tmpPath;
                 }
@@ -258,7 +258,7 @@ async function startAlgorithmus() {
             /* Berechne die Schritte für die Zellen außen rum */
             /*
                 Expandiere den Knotenpunkt:
-                Für alle Felder die sich neben dem Knoten befinden, werden die Kosten ermittelt. Sofern für dieses
+                Für alle Felder, die sich neben dem Knoten befinden, werden die Kosten ermittelt. Sofern für dieses
                 noch keine Pfadkosten definiert wurden (Bedeutet, dass dieses Feld noch von keiner anderen Stelle aus erreicht wurde)
                 oder es einen günstigeren Weg gibt.
 
@@ -274,7 +274,7 @@ async function startAlgorithmus() {
                 Für jedes Feld, dass um das gegebene Feld liegt, werden die Pfadkosten gesetzt.
 
                 Sofern der Elternknoten des Feldes von Typ "Wasser" war und das jetzige Feld kein Wasserfeld mehr ist, so wird bei diesem der Wert
-                "hasBoat" auf "false" gesetzt. Dasselbe gilt, wenn das Elternteil schon selbst kein Boot mehr hatte.
+                "hasBoat" auf "false" gesetzt. Dasselbe gilt, wenn der Elternteil schon selbst kein Boot mehr hatte.
 
                 Zuletzt wird das Feld in openList eingefügt und in der Map "parents" der Elternknoten des Feldes gesetzt.
              */
@@ -409,8 +409,8 @@ function calculatePathCost(parent) {
     return fieldCost;
 }
 
-// Gibt den Wert für die heuristische Funktion für die gegeben Position
-// Hier: Diagonal-Wert * 2 (2 für die geringste mögliche Feldkosten)
+// Gibt den Wert für die heuristische Funktion für die gegebene Position
+// Hier: Diagonal-Wert * 2 (2 für die geringsten mögliche Feldkosten)
 function heuristFunction(pos) {
     let diagonal = diagonalValue(pos);
     if (diagonal !== undefined) {
