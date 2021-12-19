@@ -71,7 +71,7 @@ function showSolution() {
 function noSolutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
     document.getElementById("solutionField").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #b60c00; text-align: center; color: white; animation-name: none;");
-    document.getElementById("solutionField").innerHTML = '<h5>Suche nicht erfolgreich!&ensp;<i style ="color: black" class="fas fa-exclamation-triangle"></i></h5>';
+    document.getElementById("solutionField").innerHTML = '<h5>Suche nicht erfolgreich! <i style ="color: black" class="fas fa-exclamation-triangle"></i></h5>';
     document.getElementById("showSolution").checked = "checked";
     document.getElementById("showSolution").disabled = false;
 }
