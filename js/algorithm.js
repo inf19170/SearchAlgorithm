@@ -323,8 +323,11 @@ async function startAlgorithmus() {
 
                         Pfadkosten setzen
                      */
-                    openList.push(pos);
-                    if (pos.toString() !== getEnd().toString() && pos.toString() !== getStart().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
+                    if (!closedList.includes(pos)){
+                        openList.push(pos);
+                        if (pos.toString() !== getEnd().toString() && pos.toString() !== getStart().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
+
+                    }
                     parents.set(pos, shortestPath);
                     setPathCosts(pos, fieldCost);
                     addChilds(shortestPath, pos);
