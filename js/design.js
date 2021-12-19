@@ -72,3 +72,11 @@ function switchVisibilitySearchArea() {
     showSearch = !showSearch;
 
 }
+
+function onHoverShowSearchArea(){
+    if (showSearch) {
+        document.getElementById("showSolution").title = "Suchbereich anzeigen";
+    } else {
+        document.getElementById("showSolution").title = "Suchbereich verstecken";
+    }
+}

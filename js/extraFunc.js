@@ -14,6 +14,7 @@ function setSearchTimeToLocalStorage() {
 
     document.querySelector("#time").addEventListener("input", function () {
         localStorage.setItem("searchTime", this.value);
+        document.getElementById("time").title = (1000 - parseFloat(this.value)).toString()+" ms";
     });
 
 }
@@ -130,9 +131,12 @@ function showMoreDetails() {
 
 function changePause(){
     pauseAlgo = !pauseAlgo;
+    setPause();
+
 }
 
-function setPause(){
+function eventPause(){
+    setPause();
     document.addEventListener("keypress", function(event){
         let code = event.code;
         if(code.toString() === "KeyP"){
@@ -140,4 +144,17 @@ function setPause(){
         }
     });
 
+}
+
+
+function setPause(){
+    if(pauseAlgo){
+        document.getElementById("playStopButton").className = 'fas fa-play';
+        document.getElementById("playStopButton").style.color = 'green';
+        document.getElementById("playStopButton").title = "Fortsetzen";
+    }else{
+        document.getElementById("playStopButton").className = 'fas fa-pause-circle';
+        document.getElementById("playStopButton").style.color ='darkred';
+        document.getElementById("playStopButton").title = "Pausieren";
+    }
 }

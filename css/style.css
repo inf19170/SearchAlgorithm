@@ -95,6 +95,23 @@
     padding-bottom: 8px;
 }
 
+/* Start-/Pause-Button */
+#runningState {
+
+    cursor: pointer;
+    transform: scale(3);
+    filter: brightness(120%);
+    margin-bottom: 30px;
+}
+
+/* Start-/Pause-Button beim Hovern */
+#runningState:hover {
+
+    cursor: pointer;
+    transform: scale(3);
+    filter: brightness(200%);
+}
+
 /*Konfiguration*/
 #settings {
     margin-left: 10px; 

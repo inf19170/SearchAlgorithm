@@ -70,6 +70,10 @@
 
             <br><br><br><br><br><br><br>
 
+            <div class="centerText" id="runningState" onclick="changePause()">
+                <i style="color: darkred" class="fas fa-pause-circle" id="playStopButton"></i>
+            </div>
+
             <p class="h4 centerText"><i class="fas fa-cog"></i> <u>Konfiguration</u></p>
 
             <br><br>
@@ -77,7 +81,7 @@
             <!-- Suchgeschwindigkeitsregler -->
             <p class="h6 centerText"><i class="fas fa-tachometer-alt"></i> Suchgeschwindigkeit:</p>
 
-            <input title="Einstellung der Suchgeschwindigkeit" type="range" class="form-range" max="1000" min="500"
+            <input title="0 ms" type="range" class="form-range" max="1000" min="500"
                    step="10" value="1000" id="time" name="time" onmouseover="setSearchTimeToLocalStorage()">
 
             <div class="row">
@@ -98,7 +102,7 @@
             <div class="centerText form-check form-switch">
 
                 <label class="form-check-label" for="showSolution">
-                    <input title="Suchbereich anzeigen/ausblenden" onchange="switchVisibilitySearchArea()"
+                    <input title="Suchbereich anzeigen/ausblenden" onchange="switchVisibilitySearchArea()" onmouseover="onHoverShowSearchArea()"
                            class="form-check-input" type="checkbox" id="showSolution" disabled>
 
                     <i class="fas fa-search"></i> <i>Suchbereich</i></label>
