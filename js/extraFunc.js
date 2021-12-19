@@ -153,7 +153,7 @@ function setPause(){
         document.getElementById("playStopButton").style.color = 'green';
         document.getElementById("playStopButton").title = "Fortsetzen";
     }else{
-        document.getElementById("playStopButton").className = 'fas fa-pause-circle';
+        document.getElementById("playStopButton").className = 'far fa-pause-circle';
         document.getElementById("playStopButton").style.color ='darkred';
         document.getElementById("playStopButton").title = "Pausieren";
     }
