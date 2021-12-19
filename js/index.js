@@ -19,8 +19,8 @@ window.onload = function () {
 function init_algo() {
     setPathCosts(getStart(), 0);
     openList.push(getStart());
-    document.getElementById("solutionTxt").innerHTML = '<h5>Suchvorgang läuft! <i class="far fa-clock"></i></h5>';
-    document.getElementById("solutionTxt").setAttribute("style", "color: #F3DC44; animation-name: none;");
+    document.getElementById("solutionField").innerHTML = '<h5>Suchvorgang läuft! <i class="far fa-clock"></i></h5>';
+    document.getElementById("solutionField").setAttribute("style", "color: #F3DC44; animation-name: none;");
     document.getElementsByTagName("body")[0].style.cursor = "progress";
     displayDiffMilliseconds("...","...","...");
     startAlgorithmus();
@@ -66,8 +66,8 @@ function showSolution() {
 // Es wurde KEINE Lösung gefunden
 function noSolutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
-    document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #b60c00; text-align: center; color: white; animation-name: none;");
-    document.getElementById("solutionTxt").innerHTML = '<h5>Suche nicht erfolgreich!&ensp;<i style ="color: black" class="fas fa-exclamation-triangle"></i></h5>';
+    document.getElementById("solutionField").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #b60c00; text-align: center; color: white; animation-name: none;");
+    document.getElementById("solutionField").innerHTML = '<h5>Suche nicht erfolgreich!&ensp;<i style ="color: black" class="fas fa-exclamation-triangle"></i></h5>';
     document.getElementById("showSolution").checked = "checked";
     document.getElementById("showSolution").disabled = false;
 }
@@ -75,8 +75,8 @@ function noSolutionFound() {
 // Es wurde eine Lösung gefunden
 function solutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";
-    document.getElementById("solutionTxt").setAttribute("style", "border: outset 3px; border-color: darkgreen; margin-bottom: 10px; background-color: green; text-align: center; color: white; animation-name: none;");
-    document.getElementById("solutionTxt").innerHTML = '<h5>Suche erfolgreich!&ensp;<i class="fas fa-check"></i></h5>';
+    document.getElementById("solutionField").setAttribute("style", "border: outset 3px; border-color: darkgreen; margin-bottom: 10px; background-color: green; text-align: center; color: white; animation-name: none;");
+    document.getElementById("solutionField").innerHTML = '<h5>Suche erfolgreich!&ensp;<i class="fas fa-check"></i></h5>';
     showPathTo(getEnd());
 }
 
