@@ -135,7 +135,7 @@ function changePause(){
 function setPause(){
     document.addEventListener("keypress", function(event){
         let code = event.code;
-        if(code.toString() === "Space" || "KeyP"){
+        if(code.toString() === "KeyP"){
             changePause();
         }
     });
