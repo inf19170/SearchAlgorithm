@@ -37,7 +37,6 @@ function showMoreDetails() {
     let costs = 0; // Kosten, die bis zum Wegwerfen des Bootes entstanden sind
 
 
-
     while (current.toString() !== getStart().toString()) {
         let tmpType = document.getElementById(current).getAttribute("type");
         let tmpThrowBoat = document.getElementById(current).getAttribute("throwBoat");

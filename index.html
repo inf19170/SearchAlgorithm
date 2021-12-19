@@ -8,7 +8,7 @@
     <title>A*-Algorithmus</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <link rel="icon" type="image/vnd.microsoft.icon" href="files/MyIcon.ico">
 
@@ -30,217 +30,220 @@
 
 <body id="completeContent" class="text-light">
 
-    <!-- Titel -->
-    <h1 class="display-4 centerText"><b><u>A*-Algorithmus - Kürzester Weg vom Start zum Ziel</u></b></h1>
+<!-- Titel -->
+<h1 class="display-4 centerText"><b><u>A*-Algorithmus - Kürzester Weg vom Start zum Ziel</u></b></h1>
 
-    <!-- Container -->
-    <div id="containerContent" class="container">
+<!-- Container -->
+<div id="containerContent" class="container">
 
-        <!-- Reihe -->
-        <div class="row" id="mainContent">
+    <!-- Reihe -->
+    <div class="row" id="mainContent">
 
-            <!-- Linke Spalte: Geländekarte -->
-            <div class="col-7" id="gridCol">
+        <!-- Linke Spalte: Geländekarte -->
+        <div class="col-7" id="gridCol">
 
-                <!-- Einfügen der Tabelle der Geländekarte -->
-                <table id="grid">
-                </table>
+            <!-- Einfügen der Tabelle der Geländekarte -->
+            <table id="grid">
+            </table>
 
-                <br><br>
+            <br><br>
 
-                <p id="infoTxt">
-                    <sup>1</sup> Zeitkosten, die beim normalem Durchlauf aufkommen!
-
-                    <br>
-
-                    <sup>2</sup> Zeitkosten, die aufkommen würden, wenn direkt am Anfang das Boot weggeworfen wurde!
-                    <br>
-                    &ensp; <i>(Unter der Bedingung, dass das Boot im Laufe des Weges weggeworfen wird!)</i>
-
-                    <br>
-
-                    <sup>3</sup> Zeitkosten, die gespart werden würden, wenn direkt am Anfang das Boot weggeworfen
-                    wurde!
-                </p>
-
-            </div>
-
-            <!-- Mittlere Spalte: Konfiguration -->
-            <div id="settings" class="col-2">
-
-                <br><br><br><br><br><br><br>
-
-                <p class="h4 centerText"><i class="fas fa-cog"></i> <u>Konfiguration</u></p>
-
-                <br><br>
-
-                <!-- Suchgeschwindigkeitsregler -->
-                <p class="h6 centerText"><i class="fas fa-tachometer-alt"></i> Suchgeschwindigkeit:</p>
-
-                <input title="Einstellung der Suchgeschwindigkeit" type="range" class="form-range" max="1000" min="500"
-                    step="10" value="1000" id="time" name="time" onmouseover="setSearchTimeToLocalStorage()">
-
-                <div class="row">
-
-                    <div class="col">
-                        <i>Langsam</i>
-                    </div>
-
-                    <div class="col rightText">
-                        <i>Schnell</i>
-                    </div>
-
-                </div>
+            <p id="infoTxt">
+                <sup>1</sup> Zeitkosten, die beim normalem Durchlauf aufkommen!
 
                 <br>
 
-                <!-- Suchfeldbereich -->
-                <div class="centerText form-check form-switch">
-
-                    <label class="form-check-label" for="showSolution">
-                        <input title="Suchbereich anzeigen/ausblenden" onchange="switchVisibilitySearchArea()"
-                            class="form-check-input" type="checkbox" id="showSolution" disabled>
-
-                        <i class="fas fa-search"></i> <i>Suchbereich</i></label>
-
-                </div>
-
-                <br><br>
-
-                <!-- Zurücksetzen-Button -->
-                <button title="Auswahlpunkte neu definieren" id="resetbtn" onclick="javascript:location.reload()"
-                    class="btn btn-outline-danger" disabled><i class="fas fa-redo-alt"></i> Zurücksetzen</button>
-
-            </div>
-
-            <!-- Rechte Spalte: Auswertungsliste -->
-            <div class="col" id="auswertung">
+                <sup>2</sup> Zeitkosten, die aufkommen würden, wenn direkt am Anfang das Boot weggeworfen wurde!
+                <br>
+                &ensp; <i>(Unter der Bedingung, dass das Boot im Laufe des Weges weggeworfen wird!)</i>
 
                 <br>
 
-                <!-- Übersicht -->
-                <h5 class="centerText"><i class="fas fa-flag-checkered"></i>&ensp;<u>Auswertung - Übersicht</b></u></h5>
+                <sup>3</sup> Zeitkosten, die gespart werden würden, wenn direkt am Anfang das Boot weggeworfen
+                wurde!
+            </p>
 
-                <br>
+        </div>
 
-                <div class="centerText" id="overview">
+        <!-- Mittlere Spalte: Konfiguration -->
+        <div id="settings" class="col-2">
 
-                    <p><i><b>Boot in Wasser genutzt:&ensp;</b></i><span id="usedBoat">-</span></p>
-                    <p><i><b>Boot weggeworfen:&ensp;</b></i><span id="throwBoat">-</span></p>
-                    <p><i><b>Zeitkosten<sup>1</sup>:&ensp;</b></i><span id="runnedCosts">-</span> ZE</p>
-                    <p><i><b>Zeitkosten (Alt.)<sup>2</sup>:&ensp;</b></i><span id="lowerRunnedCosts">-</span> ZE</p>
-                    <p><i><b>Diff. Zeitkosten<sup>3</sup>:&ensp;</b></i><span id="diffRunnedCosts">-</span> ZE</p>
+            <br><br><br><br><br><br><br>
 
+            <p class="h4 centerText"><i class="fas fa-cog"></i> <u>Konfiguration</u></p>
+
+            <br><br>
+
+            <!-- Suchgeschwindigkeitsregler -->
+            <p class="h6 centerText"><i class="fas fa-tachometer-alt"></i> Suchgeschwindigkeit:</p>
+
+            <input title="Einstellung der Suchgeschwindigkeit" type="range" class="form-range" max="1000" min="500"
+                   step="10" value="1000" id="time" name="time" onmouseover="setSearchTimeToLocalStorage()">
+
+            <div class="row">
+
+                <div class="col">
+                    <i>Langsam</i>
                 </div>
 
-
-                <!-- Aufzählung der Pfadfelder -->
-                <div class="centerText" id="runnedFields">
-                    <h5><u>Durchlaufene Pfadfelder</u></h5>
-
-                    <br>
-
-                    <div class="row">
-
-                        <!-- Feldkodierung -->
-                        <div id="fieldNumber" class="col-5">
-
-                            <b>[0]</b>
-
-                            <br>
-
-                            <b>[1]</b>
-
-                            <br>
-
-                            <b>[2]</b>
-
-                            <br>
-
-                            <b>[3]</b>
-
-                            <br>
-
-                            <b>[4]</b>
-
-                        </div>
-
-                        <!-- Feldtypen -->
-                        <div class="col-6">
-
-                            <i class="fas fa-water"></i> Wasser: <span id="runnedFieldsRiver">-</span> FE
-                            <br>
-                            <i class="fas fa-hiking"></i> Wiese: <span id="runnedFieldsFlat">-</span> FE
-                            <br>
-                            <i class="fas fa-road"></i> Weg: <span id="runnedFieldsWay">-</span> FE
-                            <br>
-                            <i class="fas fa-mountain"></i> Berg: <span id="runnedFieldsMountain">-</span> FE
-                            <br>
-                            <i class="fas fa-tree"></i> Wald: <span id="runnedFieldsForest">-</span> FE
-
-                        </div>
-
-                    </div>
-
-                    <br>
-
-                    <!-- Summe der gesamten Pfadfelder -->
-                    <h5><i><b>Insgesamt: </b></i><span id="runnedFieldsTotal">-</span> FE</li>
-                    </h5>
-
-                </div>
-
-                <!-- Ergebnisbewertung -->
-                <div class="insertSuccess">
-
-                    <h2 id="ergebnis" class="centerText"><u>Ergebnis</u></h2>
-              
-                    <div class="col" id="fieldSelect">
-                        
-                              <br>
-
-                        <!-- Auswahlpunkte -->
-                        <h5><u>Auswahlpunkte</u></h5>
-
-                        <div class="row">
-                            <!-- Startpunkt -->
-                            <div id="startPoint" class="row-4">
-                                S - Startpunkt:&ensp;<span id="startSelect">-</span>
-                            </div>
-
-                            <!-- Zielpunkt -->
-                            <div id="endPoint" class="row-4">
-                                Z - Zielpunkt:&ensp;<span id="endSelect">-</span>
-                            </div>
-                        </div>
-
-                        <br>
-
-                        <div>
-
-                            <!-- Realer Zeitanspruch des Suchalgorithmus A* -->
-                            <h5><u>Zeitanspruch</u></h5>
-
-                            <span id="minutes">-</span> min
-                            <span id="seconds">-</span> sek
-                            <span id="milliseconds">-</span> ms
-
-                        </div>
-
-                    </div>
-
-             <!-- Ausgabe des Sucherfolgs nach Auswahl des Start-/Zielpunktes -->
-                    <h5 class="p-3" id="solutionField"><div id="solutionTxt">Start-/Zielpunkt wählen!</div></h4>
-
-
+                <div class="col rightText">
+                    <i>Schnell</i>
                 </div>
 
             </div>
 
             <br>
 
+            <!-- Suchfeldbereich -->
+            <div class="centerText form-check form-switch">
+
+                <label class="form-check-label" for="showSolution">
+                    <input title="Suchbereich anzeigen/ausblenden" onchange="switchVisibilitySearchArea()"
+                           class="form-check-input" type="checkbox" id="showSolution" disabled>
+
+                    <i class="fas fa-search"></i> <i>Suchbereich</i></label>
+
+            </div>
+
+            <br><br>
+
+            <!-- Zurücksetzen-Button -->
+            <button title="Auswahlpunkte neu definieren" id="resetbtn" onclick="javascript:location.reload()"
+                    class="btn btn-outline-danger" disabled><i class="fas fa-redo-alt"></i> Zurücksetzen
+            </button>
+
         </div>
+
+        <!-- Rechte Spalte: Auswertungsliste -->
+        <div class="col" id="auswertung">
+
+            <br>
+
+            <!-- Übersicht -->
+            <h5 class="centerText"><i class="fas fa-flag-checkered"></i>&ensp;<u>Auswertung - Übersicht</b></u></h5>
+
+            <br>
+
+            <div class="centerText" id="overview">
+
+                <p><i><b>Boot in Wasser genutzt:&ensp;</b></i><span id="usedBoat">-</span></p>
+                <p><i><b>Boot weggeworfen:&ensp;</b></i><span id="throwBoat">-</span></p>
+                <p><i><b>Zeitkosten<sup>1</sup>:&ensp;</b></i><span id="runnedCosts">-</span> ZE</p>
+                <p><i><b>Zeitkosten (Alt.)<sup>2</sup>:&ensp;</b></i><span id="lowerRunnedCosts">-</span> ZE</p>
+                <p><i><b>Diff. Zeitkosten<sup>3</sup>:&ensp;</b></i><span id="diffRunnedCosts">-</span> ZE</p>
+
+            </div>
+
+
+            <!-- Aufzählung der Pfadfelder -->
+            <div class="centerText" id="runnedFields">
+                <h5><u>Durchlaufene Pfadfelder</u></h5>
+
+                <br>
+
+                <div class="row">
+
+                    <!-- Feldkodierung -->
+                    <div id="fieldNumber" class="col-5">
+
+                        <b>[0]</b>
+
+                        <br>
+
+                        <b>[1]</b>
+
+                        <br>
+
+                        <b>[2]</b>
+
+                        <br>
+
+                        <b>[3]</b>
+
+                        <br>
+
+                        <b>[4]</b>
+
+                    </div>
+
+                    <!-- Feldtypen -->
+                    <div class="col-6">
+
+                        <i class="fas fa-water"></i> Wasser: <span id="runnedFieldsRiver">-</span> FE
+                        <br>
+                        <i class="fas fa-hiking"></i> Wiese: <span id="runnedFieldsFlat">-</span> FE
+                        <br>
+                        <i class="fas fa-road"></i> Weg: <span id="runnedFieldsWay">-</span> FE
+                        <br>
+                        <i class="fas fa-mountain"></i> Berg: <span id="runnedFieldsMountain">-</span> FE
+                        <br>
+                        <i class="fas fa-tree"></i> Wald: <span id="runnedFieldsForest">-</span> FE
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <!-- Summe der gesamten Pfadfelder -->
+                <h5><i><b>Insgesamt: </b></i><span id="runnedFieldsTotal">-</span> FE</li>
+                </h5>
+
+            </div>
+
+            <!-- Ergebnisbewertung -->
+            <div class="insertSuccess">
+
+                <h2 id="ergebnis" class="centerText"><u>Ergebnis</u></h2>
+
+                <div class="col" id="fieldSelect">
+
+                    <br>
+
+                    <!-- Auswahlpunkte -->
+                    <h5><u>Auswahlpunkte</u></h5>
+
+                    <div class="row">
+                        <!-- Startpunkt -->
+                        <div id="startPoint" class="row-4">
+                            S - Startpunkt:&ensp;<span id="startSelect">-</span>
+                        </div>
+
+                        <!-- Zielpunkt -->
+                        <div id="endPoint" class="row-4">
+                            Z - Zielpunkt:&ensp;<span id="endSelect">-</span>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div>
+
+                        <!-- Realer Zeitanspruch des Suchalgorithmus A* -->
+                        <h5><u>Zeitanspruch</u></h5>
+
+                        <span id="minutes">-</span> min
+                        <span id="seconds">-</span> sek
+                        <span id="milliseconds">-</span> ms
+
+                    </div>
+
+                </div>
+
+                <!-- Ausgabe des Sucherfolgs nach Auswahl des Start-/Zielpunktes -->
+                <h5 class="p-3" id="solutionField">
+                    <div id="solutionTxt">Start-/Zielpunkt wählen!</div>
+                    </h4>
+
+
+            </div>
+
+        </div>
+
+        <br>
+
     </div>
+</div>
 
 </body>
 
@@ -248,7 +251,7 @@
 
     <!-- Github-Link -->
     <a class="btn rounded-circle btn-outline-light btn-floating mb-4 m-1"
-        href="https://github.com/inf19170/SearchAlgorithm">
+       href="https://github.com/inf19170/SearchAlgorithm">
         <i class="fab fa-github"></i>
     </a> GitHub
 

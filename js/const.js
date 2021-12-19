@@ -70,8 +70,8 @@ function FieldDescriptionToString(cords, fieldType, pathCosts, boat) {
     let fieldCosts = cost[fieldType];
 
     let positionText = "Position: [" + cords + "]";
-    if(cords.toString() === getStart()) positionText += " Start";
-    if(cords.toString() === getEnd()) positionText += " Ziel";
+    if (cords.toString() === getStart()) positionText += " Start";
+    if (cords.toString() === getEnd()) positionText += " Ziel";
 
     let description = fieldDescription.replace("[cords]", positionText);
     description = description.replace("[type]", "Feldtyp: " + typeGerman[fieldType]);

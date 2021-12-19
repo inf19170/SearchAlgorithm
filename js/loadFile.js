@@ -11,6 +11,7 @@ function getData() {
 }
 
 /* Nachfolgend Quellcode wurde aus https://code.tutsplus.com/tutorials/parsing-a-csv-file-with-javascript--cms-25626 kopiert und für die Aufgabe angepasst */
+
 // Create HTML Code for grid
 function createGrid(data) {
     let allRows = data.split(/\r?\n|\r/); // Aufteilen der Daten bei allen möglichen Zeilenumbrüchen

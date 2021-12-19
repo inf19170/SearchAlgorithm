@@ -22,7 +22,7 @@ function init_algo() {
     document.getElementById("solutionField").innerHTML = '<h5>Suchvorgang läuft! <i class="far fa-clock"></i></h5>';
     document.getElementById("solutionField").setAttribute("style", "color: #F3DC44; animation-name: none;");
     document.getElementsByTagName("body")[0].style.cursor = "progress";
-    displayDiffMilliseconds("...","...","...");
+    displayDiffMilliseconds("...", "...", "...");
     startAlgorithmus();
 }
 
@@ -66,6 +66,7 @@ function showSolution() {
     solutionFound();
     showMoreDetails();
 }
+
 // Es wurde KEINE Lösung gefunden
 function noSolutionFound() {
     document.getElementsByTagName("body")[0].style.cursor = "auto";

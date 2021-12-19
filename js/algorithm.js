@@ -206,7 +206,7 @@ async function startAlgorithmus() {
                             fieldsAround = getFieldsAround(field);
                             for (let z = 0; z < fieldsAround.length; z++) {
                                 let tmp = fieldsAround[z];
-                                if(!closedList.includes(tmp) && !openList.includes(tmp)){
+                                if (!closedList.includes(tmp) && !openList.includes(tmp)) {
                                     openList.push(tmp);
                                     document.getElementById(tmp).setAttribute("hasBoat", false.toString());
                                     document.getElementById(tmp).setAttribute("throwBoat", false.toString());
@@ -302,7 +302,7 @@ async function startAlgorithmus() {
                      */
                     if (parseFloat(document.getElementById(pos).getAttribute("pathCost")) > fieldCost) {
                         // Falls Element in der closedList ist, muss es aus dieser entfernt werden, weil es wieder in die openList hinzugefügt wird.
-                        if(closedList.includes(pos)) closedList = removeArrayElement(closedList, pos);
+                        if (closedList.includes(pos)) closedList = removeArrayElement(closedList, pos);
 
                         /*
                             Wert für "throwBoat" auf false setzen, sofern bei unserem neuen Weg throwBoat schon mal true ist (Das Boot wurde schon früher weggeworfen!)
@@ -352,11 +352,10 @@ async function startAlgorithmus() {
                         Pfadkosten setzen
                      */
                     openList.push(pos);
-                    if(pos.toString() !== getEnd().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
+                    if (pos.toString() !== getEnd().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
                     parents.set(pos, shortestPath);
                     setPathCosts(pos, fieldCost);
                     addChilds(shortestPath, pos);
-
 
 
                 }
