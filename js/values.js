@@ -40,15 +40,15 @@ let maxHeight = undefined;
 
 let showSearch = false;
 
+let pauseAlgo = false;
 
 let openList = [];
 let closedList = [];
 
 let solutionPath = [];
 let parents = new Map();
+
 let childs = new Map();
-
-
 function addChilds(key, value) {
     let array = [];
     if (childs.get(key) !== null && childs.get(key) !== undefined) {
@@ -57,7 +57,6 @@ function addChilds(key, value) {
     array.push(value);
     childs.set(key, array);
 }
-
 function removeChilds(key, value) {
     let array = [];
     if (childs.get(key) !== null && childs.get(key) !== undefined) {

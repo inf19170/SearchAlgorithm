@@ -17,7 +17,10 @@ async function startAlgorithmus() {
 
     // Algorithmus läuft so lange, wie die openList noch Elemente enthält
     while (openList.length > 0) {
-
+        if(pauseAlgo){
+            await Sleep(100);
+            continue;
+        }
 
         // Ermittle das Feld aus der OpenList mit dem kürzesten Kosten (Pfadkosten + Feldkosten + Heuristische Funktion)
         let shortestPath = undefined; // Kürzestes Element
@@ -145,7 +148,7 @@ async function startAlgorithmus() {
                 if (finished()) {
                     if (parents.get(getEnd().toString()) !== undefined) {
                         setPathCosts(getEnd(), calculatePathCost(parents.get(getEnd().toString())));
-                        continue;
+                        continue; // While Schleife abbrechen
                     }
                 }
 
@@ -208,6 +211,7 @@ async function startAlgorithmus() {
                                 let tmp = fieldsAround[z];
                                 if (!closedList.includes(tmp) && !openList.includes(tmp)) {
                                     openList.push(tmp);
+                                    if (tmp.toString() !== getEnd().toString() && tmp.toString() !== getStart().toString()) document.getElementById(tmp).style.backgroundColor = color["openList"];
                                     document.getElementById(tmp).setAttribute("hasBoat", false.toString());
                                     document.getElementById(tmp).setAttribute("throwBoat", false.toString());
                                     possiblePath = true; // Setze Bedienung, dass While-Schleife erneut durchlaufen soll
@@ -250,9 +254,6 @@ async function startAlgorithmus() {
             if (shortestPath.toString() !== getStart().toString()) {
                 document.getElementById(shortestPath).style.backgroundColor = color["searchField"];
             }
-
-            // Füge das Feld in die ClosedList
-            closedList.push(shortestPath);
 
 
             /* Berechne die Schritte für die Zellen außen rum */
@@ -305,35 +306,6 @@ async function startAlgorithmus() {
                         if (closedList.includes(pos)) closedList = removeArrayElement(closedList, pos);
 
                         /*
-                            Wert für "throwBoat" auf false setzen, sofern bei unserem neuen Weg throwBoat schon mal true ist (Das Boot wurde schon früher weggeworfen!)
-                            und unser Feld das Attribute "throwBoat" auf "true" hat.
-                         */
-                        //TODO überprüfe, ob es diesen Fall überhaupt gibt!
-                        //TODO Dieser Fall sollte eigentlich nicht exsisitieren
-                        if (document.getElementById(pos).getAttribute("throwBoat").toString() === "true") {
-                            let anotherWay = shortestPath;
-                            let anotherWayThrowBoat = false;
-
-                            /*
-                                Überprüfung, ob das Boot auf dem neuen Weg schon früher weggeworfen wurde
-                             */
-
-                            while (anotherWay.toString() !== getStart().toString()) {
-                                if (document.getElementById(anotherWay).getAttribute("throwBoat").toString() === "true") {
-                                    anotherWayThrowBoat = true;
-                                    break;
-                                }
-                                anotherWay = parents.get(anotherWay);
-                            }
-                            // Überprüfe dieselbe Abfrage noch für den Start:
-                            if (document.getElementById(getStart().toString()).getAttribute("throwBoat").toString() === "true") {
-                                anotherWayThrowBoat = true;
-                            }
-                            if (anotherWayThrowBoat === true) document.getElementById(pos).setAttribute("throwBoat", false.toString());
-                        }
-
-
-                        /*
                             Setze frühzeitig neues Elternteil + Kosten, um die Berechnung für die neuen Felder korrekt durchzuführen
                             Davor muss noch aus dem alten Elternknoten das Kind entfernt werden
                          */
@@ -352,7 +324,7 @@ async function startAlgorithmus() {
                         Pfadkosten setzen
                      */
                     openList.push(pos);
-                    if (pos.toString() !== getEnd().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
+                    if (pos.toString() !== getEnd().toString() && pos.toString() !== getStart().toString()) document.getElementById(pos).style.backgroundColor = color["openList"];
                     parents.set(pos, shortestPath);
                     setPathCosts(pos, fieldCost);
                     addChilds(shortestPath, pos);
@@ -362,6 +334,8 @@ async function startAlgorithmus() {
 
             }
 
+            // Füge das Feld in die ClosedList
+            closedList.push(shortestPath);
             // Wartezeit zwischen den Suchschritten (kann von Benutzer verändert werden)
             await Sleep(getSleepTime());
 
@@ -380,7 +354,7 @@ async function startAlgorithmus() {
 
     }
     /*
-        Falls innerhalb des Algorithmus das Ziel nicht erreicht bzw. erkannt wurde, die "openList" leer ist wird ausgegeben,
+        Falls innerhalb des Algorithmus das Ziel nicht erreicht bzw. erkannt wurde, die "openList" leer ist, wird ausgegeben,
         dass keine Lösung gefunden werden konnte.
         Dieser Fall dient als reine Sicherheitsvorkehrung. Es sollte in keinem Falle möglich sein, dass die Abfrage anschlägt.
      */

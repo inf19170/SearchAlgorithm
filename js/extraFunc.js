@@ -4,7 +4,7 @@
  * Funktionen die extra Funktionalitäten bieten:
  *      - Auswertung des Weges
  *      - Dauer des Algorithmus bis der Algorithmus beendet wurde
- *
+ *      - Algorithmus pausieren
  */
 
 
@@ -124,5 +124,20 @@ function showMoreDetails() {
 
     }
 
+
+}
+
+
+function changePause(){
+    pauseAlgo = !pauseAlgo;
+}
+
+function setPause(){
+    document.addEventListener("keypress", function(event){
+        let code = event.code;
+        if(code.toString() === "Space" || "KeyP"){
+            changePause();
+        }
+    });
 
 }

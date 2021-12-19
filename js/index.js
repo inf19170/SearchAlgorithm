@@ -6,6 +6,7 @@
  */
 // Beim Starten der Seite soll das Grid auf der Seite platziert werden und die Wartezeit zwischen den einzelnen Suchschritten auf vorigen Wert angepasst werden
 window.onload = function () {
+    setPause();
     displayGrid();
     let time = localStorage.getItem("searchTime");
     if (time != null) {
