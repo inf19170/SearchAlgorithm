@@ -96,7 +96,7 @@
 }
 
 /* Start-/Pause-Button */
-#runningState {
+#playStopButton {
 
     cursor: pointer;
     transform: scale(3);
@@ -105,7 +105,7 @@
 }
 
 /* Start-/Pause-Button beim Hovern */
-#runningState:hover {
+#playStopButton:hover {
 
     cursor: pointer;
     transform: scale(3);

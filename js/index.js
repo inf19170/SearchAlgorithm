@@ -64,6 +64,7 @@ async function setStartAndEnd(id) {
 
 // Zeigt Lösung & Auswertung
 function showSolution() {
+    document.getElementById("playStopButton").style.visibility = "hidden";
     document.getElementById("showSolution").removeAttribute("hidden");
     solutionFound();
     showMoreDetails();
@@ -71,6 +72,7 @@ function showSolution() {
 
 // Es wurde KEINE Lösung gefunden
 function noSolutionFound() {
+    document.getElementById("playStopButton").style.visibility = "hidden";
     document.getElementsByTagName("body")[0].style.cursor = "auto";
     document.getElementById("solutionField").setAttribute("style", "border: outset 3px; border-color: darkred; margin-bottom: 10px; background-color: #b60c00; text-align: center; color: white; animation-name: none;");
     document.getElementById("solutionField").innerHTML = '<h5>Suche nicht erfolgreich! <i style ="color: black" class="fas fa-exclamation-triangle"></i></h5>';
