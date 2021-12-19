@@ -114,24 +114,32 @@
 }
 
 /*Inhalt vom Suchstatus*/
-#solutionTxt {
+#solutionField {
     position: relative;
     border: groove;  
     margin-bottom: 20px; 
     text-align: center;
-    animation-name: rainbowColor;
-    animation-duration: 7s;
-    animation-iteration-count: infinite;
+
+    animation: rainbowColor 3s infinite alternate;
+}
+
+#solutionTxt {
+    animation: size 6s infinite;
 }
 
 @keyframes rainbowColor {
-     0% {color: red;}
-    20% {color: orange;}
-    40% {color: cyan;}
-    60% {color: greenyellow;}
-    80% {color:blue;}
-   100% {color: orangered;}
+     0% {color: lightgreen;}
+    33% {color: cyan;}
+    66% {color:  plum;}
+   100% {color: lightcoral;}
   }
+
+  @keyframes size {
+    0% {transform: scale(1.2);}
+   33% {transform: scale(0.8);}
+   66% {transform: scale(1.2);}
+  100% {transform: scale(1.2);}
+}
 
 /*Verbergung der Anzeige im Vorfeld, wenn Suche erfolgreich*/
 #successTxt {
