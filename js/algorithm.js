@@ -8,7 +8,6 @@
  *      - Funktion zur Überprüfung, ob das Ziel erreicht wurde
  *
  */
-//TODO Überprüfe alle Felder ob die neben an in der ClosedList sind und einen kürzeren Weg haben, dann diesen auf Elternteil setzen
 
 // Beginnt den optimierten und angepassten A* Algorithmus
 async function startAlgorithmus() {
