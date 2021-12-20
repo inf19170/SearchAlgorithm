@@ -140,16 +140,16 @@
     animation: rainbowColor 3s infinite alternate;
 }
 
-#solutionTxt {
-    animation: size 6s infinite;
-}
-
 @keyframes rainbowColor {
      0% {color: lightgreen;}
     33% {color: cyan;}
     66% {color:  plum;}
    100% {color: lightcoral;}
   }
+
+#solutionTxt {
+    animation: size 6s infinite;
+}
 
   @keyframes size {
     0% {transform: scale(1.2);}
